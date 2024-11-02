@@ -17,7 +17,7 @@ Version
 Copyright
 ---------
 
-- eZ Update is copyright 2013 - 2014 Serhey Dolgushev and 1999 - 2014 Brookins Consulting
+- eZ Update is copyright 1999 - 2024 7x
 - See: doc/COPYRIGHT for more information on the terms of the copyright and license
 
 License
