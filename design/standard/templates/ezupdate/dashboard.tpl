@@ -37,5 +37,5 @@
 </div>
 
 {if $output}
-<pre>{$output}</pre>
+<pre style="background:#000;color:#aaa;padding:15px;border-radius:4px;font-family:monospace;font-size:12px;line-height:1.4;overflow-x:auto;">{$output}</pre>
 {/if}
