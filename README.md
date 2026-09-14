@@ -11,13 +11,13 @@ This extension implements a basic eZ Publish composert management toolset and pr
 Version
 -------
 
-- The current version of eZ Update is 1.0.1
-- Last Major update: November 2, 2024
+- The current version of eZ Update is 1.0.2
+- Last Major update: September 13, 2026
 
 Copyright
 ---------
 
-- eZ Update is copyright 1999 - 2024 7x
+- eZ Update is copyright 1998 - 2026 7x
 - See: doc/COPYRIGHT for more information on the terms of the copyright and license
 
 License
