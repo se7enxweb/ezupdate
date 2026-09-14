@@ -24,9 +24,12 @@
 
 			<div class="block">
 				<form action="{'update/dashboard'|ezurl( 'no' )}" method="post">
-					<label class="inline">{'Update Installed Composert Packages via Composer Update'|i18n( 'extension/ezupdate' )}:
+					<label class="inline">{'Update Installed Composer Packages via Composer Update.</label>
+					<br>
+					<p class="inline">Warning this is a potentially destructive act.</p>
+					<label class="inline">Backup First before Updating'|i18n( 'extension/ezupdate' )}!
 					</label>
-					<br /><br />
+					<br><br>
 					<input class="button" type="submit" name="CheckoutUpdateComposerPackage" value="{'Update'|i18n( 'extension/ezupdate' )}">
 				</form>
 			</div>
