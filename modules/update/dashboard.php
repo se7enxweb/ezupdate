@@ -5,6 +5,8 @@
  * @date    2 Nov 2024
  **/
 
+
+if ( !function_exists( 'ansiToHtml' ) ) {
 /**
  * Convert ANSI color codes to HTML with CSS styling
  * 
@@ -95,6 +97,8 @@ function ansiToHtml($text) {
     
     return $text;
 }
+}
+
 
 $http    = eZHTTPTool::instance();
 $module  = $Params['Module'];
