@@ -2,9 +2,9 @@
 <software>
     <metadata>
         <name>eZ Update : Composer Updater</name>
-        <version>1.0.2</version>
+        <version>1.1.1</version>
         <copyright>Copyright (C) 1998 - 2026 7x</copyright>
-        <license>GNU General Public License v2</license>
+        <license>GNU General Public License v2.0 (or any later version)</license>
         <info_url>https://github.com/se7enxweb/ezupdate</info_url>
     </metadata>
 </software>
