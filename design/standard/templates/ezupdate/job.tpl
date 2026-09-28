@@ -18,7 +18,13 @@
              data-status-finished="{'Finished'|i18n( 'extension/ezupdate' )|wash}"
              data-status-failed="{'Failed'|i18n( 'extension/ezupdate' )|wash}"
              data-status-stopped="{'Stopped'|i18n( 'extension/ezupdate' )|wash}"
-             data-status-running="{'Running'|i18n( 'extension/ezupdate' )|wash}">{$progress.html}</pre>
+             data-status-running="{'Running'|i18n( 'extension/ezupdate' )|wash}"
+             data-notice-signedout="{'You are no longer signed in, so the output cannot be followed. Sign in again and reload this page: the run goes on on the server.'|i18n( 'extension/ezupdate' )|wash}"
+             data-notice-refused="{'The server refused to show this run (HTTP 403). The update/job policy is needed to follow it.'|i18n( 'extension/ezupdate' )|wash}"
+             data-notice-server="{'The server answered with an error (HTTP %status). Trying again...'|i18n( 'extension/ezupdate' )|wash}"
+             data-notice-noanswer="{'No answer from the server. Trying again...'|i18n( 'extension/ezupdate' )|wash}"
+             data-notice-gaveup="{'Contact with this run was lost after %count attempts. It goes on on the server: reload this page to follow it.'|i18n( 'extension/ezupdate' )|wash}">{$progress.html}</pre>
+        <p class="ezupdate-notice" id="ezupdate-job-notice" role="status" aria-live="polite" hidden="hidden"></p>
     </div>
     <div class="controlbar">
         <form method="post" action={concat( 'update/job/', $job.id )|ezurl} class="ezupdate-bar">

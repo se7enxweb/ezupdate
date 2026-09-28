@@ -320,6 +320,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>You are no longer signed in, so the output cannot be followed. Sign in again and reload this page: the run goes on on the server.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The server refused to show this run (HTTP 403). The update/job policy is needed to follow it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The server answered with an error (HTTP %status). Trying again...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No answer from the server. Trying again...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contact with this run was lost after %count attempts. It goes on on the server: reload this page to follow it.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Back to installed packages</source>
         <translation type="unfinished"></translation>
     </message>

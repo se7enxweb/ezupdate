@@ -111,3 +111,8 @@
     .ezupdate-facts th { width: auto; }
     .ezupdate-actions { white-space: normal; }
 }
+
+/* Why the output of a run cannot be followed, under the output. */
+.ezupdate-notice { margin: 0.5em 0 0 0; padding: 0.4em 0.7em; border-radius: 4px; }
+.ezupdate-notice.ezupdate-warn { background: #fff4e0; }
+.ezupdate-notice.ezupdate-bad { background: #fde8e8; }

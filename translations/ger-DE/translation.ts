@@ -320,6 +320,26 @@
         <translation>Läuft</translation>
     </message>
     <message>
+        <source>You are no longer signed in, so the output cannot be followed. Sign in again and reload this page: the run goes on on the server.</source>
+        <translation>Sie sind nicht mehr angemeldet, daher kann die Ausgabe nicht verfolgt werden. Melden Sie sich erneut an und laden Sie diese Seite neu: Der Lauf geht auf dem Server weiter.</translation>
+    </message>
+    <message>
+        <source>The server refused to show this run (HTTP 403). The update/job policy is needed to follow it.</source>
+        <translation>Der Server verweigert die Anzeige dieses Laufs (HTTP 403). Um ihn zu verfolgen, wird die Richtlinie update/job benötigt.</translation>
+    </message>
+    <message>
+        <source>The server answered with an error (HTTP %status). Trying again...</source>
+        <translation>Der Server hat mit einem Fehler geantwortet (HTTP %status). Neuer Versuch ...</translation>
+    </message>
+    <message>
+        <source>No answer from the server. Trying again...</source>
+        <translation>Keine Antwort vom Server. Neuer Versuch ...</translation>
+    </message>
+    <message>
+        <source>Contact with this run was lost after %count attempts. It goes on on the server: reload this page to follow it.</source>
+        <translation>Die Verbindung zu diesem Lauf ist nach %count Versuchen abgebrochen. Er geht auf dem Server weiter: Laden Sie diese Seite neu, um ihn zu verfolgen.</translation>
+    </message>
+    <message>
         <source>Back to installed packages</source>
         <translation>Zurück zu den installierten Paketen</translation>
     </message>

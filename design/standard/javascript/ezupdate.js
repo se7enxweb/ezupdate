@@ -38,6 +38,31 @@
         var url = pre.getAttribute('data-ezupdate-job');
         var status = document.getElementById('ezupdate-job-status');
         var bytes = -1;
+        // Why the output cannot be followed, said on the page rather than
+        // retried in silence: a run that looked frozen was often a session
+        // that had ended, or a server error.
+        var notice = document.getElementById('ezupdate-job-notice');
+        var failures = 0;
+        var maxFailures = 10;
+
+        function say(kind, httpStatus) {
+            if (!notice) { return; }
+            if (!kind) { notice.hidden = true; notice.textContent = ''; return; }
+            var text = pre.getAttribute('data-notice-' + kind) || kind;
+            notice.textContent = text.replace('%status', httpStatus).replace('%count', maxFailures);
+            notice.className = 'ezupdate-notice ' + (kind === 'server' || kind === 'noanswer' ? 'ezupdate-warn' : 'ezupdate-bad');
+            notice.hidden = false;
+        }
+
+        // One failed poll: explained, and tried again unless it cannot get
+        // better by waiting or has failed too often.
+        function failed(kind, httpStatus) {
+            failures++;
+            if (kind === 'signedout' || kind === 'refused') { say(kind, httpStatus); return; }
+            if (failures >= maxFailures) { say('gaveup', httpStatus); return; }
+            say(kind, httpStatus);
+            window.setTimeout(poll, Math.min(3000 * failures, 15000));
+        }
         var classes = { running: 'ezupdate-warn', finished: 'ezupdate-good', failed: 'ezupdate-bad', stopped: 'ezupdate-bad' };
 
         function atBottom() {
@@ -49,9 +74,19 @@
             request.open('GET', url, true);
             request.setRequestHeader('Accept', 'application/json');
             request.onload = function () {
+                if (request.status === 403) { failed('refused', 403); return; }
+                if (request.status >= 500) { failed('server', request.status); return; }
                 var data = null;
                 try { data = JSON.parse(request.responseText); } catch (e) { data = null; }
-                if (!data) { window.setTimeout(poll, 3000); return; }
+                if (!data) {
+                    // HTML where JSON was asked for: the login page, when the
+                    // session has ended; anything else is a server error.
+                    var signedOut = /user\/login/.test(request.responseURL || '') || /name="Login"/.test(request.responseText);
+                    failed(signedOut ? 'signedout' : 'server', request.status);
+                    return;
+                }
+                failures = 0;
+                say(null);
                 if (data.bytes !== bytes) {
                     var follow = atBottom();
                     // Escaped on the server (eZUpdateManager::ansiToHtml) before any span is added.
@@ -75,7 +110,7 @@
                     Array.prototype.forEach.call(waiting, function (button) { button.disabled = false; });
                 }
             };
-            request.onerror = function () { window.setTimeout(poll, 3000); };
+            request.onerror = function () { failed('noanswer', 0); };
             request.send();
         }
 
