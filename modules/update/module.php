@@ -75,6 +75,14 @@ $ViewList = array(
         'functions'               => array( 'ezupdate' ),
         'params'                  => array( 'JobID', 'Format' ),
         'default_navigation_part' => 'ezsetupnavigationpart',
+        'single_post_actions'     => array(
+            'RerunButton'      => 'Rerun',
+            'RunForRealButton' => 'RunForReal',
+        ),
+        'post_action_parameters'  => array(
+            'Rerun'      => array( 'ConfirmBackup' => 'ConfirmBackup' ),
+            'RunForReal' => array( 'ConfirmBackup' => 'ConfirmBackup' ),
+        ),
     ),
 );
 

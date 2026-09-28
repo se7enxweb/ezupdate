@@ -105,6 +105,7 @@
                 <th>{'By'|i18n( 'extension/ezupdate' )}</th>
                 <th>{'Started'|i18n( 'extension/ezupdate' )}</th>
                 <th>{'Status'|i18n( 'extension/ezupdate' )}</th>
+                <th></th>
             </tr>
             {foreach $jobs as $job sequence array( 'bglight', 'bgdark' ) as $style}
             <tr class="{$style}">
@@ -112,6 +113,16 @@
                 <td>{$job.user|wash}</td>
                 <td>{$job.created|l10n( 'shortdatetime' )}</td>
                 <td>{include uri='design:ezupdate/parts/status.tpl' status=$job.status}</td>
+                <td class="ezupdate-actions">
+                    {* A dry run runs again from here; a run that changes the installation asks for the backup on its own page. *}
+                    {if $job.changes|not}
+                    <form method="post" action={concat( 'update/job/', $job.id )|ezurl}>
+                        <input class="button" type="submit" name="RerunButton" value="{'Run again'|i18n( 'extension/ezupdate' )}"{if $job_running} disabled="disabled"{/if} />
+                    </form>
+                    {else}
+                    <a class="button" href={concat( 'update/job/', $job.id )|ezurl}>{'Run again'|i18n( 'extension/ezupdate' )}&hellip;</a>
+                    {/if}
+                </td>
             </tr>
             {/foreach}
         </table>

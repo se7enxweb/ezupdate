@@ -32,7 +32,8 @@ The package manager of an Exponential installation, in the admin (Setup tab,
 - **Live output**: an update or install runs in the background (one at a time),
   so it neither holds a web request open nor hits its time limit; the page shows
   Composer's output as it is written, in colour. The last runs are listed with
-  who started them and how they ended.
+  who started them and how they ended; each can be run again, and a dry run can
+  be run for real from its page (with the same switches and backup confirmation).
 
 Safety
 ------
@@ -106,7 +107,7 @@ Requirements
 Version
 -------
 
-- 1.1.3, September 28, 2026.
+- 1.1.4, September 28, 2026.
 
 Copyright and license
 ---------------------

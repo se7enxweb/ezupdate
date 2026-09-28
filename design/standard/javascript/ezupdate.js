@@ -69,6 +69,10 @@
                 }
                 if (data.status === 'queued' || data.status === 'running') {
                     window.setTimeout(poll, 1000);
+                } else {
+                    // The run has ended: its "run again" buttons may be used now.
+                    var waiting = document.querySelectorAll('[data-ezupdate-when-done]');
+                    Array.prototype.forEach.call(waiting, function (button) { button.disabled = false; });
                 }
             };
             request.onerror = function () { window.setTimeout(poll, 3000); };

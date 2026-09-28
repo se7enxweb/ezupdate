@@ -40,6 +40,26 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>This run cannot be started again.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update, dry run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install %package, dry run</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Install %package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Composer was not found. Set [ComposerSettings] Path, Binary or PHPBinary in ezupdate.ini.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -252,15 +272,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Update, dry run</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>A backup of files and database exists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -281,6 +293,10 @@
     </message>
     <message>
         <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -305,6 +321,14 @@
     </message>
     <message>
         <source>Back to installed packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run it for real</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Running this again is switched off (AllowUpdate / AllowInstall in ezupdate.ini).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -584,19 +608,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Confirm that a backup exists before this run.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>The version constraint is not valid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Confirm that a backup exists before installing.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Install %package, dry run</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Install %package</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

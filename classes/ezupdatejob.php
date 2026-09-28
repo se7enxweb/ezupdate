@@ -363,6 +363,65 @@ class eZUpdateJob
     }
 
     /**
+     * What a new run of this job would be: the same update or install again, or
+     * with $forReal a dry run done for real. The Composer arguments are built
+     * again by eZUpdateManager from what the job did (package, version
+     * constraint, dist or source), never taken over from the stored file.
+     *
+     * @return array|string hash kind, arguments, label, changes; or an error text
+     */
+    public function rerunPlan( $forReal = false )
+    {
+        $manager = eZUpdateManager::getInstance();
+        $kind = (string)$this->data['kind'];
+        $arguments = (array)$this->data['arguments'];
+        if ( !isset( self::$kinds[$kind] ) )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'This run cannot be started again.' );
+        }
+        $dryRun = substr( $kind, -8 ) === '-dry-run' && !$forReal;
+        $method = in_array( '--prefer-source', $arguments, true ) ? 'source'
+                : ( in_array( '--prefer-dist', $arguments, true ) ? 'dist' : 'auto' );
+
+        if ( strpos( $kind, 'update' ) === 0 )
+        {
+            return array(
+                'kind'      => $dryRun ? 'update-dry-run' : 'update',
+                'arguments' => $manager->updateArguments( $dryRun, $method ),
+                'label'     => ( $dryRun ? ezpI18n::tr( 'extension/ezupdate', 'Update, dry run' ) : ezpI18n::tr( 'extension/ezupdate', 'Update' ) ) . ' (' . $method . ')',
+                'changes'   => !$dryRun,
+            );
+        }
+
+        // require: the first argument after "require" that is not an option.
+        $spec = '';
+        foreach ( array_slice( $arguments, 1 ) as $argument )
+        {
+            if ( $argument !== '' && $argument[0] !== '-' )
+            {
+                $spec = $argument;
+                break;
+            }
+        }
+        $parts = explode( ':', $spec, 2 );
+        $name = $parts[0];
+        $constraint = isset( $parts[1] ) ? $parts[1] : '';
+        $newArguments = $manager->requireArguments( $name, $constraint, $dryRun, $method );
+        if ( $newArguments === false )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'This run cannot be started again.' );
+        }
+        $label = $name . ( $constraint !== '' ? ':' . $constraint : '' ) . ' (' . $method . ')';
+        return array(
+            'kind'      => $dryRun ? 'require-dry-run' : 'require',
+            'arguments' => $newArguments,
+            'label'     => $dryRun ? ezpI18n::tr( 'extension/ezupdate', 'Install %package, dry run', null, array( '%package' => $label ) )
+                                   : ezpI18n::tr( 'extension/ezupdate', 'Install %package', null, array( '%package' => $label ) ),
+            'changes'   => !$dryRun,
+        );
+    }
+
+    /**
      * The status and the whole output as HTML, for the progress page.
      */
     public function progress()
