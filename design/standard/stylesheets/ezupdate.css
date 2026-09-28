@@ -1,0 +1,113 @@
+/* ezupdate: the admin pages, made for the admin3 design (and readable in admin2). */
+
+.ezupdate-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em;
+    margin: 0 0 1em 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 2px solid #d5dbe3;
+}
+.ezupdate-tabs li { margin: 0; }
+.ezupdate-tabs a {
+    display: block;
+    padding: 0.5em 1em;
+    border-radius: 4px 4px 0 0;
+    color: #3a4a5c;
+    text-decoration: none;
+}
+.ezupdate-tabs a:hover { background: #eef2f6; }
+.ezupdate-tabs li.selected a {
+    background: #d5dbe3;
+    color: #1d2b3a;
+    font-weight: bold;
+}
+
+.ezupdate .box-content { padding-bottom: 0.5em; }
+.ezupdate h3 { margin: 1em 0 0.4em 0; }
+
+.ezupdate-lead { font-size: 1.1em; margin: 0.3em 0 0.8em 0; }
+.ezupdate-muted { color: #6b7785; font-size: 0.92em; }
+.ezupdate-message { white-space: pre-wrap; margin: 0.4em 0 0 0; font-size: 0.9em; }
+
+.ezupdate-facts th { width: 13em; text-align: left; vertical-align: top; }
+.ezupdate-facts td code, .ezupdate table code { font-size: 0.95em; }
+.ezupdate-number { text-align: right; white-space: nowrap; }
+.ezupdate-actions { white-space: nowrap; text-align: right; }
+.ezupdate-actions form { display: inline; }
+
+.ezupdate-badge {
+    display: inline-block;
+    padding: 0.05em 0.55em;
+    border-radius: 1em;
+    background: #e3e7ec;
+    color: #3a4a5c;
+    font-size: 0.85em;
+    font-weight: normal;
+    line-height: 1.6;
+    vertical-align: middle;
+}
+.ezupdate-good { background: #dcefdc; color: #1f5f1f; }
+.ezupdate-warn { background: #fbecc8; color: #7a5200; }
+.ezupdate-bad  { background: #f7d9d9; color: #8a1f1f; }
+
+.ezupdate-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+}
+.ezupdate-confirm {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5em;
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: 1px solid #c8d0da;
+}
+.ezupdate-bar input[type="text"], .ezupdate-bar input[type="url"] { padding: 0.25em 0.4em; }
+
+.ezupdate-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+    margin: 0.3em 0 0.4em 0;
+}
+.ezupdate-search input[type="search"] {
+    flex: 1 1 18em;
+    min-width: 0;
+    padding: 0.35em 0.5em;
+    font-size: 1.05em;
+}
+
+.ezupdate-pages {
+    display: flex;
+    gap: 1.5em;
+    justify-content: center;
+    margin: 0.8em 0;
+}
+
+.ezupdate-requires { columns: 2 18em; margin: 0 0 0.5em 1.2em; }
+
+.ezupdate-terminal {
+    max-height: 32em;
+    margin: 0.5em 0;
+    padding: 0.9em 1em;
+    overflow: auto;
+    border-radius: 4px;
+    background: #111820;
+    color: #c9d1d9;
+    font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+    font-size: 12px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@media (max-width: 700px) {
+    .ezupdate-confirm { margin-left: 0; padding-left: 0; border-left: 0; }
+    .ezupdate-facts th { width: auto; }
+    .ezupdate-actions { white-space: normal; }
+}
