@@ -1,8 +1,8 @@
 {
     "name": "se7enxweb/ezupdate",
-    "description": "eZ Update offers composer package(s) updates - Use this feature to update your website to the latest available release via composer",
+    "description": "Composer updates and installs, packagist.org browsing and the Composer and Exponential package servers of an Exponential installation, from the admin and the command line",
     "type": "ezpublish-legacy-extension",
-    "keywords": [ "eZ Publish", "eZ Publish Legacy", "eZ Publish Platform", "kernel updater", "extension", "composer", "manager", "vcs", "module", "view", "update", "composer package updates" ],
+    "keywords": [ "Exponential", "Exponential 6", "legacy extension", "composer", "packagist", "package manager", "package servers", "ezpkg", "update", "install" ],
     "homepage": "https://github.com/se7enxweb/ezupdate",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -20,7 +20,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.0.0",
+        "php": ">=7.4",
         "se7enxweb/ezpublish-legacy-installer": "*"
     },
     "extra": {

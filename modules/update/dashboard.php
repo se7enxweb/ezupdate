@@ -2,127 +2,85 @@
 /**
  * @package eZUpdate
  * @author  7x <info@se7enx.com>
- * @date    2 Nov 2024
+ * @date    28 Sep 2026
+ *
+ * The installation's Composer state: where Composer is, what may be run, the
+ * packages that have a newer release, and the recent runs. No function or class
+ * is declared here, so the view can run many times in one PHP process.
  **/
 
+require_once __DIR__ . '/classes.php';
 
-if ( !function_exists( 'ansiToHtml' ) ) {
-/**
- * Convert ANSI color codes to HTML with CSS styling
- * 
- * @param string $text Text with ANSI codes
- * @return string HTML formatted text
- */
-function ansiToHtml($text) {
-    // ANSI color map to CSS colors
-    $ansiColors = array(
-        '0'  => '',                                          // Reset (close any open span)
-        '1'  => 'font-weight:bold',                         // Bold
-        '30' => 'color:#000',                               // Black
-        '31' => 'color:#c00',                               // Red
-        '32' => 'color:#0a0',                               // Green
-        '33' => 'color:#a50',                               // Yellow
-        '34' => 'color:#00a',                               // Blue
-        '35' => 'color:#a0a',                               // Magenta
-        '36' => 'color:#0aa',                               // Cyan
-        '37' => 'color:#aaa',                               // White
-        '90' => 'color:#555',                               // Bright Black (Gray)
-        '91' => 'color:#f55',                               // Bright Red
-        '92' => 'color:#5f5',                               // Bright Green
-        '93' => 'color:#ff5',                               // Bright Yellow
-        '94' => 'color:#55f',                               // Bright Blue
-        '95' => 'color:#f5f',                               // Bright Magenta
-        '96' => 'color:#5ff',                               // Bright Cyan
-        '97' => 'color:#fff',                               // Bright White
-    );
-    
-    $currentStyles = array();
-    $result = '';
-    $inSpan = false;
-    
-    // Match ANSI escape codes: ESC[XXm where ESC can be \033 or \e or just missing
-    // The regex handles: \033[31m, \e[31m, [31m (when ESC is stripped), or ESC[31m as literal text
-    $text = preg_replace_callback(
-        '/(?:\033\[|\\e\[|\[)(\d+(?:;\d+)*)m/',
-        function($matches) use ($ansiColors, &$currentStyles, &$inSpan) {
-            $codes = explode(';', $matches[1]);
-            $html = '';
-            
-            foreach ($codes as $code) {
-                if ($code === '0' || $code === '') {
-                    // Reset - close span if open
-                    if ($inSpan) {
-                        $html .= '</span>';
-                        $inSpan = false;
-                    }
-                    $currentStyles = array();
-                } elseif (isset($ansiColors[$code])) {
-                    // Close previous span if open
-                    if ($inSpan) {
-                        $html .= '</span>';
-                    }
-                    // Add or update style
-                    $styleType = (strpos($ansiColors[$code], 'font-weight') !== false) ? 'font-weight' : 'color';
-                    $currentStyles[$styleType] = $ansiColors[$code];
-                    // Open new span with current styles
-                    $html .= '<span style="' . implode(';', $currentStyles) . '">';
-                    $inSpan = true;
-                }
-            }
-            
-            return $html;
-        },
-        $text
-    );
-    
-    // Close any remaining open span
-    if ($inSpan) {
-        $text .= '</span>';
-    }
-    
-    // Now escape HTML entities in the text content (but not our span tags)
-    $text = preg_replace_callback(
-        '/(<span[^>]*>)|(<\/span>)|([^<]+)/',
-        function($matches) {
-            if (!empty($matches[1]) || !empty($matches[2])) {
-                // It's a tag, keep as-is
-                return $matches[0];
-            } else {
-                // It's text content, escape it
-                return htmlspecialchars($matches[3], ENT_QUOTES, 'UTF-8');
-            }
-        },
-        $text
-    );
-    
-    return $text;
-}
-}
-
-
-$http    = eZHTTPTool::instance();
 $module  = $Params['Module'];
-$composer     = eZUpdateManager::getInstance();
+$manager = eZUpdateManager::getInstance();
+$user    = eZUser::currentUser();
+$access  = $user->hasAccessTo( 'update', 'manage' );
+$canManage = $access['accessWord'] !== 'no';
 $error   = null;
-$message = null;
-$output  = null;
+$outdated = null;
+$method  = $manager->installMethod( $module->hasActionParameter( 'InstallMethod' ) ? (string)$module->actionParameter( 'InstallMethod' ) : null );
 
-if( $module->isCurrentAction( 'CheckoutUpdateComposerPackage' ) ) {
-        $rawOutput = $composer->updatePackages();
-        $output = ansiToHtml($rawOutput);
+if ( $module->isCurrentAction( 'CheckForUpdates' ) )
+{
+    $outdated = $manager->outdatedPackages( true );
+    if ( $outdated === false )
+    {
+        $error = ezpI18n::tr( 'extension/ezupdate', 'Composer could not check for updates.' ) . "\n" . $manager->lastOutput();
+    }
 }
+else if ( $module->isCurrentAction( 'DryRunUpdate' ) || $module->isCurrentAction( 'Update' ) )
+{
+    $dryRun = $module->isCurrentAction( 'DryRunUpdate' );
+    if ( !$dryRun && ( !$canManage || !$manager->isUpdateAllowed() ) )
+    {
+        $error = ezpI18n::tr( 'extension/ezupdate', 'Updating is switched off ([UpdateSettings] AllowUpdate in ezupdate.ini).' );
+    }
+    else if ( !$dryRun && !$module->hasActionParameter( 'ConfirmBackup' ) )
+    {
+        $error = ezpI18n::tr( 'extension/ezupdate', 'Confirm that a backup exists before updating.' );
+    }
+    else
+    {
+        $job = eZUpdateJob::start(
+            $dryRun ? 'update-dry-run' : 'update',
+            $manager->updateArguments( $dryRun, $method ),
+            ( $dryRun ? ezpI18n::tr( 'extension/ezupdate', 'Update, dry run' ) : ezpI18n::tr( 'extension/ezupdate', 'Update' ) ) . ' (' . $method . ')'
+        );
+        if ( $job instanceof eZUpdateJob )
+        {
+            return $module->redirectTo( 'update/job/' . $job->data['id'] );
+        }
+        $error = $job;
+    }
+}
+
+$composerServers = new eZUpdateComposerServers( $manager );
 
 $tpl = eZTemplate::factory();
-$tpl->setVariable( 'composer_manager', $composer );
 $tpl->setVariable( 'error', $error );
-$tpl->setVariable( 'message', $message );
-$tpl->setVariable( 'output',  $output );
+$tpl->setVariable( 'can_manage', $canManage );
+$tpl->setVariable( 'composer_binary', $manager->composerBinary() );
+$composerVersion = $manager->composerBinary() ? $manager->composerVersion() : false;
+$tpl->setVariable( 'composer_version', $composerVersion );
+// When Composer is there but does not start, say why.
+$tpl->setVariable( 'composer_problem', $manager->composerBinary() && $composerVersion === false ? $manager->lastOutput() : '' );
+$tpl->setVariable( 'php_binary', $manager->phpBinary() );
+$tpl->setVariable( 'project_path', $manager->projectPath() );
+$tpl->setVariable( 'has_composer_json', $manager->hasComposerJson() );
+$tpl->setVariable( 'composer_json_writable', is_writable( $manager->projectPath() . '/composer.json' ) );
+$tpl->setVariable( 'update_allowed', $manager->isUpdateAllowed() );
+$tpl->setVariable( 'install_allowed', $manager->isInstallAllowed() );
+$tpl->setVariable( 'installed_count', count( $manager->installedPackages() ) );
+$tpl->setVariable( 'composer_server_count', count( $composerServers->servers() ) );
+$tpl->setVariable( 'packagist_enabled', $composerServers->packagistEnabled() );
+$tpl->setVariable( 'outdated', $outdated );
+$tpl->setVariable( 'install_method', $method );
+$tpl->setVariable( 'install_methods', eZUpdateManager::$installMethods );
+$tpl->setVariable( 'jobs', eZUpdateJob::fetchList( 10 ) );
+$tpl->setVariable( 'job_running', eZUpdateJob::isRunning() );
 
 $Result = array();
 $Result['content'] = $tpl->fetch( 'design:ezupdate/dashboard.tpl' );
 $Result['path']    = array(
-	array(
-		'text' => ezpI18n::tr( 'extension/ezupdate', 'Update' ),
-		'url'  => false
-	)
+    array( 'text' => ezpI18n::tr( 'extension/ezupdate', 'Updates and packages' ), 'url' => false ),
 );

@@ -1,8 +1,70 @@
 <?php /* #?ini charset="utf-8"?
 
 [ComposerSettings]
-Path=/usr/bin/
-# Path=/usr/local/bin/
-# Path=/opt/cpanel/composer/bin/
+# Directory of the Composer binary. Empty: each directory of SearchPath is tried.
+Path=
+# File name in that directory. Empty: each name of BinaryNames is tried.
+Binary=
+SearchPath[]
+SearchPath[]=/usr/local/bin/
+SearchPath[]=/usr/bin/
+SearchPath[]=/opt/cpanel/composer/bin/
+BinaryNames[]
+BinaryNames[]=composer
+BinaryNames[]=composer.phar
+# PHP command-line binary that runs a composer.phar (and the background jobs).
+# Empty: the php next to the running PHP (PHP_BINDIR), then /usr/local/bin/php, /usr/bin/php.
+PHPBinary=
+# Seconds a Composer run may take before it is stopped.
+Timeout=900
+# COMPOSER_HOME when the web server passes none, relative to the installation root;
+# each system account gets its own directory below it (var/ezupdate/composer/<user>).
+ComposerHome=var/ezupdate/composer
+
+[UpdateSettings]
+# enabled: the admin may run composer update. disabled: only the check for
+# updates and the dry run are offered. Composer rewrites vendor/ and every
+# package it manages, so switch this on only where that is wanted, with a backup.
+AllowUpdate=disabled
+# enabled: the admin may install packages (composer require). Same caution.
+AllowInstall=disabled
+# How packages are fetched: dist (release archives, fast), source (git clones:
+# each package keeps its .git, so its history, branch and commit can be read and
+# worked on) or auto (Composer decides: source for dev versions, dist for
+# releases). The admin forms and --prefer on the command line can choose per run.
+PreferredInstall=auto
+UpdateArguments[]
+UpdateArguments[]=--ansi
+UpdateArguments[]=--no-progress
+RequireArguments[]
+RequireArguments[]=--ansi
+RequireArguments[]=--no-progress
+
+[JobSettings]
+# PHP scripts of the installation run after a successful update or install,
+# each with its arguments.
+AfterRunCommands[]
+AfterRunCommands[]=bin/php/ezpgenerateautoloads.php --extension
+AfterRunCommands[]=bin/php/ezcache.php --clear-tag=ini,template,content
+# How many finished jobs (log and status) are kept.
+KeepJobs=20
+
+[PackagistSettings]
+URL=https://packagist.org
+# Search results per page.
+PerPage=25
+# Seconds a packagist.org answer is reused.
+CacheTime=900
+# Package types offered in the search form: type=label (empty type: any).
+Types[]
+Types[ezpublish-legacy-extension]=Extensions
+Types[ezpublish-legacy]=Kernel
+Types[library]=Libraries
+Types[]=Any type
+
+[PackageServerSettings]
+# Exponential .ezpkg package servers added in the admin are written to
+# settings/override/ezupdate.ini.append.php as Servers[<name>]=<https URL>.
+# The server of package.ini [RepositorySettings] is always listed first.
 
 */ ?>
