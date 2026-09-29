@@ -101,6 +101,14 @@
         {if $installed_info}
         <table class="list ezupdate-facts" cellspacing="0">
             <tr><th>{'Version'|i18n( 'extension/ezupdate' )}</th><td><code>{$installed_info.version|wash}</code></td></tr>
+            <tr><th>{'Funding'|i18n( 'extension/ezupdate' )}</th><td>
+                {if $funding|count}
+                    {foreach $funding as $link}<div><a class="ezupdate-fund-link" href="{$link.url|wash}" target="_blank" rel="noopener noreferrer nofollow"><span class="ezupdate-badge ezupdate-fund-type ezupdate-fund-type-{$link.type|wash}">{$link.label|wash}</span> <span class="ezupdate-fund-url">{$link.url|wash}</span></a></div>{/foreach}
+                    <div class="ezupdate-muted"><a href={'update/fund'|ezurl}>{'Funding of all installed packages'|i18n( 'extension/ezupdate' )}</a></div>
+                {else}
+                    <span class="ezupdate-muted">{'This package declares no funding.'|i18n( 'extension/ezupdate' )}</span>
+                {/if}
+            </td></tr>
             <tr><th>{'Fetched from'|i18n( 'extension/ezupdate' )}</th><td>{if eq( $installed_info.method, 'source' )}{'source (git, with history)'|i18n( 'extension/ezupdate' )}{elseif eq( $installed_info.method, 'dist' )}{'dist (archives)'|i18n( 'extension/ezupdate' )}{else}{$installed_info.method|wash}{/if}</td></tr>
             {if $installed_info.path}<tr><th>{'Directory'|i18n( 'extension/ezupdate' )}</th><td><code>{$installed_info.path|wash}</code></td></tr>{/if}
             {if $installed_info.source}<tr><th>{'source (git)'|i18n( 'extension/ezupdate' )}</th><td><code>{$installed_info.source.url|wash}</code> <span class="ezupdate-muted">{'commit'|i18n( 'extension/ezupdate' )} <code>{$installed_info.source.reference|wash}</code></span></td></tr>{/if}

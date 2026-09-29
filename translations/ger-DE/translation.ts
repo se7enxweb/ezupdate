@@ -300,6 +300,78 @@
         <translation>Erneut ausführen</translation>
     </message>
     <message>
+        <source>Funding</source>
+        <translation>Förderung</translation>
+    </message>
+    <message>
+        <source>The people and organisations behind the installed packages, and how to support them. This is the list &quot;composer fund&quot; prints, read from the installed packages' metadata and their .github/FUNDING.yml, without running Composer.</source>
+        <translation>Die Menschen und Organisationen hinter den installierten Paketen und wie Sie sie unterstützen können. Das ist die Liste, die &quot;composer fund&quot; ausgibt, gelesen aus den Metadaten der installierten Pakete und ihrer .github/FUNDING.yml, ohne Composer auszuführen.</translation>
+    </message>
+    <message>
+        <source>of %count packages ask for funding</source>
+        <translation>von %count Paketen bitten um Förderung</translation>
+    </message>
+    <message>
+        <source>vendors</source>
+        <translation>Anbieter</translation>
+    </message>
+    <message>
+        <source>funding links</source>
+        <translation>Förder-Links</translation>
+    </message>
+    <message>
+        <source>All installed packages</source>
+        <translation>Alle installierten Pakete</translation>
+    </message>
+    <message>
+        <source>Required by composer.json</source>
+        <translation>Von composer.json verlangt</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Herunterladen</translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation>Text</translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation>Filter</translation>
+    </message>
+    <message>
+        <source>Vendor, package or link</source>
+        <translation>Anbieter, Paket oder Link</translation>
+    </message>
+    <message>
+        <source>Supports 1 package</source>
+        <translation>Unterstützt 1 Paket</translation>
+    </message>
+    <message>
+        <source>Supports %count packages</source>
+        <translation>Unterstützt %count Pakete</translation>
+    </message>
+    <message>
+        <source>from %source</source>
+        <translation>aus %source</translation>
+    </message>
+    <message>
+        <source>No vendor matches the filter.</source>
+        <translation>Kein Anbieter passt zum Filter.</translation>
+    </message>
+    <message>
+        <source>None of these packages asks for funding.</source>
+        <translation>Keines dieser Pakete bittet um Förderung.</translation>
+    </message>
+    <message>
+        <source>%count packages declare no funding</source>
+        <translation>%count Pakete geben keine Förderung an</translation>
+    </message>
+    <message>
+        <source>On the command line: php extension/ezupdate/bin/php/ezupdate.php fund [--direct] [--json]</source>
+        <translation>Auf der Kommandozeile: php extension/ezupdate/bin/php/ezupdate.php fund [--direct] [--json]</translation>
+    </message>
+    <message>
         <source>Started by %user on %date</source>
         <translation>Gestartet von %user am %date</translation>
     </message>
@@ -446,6 +518,14 @@
     <message>
         <source>As installed</source>
         <translation>Wie installiert</translation>
+    </message>
+    <message>
+        <source>Funding of all installed packages</source>
+        <translation>Förderung aller installierten Pakete</translation>
+    </message>
+    <message>
+        <source>This package declares no funding.</source>
+        <translation>Dieses Paket gibt keine Förderung an.</translation>
     </message>
     <message>
         <source>Fetched from</source>

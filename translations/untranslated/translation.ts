@@ -300,6 +300,78 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Funding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The people and organisations behind the installed packages, and how to support them. This is the list &quot;composer fund&quot; prints, read from the installed packages' metadata and their .github/FUNDING.yml, without running Composer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>of %count packages ask for funding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vendors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>funding links</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All installed packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required by composer.json</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vendor, package or link</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supports 1 package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supports %count packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>from %source</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No vendor matches the filter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>None of these packages asks for funding.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count packages declare no funding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On the command line: php extension/ezupdate/bin/php/ezupdate.php fund [--direct] [--json]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Started by %user on %date</source>
         <translation type="unfinished"></translation>
     </message>
@@ -445,6 +517,14 @@
     </message>
     <message>
         <source>As installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Funding of all installed packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This package declares no funding.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

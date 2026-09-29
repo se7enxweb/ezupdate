@@ -116,3 +116,29 @@
 .ezupdate-notice { margin: 0.5em 0 0 0; padding: 0.4em 0.7em; border-radius: 4px; }
 .ezupdate-notice.ezupdate-warn { background: #fff4e0; }
 .ezupdate-notice.ezupdate-bad { background: #fde8e8; }
+
+/* Funding: who the installed packages ask to be funded by. */
+.ezupdate-fund-summary { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 0.4em 0 1em 0; padding: 0; list-style: none; }
+.ezupdate-fund-summary li { margin: 0; padding: 0.35em 0.9em; border-radius: 999px; background: #eef2f6; color: #3a4a5c; }
+.ezupdate-fund-summary strong { font-size: 1.1em; margin-right: 0.2em; }
+.ezupdate-fund-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6em 1.6em; margin: 0 0 1em 0; }
+.ezupdate-fund-scope a, .ezupdate-fund-scope strong { margin-right: 0.8em; }
+.ezupdate-fund-downloads a { margin-left: 0.4em; }
+.ezupdate-fund-filter { display: flex; align-items: center; gap: 0.5em; font-weight: bold; }
+.ezupdate-fund-filter input { font-weight: normal; min-width: 16em; }
+.ezupdate-fund-vendors { display: grid; grid-template-columns: repeat(auto-fill, minmax(26em, 1fr)); gap: 0.9em; }
+.ezupdate-fund-vendor { padding: 0.7em 0.9em; border: 1px solid #dfe4ea; border-radius: 6px; background: #fff; }
+.ezupdate-fund-vendor h2 { margin: 0 0 0.5em 0; font-size: 1.1em; }
+.ezupdate-fund-links { margin: 0; padding: 0; list-style: none; }
+.ezupdate-fund-links > li { margin: 0 0 0.5em 0; }
+.ezupdate-fund-link { display: flex; align-items: center; gap: 0.5em; text-decoration: none; word-break: break-all; }
+.ezupdate-fund-link:hover .ezupdate-fund-url { text-decoration: underline; }
+.ezupdate-fund-type { flex: none; background: #e6eefa; color: #1f4a7f; }
+.ezupdate-fund-type-github { background: #eef2f6; color: #1d2b3a; }
+.ezupdate-fund-type-custom { background: #e3f1e6; color: #1f5f2c; }
+.ezupdate-fund-packages { margin: 0.15em 0 0 0.2em; font-size: 0.9em; }
+.ezupdate-fund-packages summary { cursor: pointer; color: #56657a; }
+.ezupdate-fund-packages p { margin: 0.3em 0 0 0; }
+.ezupdate-fund-unfunded { margin: 1.2em 0 0.6em 0; }
+.ezupdate-fund-unfunded summary { cursor: pointer; }
+@media (max-width: 700px) { .ezupdate-fund-vendors { grid-template-columns: 1fr; } }

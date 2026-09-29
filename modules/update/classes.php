@@ -16,6 +16,7 @@ foreach ( array(
     'eZUpdatePackageServers'  => 'ezupdatepackageservers.php',
     'eZUpdatePackagist'       => 'ezupdatepackagist.php',
     'eZUpdateJob'             => 'ezupdatejob.php',
+    'eZUpdateFunding'         => 'ezupdatefunding.php',
 ) as $ezupdateClass => $ezupdateFile )
 {
     if ( !class_exists( $ezupdateClass ) )

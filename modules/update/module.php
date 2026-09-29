@@ -70,6 +70,14 @@ $ViewList = array(
             'FetchPackageButton' => 'FetchPackage',
         ),
     ),
+    // Who the installed packages ask to be funded by, as "composer fund".
+    'fund' => array(
+        'script'                  => 'fund.php',
+        'functions'               => array( 'ezupdate' ),
+        'params'                  => array( 'Format' ),
+        'unordered_params'        => array( 'direct' => 'Direct' ),
+        'default_navigation_part' => 'ezsetupnavigationpart',
+    ),
     'job' => array(
         'script'                  => 'job.php',
         'functions'               => array( 'ezupdate' ),

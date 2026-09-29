@@ -45,19 +45,22 @@ $script = eZScript::instance( array(
         "  fetch <server> <package> [--replace]   download a .ezpkg into the local package repository\n" .
         "  require <vendor/name> [<constraint>] [--dry-run] [--prefer=dist|source]   install a package\n" .
         "  update [--dry-run] [--prefer=dist|source]   update the packages composer.json names\n" .
-        "  jobs                                   the recent runs, from here and from the admin\n",
+        "  jobs                                   the recent runs, from here and from the admin\n" .
+        "  fund [--direct] [--json]               who the installed packages ask to be funded by, as composer fund\n",
     'use-session'    => false,
     'use-modules'    => true,
     'use-extensions' => true,
 ) );
 $script->startup();
-$options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer:]', '', array(
+$options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer:][direct][json]', '', array(
     'all'      => 'outdated: dependencies too, not only what composer.json names',
     'type'     => 'search: the package type on packagist.org (empty: any)',
     'composer' => 'search: ask Composer (every server in composer.json) instead of packagist.org',
     'replace'  => 'fetch: replace a package already in the local repository',
     'dry-run'  => 'require, update: show what would change, change nothing',
     'prefer'   => 'require, update: dist (archives), source (git clones with history) or auto; default [UpdateSettings] PreferredInstall',
+    'direct'   => 'fund: only the packages composer.json requires itself',
+    'json'     => 'fund: print JSON instead of text',
 ) );
 $script->initialize();
 
@@ -102,6 +105,23 @@ switch ( $command )
         $cli->output( 'Servers:      ' . ( $servers->packagistEnabled() ? 'packagist.org' : 'packagist.org off' ) . ', ' . count( $servers->servers() ) . ' in composer.json' );
         $cli->output( 'Update:       ' . ( $manager->isUpdateAllowed() ? 'allowed' : 'switched off ([UpdateSettings] AllowUpdate)' ) );
         $cli->output( 'Install:      ' . ( $manager->isInstallAllowed() ? 'allowed' : 'switched off ([UpdateSettings] AllowInstall)' ) );
+        break;
+
+    case 'fund':
+        if ( !class_exists( 'eZUpdateFunding' ) )
+            require_once __DIR__ . '/../../classes/ezupdatefunding.php';
+        $funding = new eZUpdateFunding( $manager );
+        $direct = !empty( $options['direct'] );
+        if ( !empty( $options['json'] ) )
+        {
+            $cli->output( json_encode( array( 'summary' => $funding->summary( $direct ), 'vendors' => array_values( $funding->byVendor( $direct ) ) ),
+                                       JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) );
+            break;
+        }
+        $summary = $funding->summary( $direct );
+        $cli->output( sprintf( '%d of %d packages ask for funding, %d vendors, %d links:', $summary['funded'], $summary['packages'], $summary['vendors'], $summary['links'] ) );
+        $cli->output( '' );
+        $cli->output( $funding->asText( $direct ) );
         break;
 
     case 'outdated':

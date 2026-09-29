@@ -75,6 +75,8 @@ $tpl->setVariable( 'package', $package );
 $tpl->setVariable( 'packagist_error', $package === false ? $packagist->error : null );
 $tpl->setVariable( 'installed_version', $installedVersion );
 $tpl->setVariable( 'installed_info', $installedVersion !== false ? $manager->installedPackageInfo( $name ) : false );
+$funding = new eZUpdateFunding( $manager );
+$tpl->setVariable( 'funding', $installedVersion !== false ? $funding->forPackage( $name ) : array() );
 $tpl->setVariable( 'install_method', $method );
 $tpl->setVariable( 'install_methods', eZUpdateManager::$installMethods );
 $tpl->setVariable( 'details', $details );
