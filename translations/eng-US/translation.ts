@@ -744,4 +744,18 @@
         <translation>The package server was removed.</translation>
     </message>
 </context>
+<context>
+    <name>kernel/navigationpart</name>
+    <message>
+        <source>Update</source>
+        <translation>Update</translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/parts/setup/menu</name>
+    <message>
+        <source>Updates and packages</source>
+        <translation>Updates and packages</translation>
+    </message>
+</context>
 </TS>

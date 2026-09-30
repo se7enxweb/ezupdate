@@ -744,4 +744,18 @@
         <translation type="unfinished"></translation>
     </message>
 </context>
+<context>
+    <name>kernel/navigationpart</name>
+    <message>
+        <source>Update</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>design/admin/parts/setup/menu</name>
+    <message>
+        <source>Updates and packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>
