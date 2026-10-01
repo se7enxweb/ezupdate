@@ -67,7 +67,7 @@ Renamed: The dashboard tab is Overview
 ```
 
 The body says why, when that is not obvious. Open the pull request against
-`master`; describe what you changed and how you tested it.
+`main`; describe what you changed and how you tested it.
 
 By contributing you agree that your work is published under the GNU General
 Public License v2.0 or any later version.
