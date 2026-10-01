@@ -743,6 +743,378 @@
         <source>The package server was removed.</source>
         <translation>The package server was removed.</translation>
     </message>
+    <message>
+        <source>Where</source>
+        <translation>Where</translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation>Searching...</translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation>Nothing found</translation>
+    </message>
+    <message>
+        <source>Try another word, or every type.</source>
+        <translation>Try another word, or every type.</translation>
+    </message>
+    <message>
+        <source>Pages</source>
+        <translation>Pages</translation>
+    </message>
+    <message>
+        <source>Search packagist.org or your own servers</source>
+        <translation>Search packagist.org or your own servers</translation>
+    </message>
+    <message>
+        <source>Exponential extensions are of the type ezpublish-legacy-extension.</source>
+        <translation>Exponential extensions are of the type ezpublish-legacy-extension.</translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation>Overview</translation>
+    </message>
+    <message>
+        <source>The installation's Composer: where it is, what may be run, which packages have a newer release, and the recent runs.</source>
+        <translation>The installation's Composer: where it is, what may be run, which packages have a newer release, and the recent runs.</translation>
+    </message>
+    <message>
+        <source>Installed by Composer</source>
+        <translation>Installed by Composer</translation>
+    </message>
+    <message>
+        <source>Extensions, %active active</source>
+        <translation>Extensions, %active active</translation>
+    </message>
+    <message>
+        <source>Need attention</source>
+        <translation>Need attention</translation>
+    </message>
+    <message>
+        <source>With a newer release</source>
+        <translation>With a newer release</translation>
+    </message>
+    <message>
+        <source>Updates not checked yet</source>
+        <translation>Updates not checked yet</translation>
+    </message>
+    <message>
+        <source>Last run %date</source>
+        <translation>Last run %date</translation>
+    </message>
+    <message>
+        <source>No runs yet</source>
+        <translation>No runs yet</translation>
+    </message>
+    <message>
+        <source>Everything is up to date</source>
+        <translation>Everything is up to date</translation>
+    </message>
+    <message>
+        <source>Not checked yet</source>
+        <translation>Not checked yet</translation>
+    </message>
+    <message>
+        <source>Check for updates to see which packages have a newer release.</source>
+        <translation>Check for updates to see which packages have a newer release.</translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation>Checking...</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <source>Started by</source>
+        <translation>Started by</translation>
+    </message>
+    <message>
+        <source>Took</source>
+        <translation>Took</translation>
+    </message>
+    <message>
+        <source>Exit code</source>
+        <translation>Exit code</translation>
+    </message>
+    <message>
+        <source>Keep the newest output in view</source>
+        <translation>Keep the newest output in view</translation>
+    </message>
+    <message>
+        <source>Follow</source>
+        <translation>Follow</translation>
+    </message>
+    <message>
+        <source>Wrap lines</source>
+        <translation>Wrap lines</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>Copied</translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <source>Not on packagist.org</source>
+        <translation>Not on packagist.org</translation>
+    </message>
+    <message>
+        <source>Latest %version</source>
+        <translation>Latest %version</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>About</translation>
+    </message>
+    <message>
+        <source>Releases only</source>
+        <translation>Releases only</translation>
+    </message>
+    <message>
+        <source>installed</source>
+        <translation>installed</translation>
+    </message>
+    <message>
+        <source>Fetching...</source>
+        <translation>Fetching...</translation>
+    </message>
+    <message>
+        <source>Nothing matches.</source>
+        <translation>Nothing matches.</translation>
+    </message>
+    <message>
+        <source>No packages</source>
+        <translation>No packages</translation>
+    </message>
+    <message>
+        <source>This server lists no packages, or its index.xml could not be read.</source>
+        <translation>This server lists no packages, or its index.xml could not be read.</translation>
+    </message>
+    <message>
+        <source>Where Composer looks for code packages, and where the setup wizard and the package views find .ezpkg packages.</source>
+        <translation>Where Composer looks for code packages, and where the setup wizard and the package views find .ezpkg packages.</translation>
+    </message>
+    <message>
+        <source>built in</source>
+        <translation>built in</translation>
+    </message>
+    <message>
+        <source>No package servers</source>
+        <translation>No package servers</translation>
+    </message>
+    <message>
+        <source>Add one below.</source>
+        <translation>Add one below.</translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation>All</translation>
+    </message>
+    <message>
+        <source>In composer.json</source>
+        <translation>In composer.json</translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translation>Extensions</translation>
+    </message>
+    <message>
+        <source>Libraries</source>
+        <translation>Libraries</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Active</translation>
+    </message>
+    <message>
+        <source>Not active</source>
+        <translation>Not active</translation>
+    </message>
+    <message>
+        <source>Not from Composer</source>
+        <translation>Not from Composer</translation>
+    </message>
+    <message>
+        <source>Git clones</source>
+        <translation>Git clones</translation>
+    </message>
+    <message>
+        <source>Needs attention</source>
+        <translation>Needs attention</translation>
+    </message>
+    <message>
+        <source>What composer.json requires, what composer.lock resolved, what is installed on disk and which extensions the settings switch on, side by side.</source>
+        <translation>What composer.json requires, what composer.lock resolved, what is installed on disk and which extensions the settings switch on, side by side.</translation>
+    </message>
+    <message>
+        <source>%count siteaccesses</source>
+        <translation>%count siteaccesses</translation>
+    </message>
+    <message>
+        <source>Required in composer.json</source>
+        <translation>Required in composer.json</translation>
+    </message>
+    <message>
+        <source>Extensions not from Composer</source>
+        <translation>Extensions not from Composer</translation>
+    </message>
+    <message>
+        <source>Filter by name, description, extension or path</source>
+        <translation>Filter by name, description, extension or path</translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation>Show</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sort by</translation>
+    </message>
+    <message>
+        <source>Needs attention first</source>
+        <translation>Needs attention first</translation>
+    </message>
+    <message>
+        <source>Installed version</source>
+        <translation>Installed version</translation>
+    </message>
+    <message>
+        <source>Extension</source>
+        <translation>Extension</translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation>Details</translation>
+    </message>
+    <message>
+        <source>Plugin</source>
+        <translation>Plugin</translation>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation>Library</translation>
+    </message>
+    <message>
+        <source>not from Composer</source>
+        <translation>not from Composer</translation>
+    </message>
+    <message>
+        <source>Not in composer.json: required by another package</source>
+        <translation>Not in composer.json: required by another package</translation>
+    </message>
+    <message>
+        <source>dependency</source>
+        <translation>dependency</translation>
+    </message>
+    <message>
+        <source>Installed on disk</source>
+        <translation>Installed on disk</translation>
+    </message>
+    <message>
+        <source>disk</source>
+        <translation>disk</translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation>off</translation>
+    </message>
+    <message>
+        <source>active</source>
+        <translation>active</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation>Path</translation>
+    </message>
+    <message>
+        <source>missing</source>
+        <translation>missing</translation>
+    </message>
+    <message>
+        <source>Installed from</source>
+        <translation>Installed from</translation>
+    </message>
+    <message>
+        <source>lock</source>
+        <translation>lock</translation>
+    </message>
+    <message>
+        <source>branch %branch</source>
+        <translation>branch %branch</translation>
+    </message>
+    <message>
+        <source>detached</source>
+        <translation>detached</translation>
+    </message>
+    <message>
+        <source>Switched on</source>
+        <translation>Switched on</translation>
+    </message>
+    <message>
+        <source>Not in ActiveExtensions or any ActiveAccessExtensions</source>
+        <translation>Not in ActiveExtensions or any ActiveAccessExtensions</translation>
+    </message>
+    <message>
+        <source>Everywhere (ActiveExtensions)</source>
+        <translation>Everywhere (ActiveExtensions)</translation>
+    </message>
+    <message>
+        <source>ActiveAccessExtensions of %list</source>
+        <translation>ActiveAccessExtensions of %list</translation>
+    </message>
+    <message>
+        <source>Extension version</source>
+        <translation>Extension version</translation>
+    </message>
+    <message>
+        <source>Composer, extensions and package servers</source>
+        <translation>Composer, extensions and package servers</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>Close</translation>
+    </message>
+    <message>
+        <source>Required, not installed</source>
+        <translation>Required, not installed</translation>
+    </message>
+    <message>
+        <source>Not in composer.lock</source>
+        <translation>Not in composer.lock</translation>
+    </message>
+    <message>
+        <source>Locked %locked, installed %installed</source>
+        <translation>Locked %locked, installed %installed</translation>
+    </message>
+    <message>
+        <source>Lock older than composer.json (%constraint)</source>
+        <translation>Lock older than composer.json (%constraint)</translation>
+    </message>
+    <message>
+        <source>Other commit than the lock</source>
+        <translation>Other commit than the lock</translation>
+    </message>
+    <message>
+        <source>Missing on disk</source>
+        <translation>Missing on disk</translation>
+    </message>
+    <message>
+        <source>Active, but not on disk</source>
+        <translation>Active, but not on disk</translation>
+    </message>
+    <message>
+        <source>Git clone of a dist install</source>
+        <translation>Git clone of a dist install</translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>

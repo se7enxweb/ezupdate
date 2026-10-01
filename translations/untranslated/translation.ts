@@ -743,6 +743,378 @@
         <source>The package server was removed.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Where</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Searching...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Try another word, or every type.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Search packagist.org or your own servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exponential extensions are of the type ezpublish-legacy-extension.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Overview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The installation's Composer: where it is, what may be run, which packages have a newer release, and the recent runs.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installed by Composer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions, %active active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Need attention</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>With a newer release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Updates not checked yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Last run %date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No runs yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Everything is up to date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not checked yet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Check for updates to see which packages have a newer release.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Checking...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Started by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Took</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit code</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep the newest output in view</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Follow</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wrap lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not on packagist.org</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Latest %version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Releases only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fetching...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nothing matches.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This server lists no packages, or its index.xml could not be read.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Where Composer looks for code packages, and where the setup wizard and the package views find .ezpkg packages.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>built in</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No package servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add one below.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In composer.json</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Libraries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not from Composer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Git clones</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Needs attention</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>What composer.json requires, what composer.lock resolved, what is installed on disk and which extensions the settings switch on, side by side.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count siteaccesses</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required in composer.json</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extensions not from Composer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter by name, description, extension or path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Needs attention first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installed version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Details</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Plugin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>not from Composer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not in composer.json: required by another package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dependency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installed on disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>off</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>active</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Installed from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>branch %branch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>detached</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Switched on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not in ActiveExtensions or any ActiveAccessExtensions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Everywhere (ActiveExtensions)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ActiveAccessExtensions of %list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Extension version</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Composer, extensions and package servers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required, not installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not in composer.lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Locked %locked, installed %installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lock older than composer.json (%constraint)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Other commit than the lock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Missing on disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active, but not on disk</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Git clone of a dist install</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>
