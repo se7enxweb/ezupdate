@@ -32,6 +32,8 @@ $script = eZScript::instance( array(
     'description'    => "ezupdate: Composer updates and packages, Exponential package servers.\n\n" .
         "Commands:\n" .
         "  status                                 where Composer is, what may be run\n" .
+        "  installed [--issues] [--json]          composer.json, the lock, installed.json and the extension\n" .
+        "                                         directories matched up, and which extensions are active\n" .
         "  outdated [--all]                       packages with a newer release (--all: dependencies too)\n" .
         "  search <words> [--type=<type>]         search packagist.org\n" .
         "  search <words> --composer              search every server in composer.json with Composer\n" .
@@ -52,7 +54,7 @@ $script = eZScript::instance( array(
     'use-extensions' => true,
 ) );
 $script->startup();
-$options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer:][direct][json]', '', array(
+$options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer:][direct][json][issues]', '', array(
     'all'      => 'outdated: dependencies too, not only what composer.json names',
     'type'     => 'search: the package type on packagist.org (empty: any)',
     'composer' => 'search: ask Composer (every server in composer.json) instead of packagist.org',
@@ -60,7 +62,8 @@ $options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer
     'dry-run'  => 'require, update: show what would change, change nothing',
     'prefer'   => 'require, update: dist (archives), source (git clones with history) or auto; default [UpdateSettings] PreferredInstall',
     'direct'   => 'fund: only the packages composer.json requires itself',
-    'json'     => 'fund: print JSON instead of text',
+    'json'     => 'fund, installed: print JSON instead of text',
+    'issues'   => 'installed: only what needs attention',
 ) );
 $script->initialize();
 
@@ -105,6 +108,36 @@ switch ( $command )
         $cli->output( 'Servers:      ' . ( $servers->packagistEnabled() ? 'packagist.org' : 'packagist.org off' ) . ', ' . count( $servers->servers() ) . ' in composer.json' );
         $cli->output( 'Update:       ' . ( $manager->isUpdateAllowed() ? 'allowed' : 'switched off ([UpdateSettings] AllowUpdate)' ) );
         $cli->output( 'Install:      ' . ( $manager->isInstallAllowed() ? 'allowed' : 'switched off ([UpdateSettings] AllowInstall)' ) );
+        break;
+
+    case 'installed':
+        if ( !class_exists( 'eZUpdateInventory' ) )
+            require_once __DIR__ . '/../../classes/ezupdateinventory.php';
+        $inventory = ( new eZUpdateInventory( $manager ) )->build();
+        $rows = $inventory['rows'];
+        if ( !empty( $options['issues'] ) )
+            $rows = array_values( array_filter( $rows, function ( $row ) { return (bool)$row['issues']; } ) );
+        if ( !empty( $options['json'] ) )
+        {
+            $cli->output( json_encode( array( 'summary' => $inventory['summary'], 'packages' => $rows ), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) );
+            break;
+        }
+        $sum = $inventory['summary'];
+        $cli->output( sprintf( '%d rows: %d installed by Composer, %d required in composer.json, %d extensions (%d active), %d not from Composer, %d need attention',
+                               $sum['all'], $sum['composer'], $sum['required'], $sum['extension'], $sum['active'], $sum['local'], $sum['issues'] ) );
+        $cli->output( '' );
+        $cli->output( sprintf( '%-44s %-9s %-12s %-12s %-14s %s', 'PACKAGE', 'KIND', 'JSON', 'LOCK', 'INSTALLED', 'EXTENSION' ) );
+        foreach ( $rows as $row )
+        {
+            $installedVersion = $row['installed'] !== '' ? $row['installed'] : ( $row['ext_version'] !== '' ? $row['ext_version'] : '-' );
+            if ( $row['git'] )
+                $installedVersion .= ' (' . trim( $row['git']['branch'] . '@' . $row['git']['commit'], '@' ) . ')';
+            $where = $row['extension'] ? $row['extension'] . ' ' . ( $row['active'] ? '[' . implode( ',', $row['active'] ) . ']' : '[off]' ) : '';
+            $cli->output( sprintf( '%-44s %-9s %-12s %-12s %-14s %s', $row['name'], $row['kind'], $row['required'] !== '' ? $row['required'] : ( $row['composer'] ? 'dependency' : '-' ),
+                                   $row['locked'] !== '' ? $row['locked'] : '-', $installedVersion, $where ) );
+            foreach ( $row['issues'] as $issue )
+                $cli->output( '    ' . ( $issue[0] === 'bad' ? '!! ' : ' ! ' ) . $issue[1] );
+        }
         break;
 
     case 'fund':

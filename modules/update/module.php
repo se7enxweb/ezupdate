@@ -26,6 +26,13 @@ $ViewList = array(
             'Update'       => array( 'ConfirmBackup' => 'ConfirmBackup', 'InstallMethod' => 'InstallMethod' ),
         ),
     ),
+    // composer.json, composer.lock, installed.json and the extension directories, matched up (read only)
+    'installed' => array(
+        'script'                  => 'installed.php',
+        'functions'               => array( 'ezupdate' ),
+        'params'                  => array( 'Format' ),
+        'default_navigation_part' => 'ezsetupnavigationpart',
+    ),
     'browse' => array(
         'script'                  => 'browse.php',
         'functions'               => array( 'ezupdate' ),

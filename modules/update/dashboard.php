@@ -76,7 +76,13 @@ $tpl->setVariable( 'packagist_enabled', $composerServers->packagistEnabled() );
 $tpl->setVariable( 'outdated', $outdated );
 $tpl->setVariable( 'install_method', $method );
 $tpl->setVariable( 'install_methods', eZUpdateManager::$installMethods );
-$tpl->setVariable( 'jobs', eZUpdateJob::fetchList( 10 ) );
+$jobs = eZUpdateJob::fetchList( 10 );
+$tpl->setVariable( 'jobs', $jobs );
+$tpl->setVariable( 'last_job', $jobs ? reset( $jobs ) : false );
+// the Overview's cards: what the installed packages view finds (files only, no Composer run)
+$inventory = new eZUpdateInventory( $manager );
+$inventoryData = $inventory->build();
+$tpl->setVariable( 'inventory', $inventoryData['summary'] );
 $tpl->setVariable( 'job_running', eZUpdateJob::isRunning() );
 
 $Result = array();
