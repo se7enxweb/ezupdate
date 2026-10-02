@@ -2,6 +2,7 @@
 /**
  * The code of extension/ezupdate/bin/php/ezupdate.php, moved into a class (#207 stage 1). The file extension/ezupdate/bin/php/ezupdate.php is one call to it.
  * Guide: doc/bc/6.0/cli_cronjob_view_abstractions.md
+ * @description Command line of ezupdate: the same checks and server lists as the admin pages
  */
 /*
  * The original header of extension/ezupdate/bin/php/ezupdate.php:
