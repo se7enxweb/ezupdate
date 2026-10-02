@@ -31,8 +31,8 @@ class Ezupdate extends \Exponential\Runnable\Command
             ${$__name} = &$GLOBALS[$__name];
         unset( $__name );
 
-        $cli = \eZCLI::instance();
-        $script = \eZScript::instance( array(
+        $cli = $this->cli();
+        $script = $this->script( array(
             'description'    => "ezupdate: Composer updates and packages, Exponential package servers.\n\n" .
                 "Commands:\n" .
                 "  status                                 where Composer is, what may be run\n" .
@@ -57,8 +57,7 @@ class Ezupdate extends \Exponential\Runnable\Command
             'use-modules'    => true,
             'use-extensions' => true,
         ) );
-        $script->startup();
-        $options = $script->getOptions( '[all][type:][composer][replace][dry-run][prefer:][direct][json][issues]', '', array(
+        $options = $this->startup( '[all][type:][composer][replace][dry-run][prefer:][direct][json][issues]', '', array(
             'all'      => 'outdated: dependencies too, not only what composer.json names',
             'type'     => 'search: the package type on packagist.org (empty: any)',
             'composer' => 'search: ask Composer (every server in composer.json) instead of packagist.org',
@@ -69,7 +68,6 @@ class Ezupdate extends \Exponential\Runnable\Command
             'json'     => 'fund, installed: print JSON instead of text',
             'issues'   => 'installed: only what needs attention',
         ) );
-        $script->initialize();
 
         $arguments = array_values( $options['arguments'] );
         $command   = isset( $arguments[0] ) ? $arguments[0] : 'status';
