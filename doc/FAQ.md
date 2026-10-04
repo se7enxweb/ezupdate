@@ -16,9 +16,17 @@ history of runs that both sides share.
 
 ### The Overview says "Composer: Not found".
 
-Composer is looked for in `/usr/local/bin`, `/usr/bin` and
-`/opt/cpanel/composer/bin`. Set `[ComposerSettings] Path` (and `Binary` for a
-`composer.phar`) in `settings/override/ezupdate.ini.append.php`.
+Composer is looked for first inside the installation (`var/ezupdate/`, `bin/`, the
+root, `vendor/bin/`), then in `/usr/local/bin`, `/usr/bin` and
+`/opt/cpanel/composer/bin`. On a default Plesk host PHP runs with `open_basedir`,
+which hides the system folders from the search (and the Plesk `composer` there is
+a wrapper that starts an older PHP). Press **Get Composer** on the Overview: it
+downloads the official `composer.phar` into `var/ezupdate/` and verifies it against
+the published SHA-256 (needs the *manage* permission). Or set
+`[ComposerSettings] Path`, `Binary` and `PHPBinary` in
+`settings/override/ezupdate.ini.append.php`: a path you set yourself is used even
+when `open_basedir` keeps PHP from checking it. The message on the Overview lists
+everywhere that was looked at.
 
 ### It says "Does not start".
 

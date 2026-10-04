@@ -5,7 +5,14 @@
 Path=
 # File name in that directory. Empty: each name of BinaryNames is tried.
 Binary=
+# Relative entries are below the installation root and come first: they are inside
+# open_basedir, which hides /usr/local/bin and the like on a default Plesk host.
+# "Get Composer" on the Overview puts composer.phar into var/ezupdate/.
 SearchPath[]
+SearchPath[]=var/ezupdate/
+SearchPath[]=bin/
+SearchPath[]=./
+SearchPath[]=vendor/bin/
 SearchPath[]=/usr/local/bin/
 SearchPath[]=/usr/bin/
 SearchPath[]=/opt/cpanel/composer/bin/
@@ -15,6 +22,18 @@ BinaryNames[]=composer.phar
 # PHP command-line binary that runs a composer.phar (and the background jobs).
 # Empty: the php next to the running PHP (PHP_BINDIR), then /usr/local/bin/php, /usr/bin/php.
 PHPBinary=
+# When PHPBinary is empty the php next to the running PHP is used, then these
+# files (%version% = 8.5, %nodot% = 85), preferring one with the running major.minor.
+PHPSearchPath[]
+PHPSearchPath[]=/opt/plesk/php/%version%/bin/php
+PHPSearchPath[]=/usr/local/bin/php
+PHPSearchPath[]=/usr/bin/php%version%
+PHPSearchPath[]=/usr/bin/php
+PHPSearchPath[]=/opt/cpanel/ea-php%nodot%/root/usr/bin/php
+# "Get Composer": where composer.phar and its SHA-256 are downloaded from.
+DownloadURL=https://getcomposer.org/download/latest-stable/composer.phar
+# Empty: DownloadURL followed by .sha256sum
+ChecksumURL=
 # Seconds a Composer run may take before it is stopped.
 Timeout=900
 # COMPOSER_HOME when the web server passes none, relative to the installation root;

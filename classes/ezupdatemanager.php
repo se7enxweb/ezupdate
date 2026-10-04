@@ -101,12 +101,15 @@ class eZUpdateManager
             return false;
         }
 
-        if ( self::isPhpScript( $binary ) )
+        // A file open_basedir hides cannot be inspected: the configured file is
+        // trusted, a .phar runs through PHP and anything else as an executable.
+        $hidden = !$this->pathAllowed( $binary );
+        if ( $hidden ? substr( $binary, -5 ) === '.phar' : self::isPhpScript( $binary ) )
         {
             $php = $this->phpBinary();
             $this->command = $php ? array( $php, $binary ) : false;
         }
-        else if ( is_executable( $binary ) )
+        else if ( $hidden || is_executable( $binary ) )
         {
             $this->command = array( $binary );
         }
@@ -114,29 +117,315 @@ class eZUpdateManager
     }
 
     /**
-     * Finds the binary: [ComposerSettings] Path + Binary when Path is set, else
-     * each directory of SearchPath, each name of BinaryNames.
+     * The directories PHP's open_basedir allows, or an empty array when it is not set.
+     */
+    public static function openBasedir()
+    {
+        $value = trim( (string)ini_get( 'open_basedir' ) );
+        if ( $value === '' )
+        {
+            return array();
+        }
+        return array_values( array_filter( array_map( 'trim', explode( PATH_SEPARATOR, $value ) ), 'strlen' ) );
+    }
+
+    /**
+     * Whether PHP's file functions may look at $path (always true without open_basedir).
+     */
+    public function pathAllowed( $path )
+    {
+        $allowed = self::openBasedir();
+        if ( !$allowed )
+        {
+            return true;
+        }
+        $path = self::normalize( $path );
+        foreach ( $allowed as $dir )
+        {
+            if ( $dir === '.' )
+            {
+                $dir = $this->projectPath();
+            }
+            $dir = self::normalize( $dir );
+            // open_basedir is a prefix match: "/a/b" also admits "/a/bc"; a directory with a trailing slash admits only itself.
+            if ( $path === rtrim( $dir, '/' ) || strpos( $path . '/', rtrim( $dir, '/' ) . '/' ) === 0 )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static function normalize( $path )
+    {
+        $path = preg_replace( '#/+#', '/', (string)$path );
+        $out = array();
+        foreach ( explode( '/', $path ) as $part )
+        {
+            if ( $part === '..' )
+            {
+                array_pop( $out );
+            }
+            else if ( $part !== '.' )
+            {
+                $out[] = $part;
+            }
+        }
+        return implode( '/', $out );
+    }
+
+    /**
+     * A SearchPath entry as an absolute directory: relative entries (var/ezupdate/,
+     * vendor/bin/, ./) are below the installation root.
+     */
+    private function absoluteDir( $dir )
+    {
+        $dir = trim( (string)$dir );
+        if ( $dir === '' )
+        {
+            return '';
+        }
+        if ( $dir[0] !== '/' )
+        {
+            $dir = rtrim( $this->projectPath(), '/' ) . '/' . ( $dir === '.' || $dir === './' ? '' : $dir );
+        }
+        return rtrim( $dir, '/' ) . '/';
+    }
+
+    /** @var array Where findBinary() looked: array( file, state ), state one of missing, hidden */
+    private $searched = array();
+
+    /** @var bool Whether the binary was taken from the settings without being checked (open_basedir) */
+    private $trusted = false;
+
+    /**
+     * What the last search looked at, for the message when nothing was found.
+     *
+     * @return array of array( 'file' => string, 'state' => 'missing'|'hidden' )
+     */
+    public function searchedPlaces()
+    {
+        $this->composerCommand();
+        return $this->searched;
+    }
+
+    /**
+     * True when Composer was taken from the settings although open_basedir does
+     * not let PHP check that the file is there.
+     */
+    public function isTrusted()
+    {
+        $this->composerCommand();
+        return $this->trusted;
+    }
+
+    /**
+     * Finds the binary. [ComposerSettings] Binary may be a full path; else Path +
+     * Binary when Path is set, else each directory of SearchPath (relative
+     * entries are below the installation root), each name of BinaryNames.
+     *
+     * Where open_basedir hides the place, a configured Path/Binary is trusted
+     * (it is started with proc_open, which open_basedir does not restrict); an
+     * automatic search skips it and notes it in searchedPlaces().
      */
     private function findBinary()
     {
-        $names = trim( (string)$this->ini->variable( 'ComposerSettings', 'Binary' ) );
-        $names = $names !== '' ? array( $names ) : (array)$this->ini->variable( 'ComposerSettings', 'BinaryNames' );
+        $this->searched = array();
+        $this->trusted = false;
 
+        $binary = trim( (string)$this->ini->variable( 'ComposerSettings', 'Binary' ) );
         $path = trim( (string)$this->ini->variable( 'ComposerSettings', 'Path' ) );
-        $dirs = $path !== '' ? array( $path ) : (array)$this->ini->variable( 'ComposerSettings', 'SearchPath' );
+        $names = $binary !== '' ? array( $binary ) : (array)$this->ini->variable( 'ComposerSettings', 'BinaryNames' );
 
-        foreach ( $dirs as $dir )
+        // Explicitly configured: the full path in Binary, or Path with Binary / the first name.
+        $configured = false;
+        if ( $binary !== '' && strpos( $binary, '/' ) !== false )
         {
+            $configured = $binary[0] === '/' ? $binary : $this->absoluteDir( dirname( $binary ) ) . basename( $binary );
+        }
+        else if ( $path !== '' )
+        {
+            $configured = false;
             foreach ( $names as $name )
             {
-                $file = rtrim( $dir, '/' ) . '/' . $name;
+                $file = $this->absoluteDir( $path ) . $name;
+                if ( !$this->pathAllowed( $file ) )
+                {
+                    $this->searched[] = array( 'file' => $file, 'state' => 'hidden' );
+                    $this->trusted = true;
+                    return $file;
+                }
                 if ( is_file( $file ) && is_readable( $file ) )
                 {
                     return $file;
                 }
+                $this->searched[] = array( 'file' => $file, 'state' => 'missing' );
+            }
+            return false;
+        }
+        if ( $configured !== false )
+        {
+            if ( !$this->pathAllowed( $configured ) )
+            {
+                $this->searched[] = array( 'file' => $configured, 'state' => 'hidden' );
+                $this->trusted = true;
+                return $configured;
+            }
+            if ( is_file( $configured ) && is_readable( $configured ) )
+            {
+                return $configured;
+            }
+            $this->searched[] = array( 'file' => $configured, 'state' => 'missing' );
+            return false;
+        }
+
+        foreach ( (array)$this->ini->variable( 'ComposerSettings', 'SearchPath' ) as $dir )
+        {
+            $dir = $this->absoluteDir( $dir );
+            if ( $dir === '' )
+            {
+                continue;
+            }
+            foreach ( $names as $name )
+            {
+                $file = $dir . $name;
+                if ( !$this->pathAllowed( $file ) )
+                {
+                    $this->searched[] = array( 'file' => $file, 'state' => 'hidden' );
+                    continue;
+                }
+                if ( is_file( $file ) && is_readable( $file ) )
+                {
+                    return $file;
+                }
+                $this->searched[] = array( 'file' => $file, 'state' => 'missing' );
             }
         }
         return false;
+    }
+
+    /**
+     * Why no Composer was found: where it was looked for, that open_basedir hides
+     * system folders (when it does), and what to do about it.
+     */
+    public function notFoundMessage()
+    {
+        $text = ezpI18n::tr( 'extension/ezupdate', 'Composer was not found. Set [ComposerSettings] Path, Binary or PHPBinary in ezupdate.ini.' );
+        $missing = array();
+        $hidden = array();
+        foreach ( $this->searchedPlaces() as $place )
+        {
+            if ( $place['state'] === 'hidden' )
+            {
+                $hidden[] = $place['file'];
+            }
+            else
+            {
+                $missing[] = $place['file'];
+            }
+        }
+        if ( $missing )
+        {
+            $text .= "\n" . ezpI18n::tr( 'extension/ezupdate', 'Looked in: %places.', null, array( '%places' => implode( ', ', $missing ) ) );
+        }
+        $allowed = self::openBasedir();
+        if ( $allowed )
+        {
+            $text .= "\n" . ezpI18n::tr( 'extension/ezupdate', 'PHP runs with open_basedir (%dirs), which hides system folders such as /usr/local/bin from the search%skipped.', null,
+                array( '%dirs' => implode( ':', $allowed ), '%skipped' => $hidden ? ' (' . implode( ', ', $hidden ) . ')' : '' ) );
+        }
+        $text .= "\n" . ezpI18n::tr( 'extension/ezupdate', 'Press "Get Composer" on the Overview to download the official composer.phar into var/ezupdate/, or set [ComposerSettings] Path, Binary and PHPBinary in ezupdate.ini to a Composer outside open_basedir.' );
+        return $text;
+    }
+
+    /** The place "Get Composer" puts composer.phar. */
+    public function localComposerFile()
+    {
+        return rtrim( $this->projectPath(), '/' ) . '/var/ezupdate/composer.phar';
+    }
+
+    /**
+     * Downloads the official composer.phar into var/ezupdate/ and checks it
+     * against the published SHA-256 before it is put in place.
+     *
+     * @return true|string true, or the reason it failed
+     */
+    public function downloadComposer()
+    {
+        $url = trim( (string)$this->ini->variable( 'ComposerSettings', 'DownloadURL' ) );
+        if ( $url === '' )
+        {
+            $url = 'https://getcomposer.org/download/latest-stable/composer.phar';
+        }
+        $sumUrl = trim( (string)$this->ini->variable( 'ComposerSettings', 'ChecksumURL' ) );
+        if ( $sumUrl === '' )
+        {
+            $sumUrl = $url . '.sha256sum';
+        }
+
+        $sum = self::fetch( $sumUrl );
+        if ( $sum === false || !preg_match( '/\b([0-9a-f]{64})\b/i', $sum, $m ) )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'The checksum of composer.phar could not be fetched from %url.', null, array( '%url' => $sumUrl ) );
+        }
+        $expected = strtolower( $m[1] );
+
+        $phar = self::fetch( $url );
+        if ( $phar === false || $phar === '' )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'composer.phar could not be downloaded from %url.', null, array( '%url' => $url ) );
+        }
+        if ( !hash_equals( $expected, hash( 'sha256', $phar ) ) )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'The downloaded composer.phar does not match its published SHA-256 checksum and was discarded.' );
+        }
+
+        $target = $this->localComposerFile();
+        $dir = dirname( $target );
+        if ( !is_dir( $dir ) && !eZDir::mkdir( $dir, false, true ) )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'The directory %dir could not be created.', null, array( '%dir' => $dir ) );
+        }
+        $temporary = $target . '.' . getmypid() . '.tmp';
+        if ( file_put_contents( $temporary, $phar ) === false )
+        {
+            return ezpI18n::tr( 'extension/ezupdate', 'The directory %dir is not writable.', null, array( '%dir' => $dir ) );
+        }
+        @chmod( $temporary, 0755 );
+        if ( !rename( $temporary, $target ) )
+        {
+            @unlink( $temporary );
+            return ezpI18n::tr( 'extension/ezupdate', 'composer.phar could not be put in place in %dir.', null, array( '%dir' => $dir ) );
+        }
+        $this->command = null;
+        return true;
+    }
+
+    /**
+     * The body of a URL, or false. http(s) through cURL when there is one, else
+     * through PHP's streams.
+     */
+    private static function fetch( $url )
+    {
+        if ( preg_match( '#^https?://#i', $url ) && function_exists( 'curl_init' ) )
+        {
+            $curl = curl_init( $url );
+            curl_setopt_array( $curl, array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_MAXREDIRS      => 5,
+                CURLOPT_CONNECTTIMEOUT => 15,
+                CURLOPT_TIMEOUT        => 120,
+                CURLOPT_SSL_VERIFYPEER => true,
+                CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS | CURLPROTO_HTTP,
+            ) );
+            $body = curl_exec( $curl );
+            $code = (int)curl_getinfo( $curl, CURLINFO_RESPONSE_CODE );
+            curl_close( $curl );
+            return $body !== false && $code === 200 ? $body : false;
+        }
+        $context = stream_context_create( array( 'http' => array( 'timeout' => 120, 'follow_location' => 1 ) ) );
+        return @file_get_contents( $url, false, $context );
     }
 
     /**
@@ -158,29 +447,83 @@ class eZUpdateManager
         return strpos( $line, '<?php' ) === 0 || preg_match( '/^#!.*\bphp[0-9.]*\s*$/', $line ) === 1;
     }
 
+    /** @var string|false|null Cached result of phpBinary() */
+    private $php = null;
+
     /**
-     * The PHP command-line binary. Under PHP-FPM PHP_BINARY is the FPM daemon,
-     * so the php next to it (PHP_BINDIR) is used instead.
+     * The PHP command-line binary. [ComposerSettings] PHPBinary wins, unchecked.
+     * Under the command line it is the running binary. Under PHP-FPM / lsphp
+     * PHP_BINARY is the daemon, so the php next to it (PHP_BINDIR) is used: when
+     * open_basedir keeps PHP from checking that file it is still taken, because
+     * it is the command line of the running PHP. Candidates are asked for their
+     * version, and one with the running major.minor is preferred, since a
+     * composer.phar and the jobs must see the extensions and syntax of the web PHP.
      */
     public function phpBinary()
     {
+        if ( $this->php !== null )
+        {
+            return $this->php;
+        }
         $configured = trim( (string)$this->ini->variable( 'ComposerSettings', 'PHPBinary' ) );
         if ( $configured !== '' )
         {
-            return $configured;
+            return $this->php = $configured;
         }
         if ( PHP_SAPI === 'cli' && PHP_BINARY !== '' )
         {
-            return PHP_BINARY;
+            return $this->php = PHP_BINARY;
         }
-        foreach ( array( PHP_BINDIR . '/php', '/usr/local/bin/php', '/usr/bin/php' ) as $file )
+
+        $running = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
+        $candidates = array( PHP_BINDIR . '/php' );
+        foreach ( (array)$this->ini->variable( 'ComposerSettings', 'PHPSearchPath' ) as $template )
         {
-            if ( is_executable( $file ) )
+            $candidates[] = str_replace( array( '%version%', '%nodot%' ), array( $running, str_replace( '.', '', $running ) ), $template );
+        }
+
+        $fallback = false;
+        foreach ( array_unique( $candidates ) as $index => $file )
+        {
+            $visible = $this->pathAllowed( $file );
+            if ( $visible && !is_executable( $file ) )
             {
-                return $file;
+                continue;
+            }
+            // Hidden by open_basedir: only the php next to the running PHP is taken on trust.
+            if ( !$visible && $index !== 0 )
+            {
+                continue;
+            }
+            $version = self::phpVersionOf( $file );
+            if ( $version === $running )
+            {
+                return $this->php = $file;
+            }
+            if ( $fallback === false && ( $version !== false || ( !$visible && $index === 0 ) ) )
+            {
+                $fallback = $file;
             }
         }
-        return false;
+        return $this->php = $fallback;
+    }
+
+    /**
+     * "major.minor" of a php binary, asked of the binary itself, or false.
+     */
+    public static function phpVersionOf( $file )
+    {
+        $spawned = self::spawn( array( $file, '-n', '-r', 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;' ) );
+        if ( !$spawned )
+        {
+            return false;
+        }
+        list( $process, $pipe ) = $spawned;
+        stream_set_timeout( $pipe, 10 );
+        $output = trim( (string)stream_get_contents( $pipe ) );
+        fclose( $pipe );
+        proc_close( $process );
+        return preg_match( '/^\d+\.\d+$/', $output ) ? $output : false;
     }
 
     public function composerVersion()
@@ -509,7 +852,7 @@ class eZUpdateManager
         if ( !$command )
         {
             return $this->lastResult = array(
-                'output'    => ezpI18n::tr( 'extension/ezupdate', 'Composer was not found. Set [ComposerSettings] Path, Binary or PHPBinary in ezupdate.ini.' ),
+                'output'    => $this->notFoundMessage(),
                 'exit'      => -1,
                 'timed_out' => false,
                 'seconds'   => 0,

@@ -25,7 +25,9 @@ After changing a setting, clear the INI cache:
 |---|---|---|
 | `Path` | *(empty)* | Directory of the Composer binary. Empty: each directory of `SearchPath` is tried. |
 | `Binary` | *(empty)* | File name in that directory. Empty: each name of `BinaryNames` is tried. |
-| `SearchPath[]` | `/usr/local/bin/`, `/usr/bin/`, `/opt/cpanel/composer/bin/` | Where to look when `Path` is empty. |
+| `SearchPath[]` | `var/ezupdate/`, `bin/`, `./`, `vendor/bin/`, `/usr/local/bin/`, `/usr/bin/`, `/opt/cpanel/composer/bin/` | Where to look when `Path` is empty. Relative entries are below the installation root and come first (they are inside `open_basedir`). Absolute places `open_basedir` hides are skipped and named in the *not found* message. |
+| `DownloadURL`, `ChecksumURL` | getcomposer.org latest-stable | Where *Get Composer* downloads `composer.phar` and its SHA-256 from (`ChecksumURL` empty: `DownloadURL` + `.sha256sum`). |
+| `PHPSearchPath[]` | `/opt/plesk/php/%version%/bin/php`, `/usr/local/bin/php`, ... | PHP binaries tried after the one next to the running PHP; one with the running major.minor is preferred. |
 | `BinaryNames[]` | `composer`, `composer.phar` | Names to look for. |
 | `PHPBinary` | *(empty)* | The PHP command line binary that runs a `composer.phar` and the background runs. Empty: the `php` next to the running PHP (`PHP_BINDIR`), then `/usr/local/bin/php`, `/usr/bin/php`. Set it when the web server's PHP is not a command line PHP (PHP-FPM). |
 | `Timeout` | `900` | Seconds a Composer run may take before it is stopped. |

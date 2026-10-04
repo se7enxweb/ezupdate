@@ -1,4 +1,4 @@
-{include uri='design:ezupdate/parts/header.tpl' current='dashboard' error=$error}
+{include uri='design:ezupdate/parts/header.tpl' current='dashboard' error=$error message=$notice}
 <div class="ezx-page">
 
     <div class="ezx-head">
@@ -29,7 +29,14 @@
                 <dt>{'Composer'|i18n( 'extension/ezupdate' )}</dt>
                 <dd>{if $composer_binary}<code>{$composer_binary|wash}</code>{if $composer_version} <span class="ezupdate-muted">{$composer_version|wash}</span>{/if}
                     {if $composer_problem}<span class="ezupdate-badge ezupdate-bad">{'Does not start'|i18n( 'extension/ezupdate' )}</span><pre class="ezupdate-message">{$composer_problem|wash}</pre>{/if}
-                    {else}<span class="ezupdate-badge ezupdate-bad">{'Not found'|i18n( 'extension/ezupdate' )}</span> {'Set [ComposerSettings] Path in ezupdate.ini.'|i18n( 'extension/ezupdate' )}{/if}</dd>
+                    {else}<span class="ezupdate-badge ezupdate-bad">{'Not found'|i18n( 'extension/ezupdate' )}</span>
+                    <pre class="ezupdate-message">{$composer_not_found|wash}</pre>
+                    {if $can_manage}
+                    <form method="post" action={'update/dashboard'|ezurl} class="ezupdate-bar">
+                        <input class="defaultbutton" type="submit" name="GetComposerButton" value="{'Get Composer'|i18n( 'extension/ezupdate' )}" data-ezx-busy="{'Downloading...'|i18n( 'extension/ezupdate' )|wash}" />
+                    </form>
+                    {/if}{/if}
+                    {if $composer_trusted}<span class="ezupdate-muted">{'Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.'|i18n( 'extension/ezupdate' )}</span>{/if}</dd>
                 <dt>{'PHP for Composer'|i18n( 'extension/ezupdate' )}</dt>
                 <dd>{if $php_binary}<code>{$php_binary|wash}</code>{else}<span class="ezupdate-badge ezupdate-bad">{'Not found'|i18n( 'extension/ezupdate' )}</span>{/if}</dd>
                 <dt>{'Installation'|i18n( 'extension/ezupdate' )}</dt>

@@ -4,6 +4,23 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.11 (2026-10-03)
+-------------------
+
+**Works on hosts with open_basedir.**
+
+Added
+- *Get Composer* on the Overview: downloads the official `composer.phar` into
+  `var/ezupdate/`, verified against the published SHA-256.
+- Installation-local places (`var/ezupdate/`, `bin/`, root, `vendor/bin/`) are
+  searched before the system ones; `PHPSearchPath[]`, `DownloadURL`, `ChecksumURL`.
+
+Updated
+- A Composer or PHP path set in `ezupdate.ini` is used although `open_basedir`
+  hides it; the PHP next to the running PHP is used and its major.minor checked.
+- The *Composer was not found* message lists where it looked and says what
+  `open_basedir` hides.
+
 1.1.8 (2026-10-01)
 ------------------
 

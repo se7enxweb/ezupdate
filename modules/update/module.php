@@ -20,6 +20,7 @@ $ViewList = array(
             'CheckForUpdatesButton' => 'CheckForUpdates',
             'DryRunUpdateButton'    => 'DryRunUpdate',
             'UpdateButton'          => 'Update',
+            'GetComposerButton'     => 'GetComposer',
         ),
         'post_action_parameters'  => array(
             'DryRunUpdate' => array( 'InstallMethod' => 'InstallMethod' ),

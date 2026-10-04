@@ -75,7 +75,9 @@ Admin, **Setup** tab, **Updates and packages** in the left menu, or straight at
 - **Package servers** (`update/servers`) — Composer and `.ezpkg` servers
 - **Funding** (`update/fund`) — who to support
 
-If the Overview says *Composer: Not found*, set `[ComposerSettings] Path`. If it
+If the Overview says *Composer: Not found*, press **Get Composer**: it downloads the
+official `composer.phar` into `var/ezupdate/` and checks it against the published
+SHA-256 before use (or set `[ComposerSettings] Path`). If it
 says *Does not start*, the message under it is Composer's own: usually a PHP
 binary it cannot use (set `PHPBinary`) or a `COMPOSER_HOME` it cannot write.
 

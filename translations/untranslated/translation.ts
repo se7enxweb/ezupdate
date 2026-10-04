@@ -1115,6 +1115,62 @@
         <source>Git clone of a dist install</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Looked in: %places.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHP runs with open_basedir (%dirs), which hides system folders such as /usr/local/bin from the search%skipped.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Press "Get Composer" on the Overview to download the official composer.phar into var/ezupdate/, or set [ComposerSettings] Path, Binary and PHPBinary in ezupdate.ini to a Composer outside open_basedir.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The checksum of composer.phar could not be fetched from %url.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>composer.phar could not be downloaded from %url.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The downloaded composer.phar does not match its published SHA-256 checksum and was discarded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The directory %dir could not be created.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The directory %dir is not writable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>composer.phar could not be put in place in %dir.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You do not have permission to download Composer.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Composer was downloaded to %file and verified against its SHA-256 checksum.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Get Composer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>

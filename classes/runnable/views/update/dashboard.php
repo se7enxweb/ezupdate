@@ -41,7 +41,30 @@ class Dashboard extends \Exponential\Runnable\ModuleView
         $outdated = null;
         $method  = $manager->installMethod( $module->hasActionParameter( 'InstallMethod' ) ? (string)$module->actionParameter( 'InstallMethod' ) : null );
 
-        if ( $module->isCurrentAction( 'CheckForUpdates' ) )
+        $notice  = null;
+
+        if ( $module->isCurrentAction( 'GetComposer' ) )
+        {
+            if ( !$canManage )
+            {
+                $error = \ezpI18n::tr( 'extension/ezupdate', 'You do not have permission to download Composer.' );
+            }
+            else
+            {
+                $result = $manager->downloadComposer();
+                if ( $result === true )
+                {
+                    \eZAudit::writeAudit( 'ezupdate-get-composer', array( 'Composer file' => $manager->localComposerFile(), 'Comment' => 'composer.phar downloaded and verified against its SHA-256' ) );
+                    $manager = \eZUpdateManager::getInstance();
+                    $notice = \ezpI18n::tr( 'extension/ezupdate', 'Composer was downloaded to %file and verified against its SHA-256 checksum.', null, array( '%file' => $manager->localComposerFile() ) );
+                }
+                else
+                {
+                    $error = $result;
+                }
+            }
+        }
+        else if ( $module->isCurrentAction( 'CheckForUpdates' ) )
         {
             $outdated = $manager->outdatedPackages( true );
             if ( $outdated === false )
@@ -79,6 +102,9 @@ class Dashboard extends \Exponential\Runnable\ModuleView
 
         $tpl = \eZTemplate::factory();
         $tpl->setVariable( 'error', $error );
+        $tpl->setVariable( 'notice', $notice );
+        $tpl->setVariable( 'composer_not_found', $manager->composerBinary() ? '' : $manager->notFoundMessage() );
+        $tpl->setVariable( 'composer_trusted', $manager->composerBinary() && $manager->isTrusted() );
         $tpl->setVariable( 'can_manage', $canManage );
         $tpl->setVariable( 'composer_binary', $manager->composerBinary() );
         $composerVersion = $manager->composerBinary() ? $manager->composerVersion() : false;

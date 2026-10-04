@@ -1115,6 +1115,62 @@
         <source>Git clone of a dist install</source>
         <translation>Git-Klon einer dist-Installation</translation>
     </message>
+    <message>
+        <source>Looked in: %places.</source>
+        <translation>Gesucht wurde in: %places.</translation>
+    </message>
+    <message>
+        <source>PHP runs with open_basedir (%dirs), which hides system folders such as /usr/local/bin from the search%skipped.</source>
+        <translation>PHP läuft mit open_basedir (%dirs); das verbirgt Systemordner wie /usr/local/bin vor der Suche%skipped.</translation>
+    </message>
+    <message>
+        <source>Press "Get Composer" on the Overview to download the official composer.phar into var/ezupdate/, or set [ComposerSettings] Path, Binary and PHPBinary in ezupdate.ini to a Composer outside open_basedir.</source>
+        <translation>Drücken Sie auf der Übersicht "Composer holen", um die offizielle composer.phar nach var/ezupdate/ zu laden, oder setzen Sie [ComposerSettings] Path, Binary und PHPBinary in ezupdate.ini auf ein Composer außerhalb von open_basedir.</translation>
+    </message>
+    <message>
+        <source>The checksum of composer.phar could not be fetched from %url.</source>
+        <translation>Die Prüfsumme von composer.phar konnte nicht von %url geladen werden.</translation>
+    </message>
+    <message>
+        <source>composer.phar could not be downloaded from %url.</source>
+        <translation>composer.phar konnte nicht von %url heruntergeladen werden.</translation>
+    </message>
+    <message>
+        <source>The downloaded composer.phar does not match its published SHA-256 checksum and was discarded.</source>
+        <translation>Die heruntergeladene composer.phar stimmt nicht mit der veröffentlichten SHA-256-Prüfsumme überein und wurde verworfen.</translation>
+    </message>
+    <message>
+        <source>The directory %dir could not be created.</source>
+        <translation>Das Verzeichnis %dir konnte nicht angelegt werden.</translation>
+    </message>
+    <message>
+        <source>The directory %dir is not writable.</source>
+        <translation>Das Verzeichnis %dir ist nicht beschreibbar.</translation>
+    </message>
+    <message>
+        <source>composer.phar could not be put in place in %dir.</source>
+        <translation>composer.phar konnte nicht in %dir abgelegt werden.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to download Composer.</source>
+        <translation>Sie haben keine Berechtigung, Composer herunterzuladen.</translation>
+    </message>
+    <message>
+        <source>Composer was downloaded to %file and verified against its SHA-256 checksum.</source>
+        <translation>Composer wurde nach %file geladen und gegen seine SHA-256-Prüfsumme geprüft.</translation>
+    </message>
+    <message>
+        <source>Get Composer</source>
+        <translation>Composer holen</translation>
+    </message>
+    <message>
+        <source>Downloading...</source>
+        <translation>Wird geladen ...</translation>
+    </message>
+    <message>
+        <source>Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.</source>
+        <translation>Aus ezupdate.ini übernommen; open_basedir verhindert, dass PHP die Datei prüft.</translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>
