@@ -47,10 +47,20 @@ Under the list:
 - **Fetch from** — how packages are fetched for this run: *dist* (release
   archives, fast), *source* (git clones with history) or *auto* (Composer
   decides: source for development versions, dist for releases).
-- **Update, dry run** — `composer update --dry-run`: what would change, in a
+- **Preview (dry run)** — `composer update --dry-run`: what would change, in a
   run you can follow. Always safe.
-- **Update** — only when updating is allowed and you have `update/manage`; tick
-  *A backup of files and database exists* to enable it.
+- **Install updates** — runs `composer update` for the ticked packages. After
+  *Check for updates* every package that an update can install has a tick box
+  (all ticked); the *Kind* column says **Can be installed** or **Blocked by
+  composer.json (constraint)**. Blocked packages have no tick box: raise their
+  constraint in composer.json first. The button is always on the page. While
+  updating is switched off (the default) it is disabled and the text under it says
+  why (Composer rewrites `vendor/`; make a backup) and how to switch it on. With the
+  `update/manage` policy, **Switch on updates** writes `AllowUpdate=enabled` to
+  `settings/override/ezupdate.ini.append.php` (password again when
+  `[AuditConsoleSettings] ReauthForManage` is on; recorded in the audit log) and
+  **Switch off** reverses it. When updating is on, tick *A backup of files and
+  database exists* to enable *Install updates*.
 
 **Recent runs** — the last ten, from the admin and from the command line: what,
 who, when, how it ended. *Run again* repeats a dry run at once; a run that

@@ -582,6 +582,173 @@ class eZUpdateManager
     }
 
     /**
+     * The outdated packages, each with what Composer itself says an update would do: one
+     * `composer update --dry-run` over all of them (the same arguments the real update
+     * gets), parsed per package. composer outdated's "semver-safe-update" only means the
+     * newest release is within the semver range of the installed one; it does not mean
+     * composer.json allows it.
+     *
+     * @return array|false the outdatedPackages() list with the keys installable (bool),
+     *                     blocked (bool), constraint (string, from composer.json),
+     *                     would_install (string); false when Composer failed
+     */
+    public function outdatedWithInstallability( $directOnly = true )
+    {
+        $outdated = $this->outdatedPackages( $directOnly );
+        if ( $outdated === false || !$outdated )
+        {
+            return $outdated;
+        }
+        $names = array();
+        foreach ( $outdated as $package )
+        {
+            if ( self::isPackageName( $package['name'] ) )
+            {
+                $names[] = $package['name'];
+            }
+        }
+        // A partial update refuses when composer.json asks for a version the lock file does not have
+        // ("Make sure you list it as an argument"): those packages are added, and the real run gets them too.
+        $this->lockMismatch = array();
+        for ( $try = 0; $try < 3; $try++ )
+        {
+            $dry = $this->run( array_merge( array( 'update', '--dry-run', '--no-interaction', '--no-ansi', '--no-progress' ), $names ) );
+            if ( (int)$dry['exit'] === 0 )
+            {
+                break;
+            }
+            $more = array_diff( self::parseLockMismatches( $dry['output'] ), $names );
+            if ( !$more )
+            {
+                break;
+            }
+            $names = array_merge( $names, $more );
+            $this->lockMismatch = array_merge( $this->lockMismatch, $more );
+        }
+        return self::classifyUpdates( $outdated, (string)$dry['output'], (int)$dry['exit'] === 0, $this->composerConstraints() );
+    }
+
+    /**
+     * Pure: marks each outdated package by what a dry-run update printed.
+     *
+     * @param array  $outdated    the outdatedPackages() list
+     * @param string $dryRunOutput output of `composer update --dry-run`
+     * @param bool   $dryRunOk    whether that run succeeded; when not, nothing is known
+     * @param array  $constraints package name => constraint of composer.json
+     * @return array the list with installable, blocked, unknown, constraint, would_install
+     */
+    public static function classifyUpdates( array $outdated, $dryRunOutput, $dryRunOk, array $constraints )
+    {
+        $upgrades = self::parseUpgrades( $dryRunOutput );
+        $result = array();
+        foreach ( $outdated as $package )
+        {
+            $name = $package['name'];
+            $package['constraint'] = isset( $constraints[$name] ) ? (string)$constraints[$name] : '';
+            $package['would_install'] = isset( $upgrades[$name] ) ? $upgrades[$name] : '';
+            $package['installable'] = $dryRunOk && isset( $upgrades[$name] );
+            $package['unknown'] = !$dryRunOk;
+            $package['blocked'] = $dryRunOk && !isset( $upgrades[$name] );
+            $result[] = $package;
+        }
+        return $result;
+    }
+
+    /** @var array packages composer.json asks a newer version of than composer.lock holds, found by the last check */
+    private $lockMismatch = array();
+
+    public function lockMismatch()
+    {
+        return $this->lockMismatch;
+    }
+
+    /**
+     * Pure: the packages a failed partial update names as "fixed to <lock version> by a partial update"
+     * while composer.json requires another version.
+     *
+     * @return array package names
+     */
+    public static function parseLockMismatches( $output )
+    {
+        $names = array();
+        if ( preg_match_all( '/Root composer\.json requires (\S+) [^,\n]+, found \S+ but the package is fixed to/', (string)$output, $m ) )
+        {
+            $names = array_values( array_unique( array_filter( $m[1], array( __CLASS__, 'isPackageName' ) ) ) );
+        }
+        return $names;
+    }
+
+    /**
+     * Pure: the packages `composer update` printed an "Upgrading name (from => to)" line for.
+     *
+     * @return array package name => new version
+     */
+    public static function parseUpgrades( $output )
+    {
+        $upgrades = array();
+        if ( preg_match_all( '/^\s*-\s+Upgrading\s+(\S+)\s+\(\s*(.*?)\s*=>\s*(.*?)\s*\)/m', (string)$output, $m, PREG_SET_ORDER ) )
+        {
+            foreach ( $m as $line )
+            {
+                // "13.4.0" or "dev-main 1a2b3c4"; the first word is the version
+                $upgrades[$line[1]] = trim( $line[3] );
+            }
+        }
+        // a package Composer re-installs at a new version (it was missing from the lock or vendor/)
+        if ( preg_match_all( '/^\s*-\s+Installing\s+(\S+)\s+\(\s*([^)]*?)\s*\)/m', (string)$output, $m, PREG_SET_ORDER ) )
+        {
+            foreach ( $m as $line )
+            {
+                $upgrades[$line[1]] = trim( $line[2] );
+            }
+        }
+        return $upgrades;
+    }
+
+    /**
+     * The constraints composer.json names, package => constraint (require and require-dev).
+     */
+    public function composerConstraints()
+    {
+        $file = $this->projectPath() . '/composer.json';
+        $data = is_file( $file ) ? json_decode( (string)file_get_contents( $file ), true ) : null;
+        $constraints = array();
+        if ( is_array( $data ) )
+        {
+            foreach ( array( 'require-dev', 'require' ) as $section )
+            {
+                foreach ( isset( $data[$section] ) && is_array( $data[$section] ) ? $data[$section] : array() as $name => $constraint )
+                {
+                    $constraints[$name] = (string)$constraint;
+                }
+            }
+        }
+        return $constraints;
+    }
+
+    /**
+     * Writes [UpdateSettings] AllowUpdate to settings/override/ezupdate.ini.append.php
+     * through the kernel's INI editor (the code path of `exp:ini`).
+     *
+     * @return true|string true, or the error text
+     */
+    public function setUpdateAllowed( $allowed )
+    {
+        try
+        {
+            $editor = new expIniEditor( expIniEditor::scope( 'global' ), 'ezupdate.ini.append.php' );
+            $editor->set( 'UpdateSettings', 'AllowUpdate', $allowed ? 'enabled' : 'disabled' );
+            $editor->save();
+        }
+        catch ( Exception $e )
+        {
+            return $e->getMessage();
+        }
+        $this->ini = eZINI::instance( 'ezupdate.ini' );
+        return true;
+    }
+
+    /**
      * The output of the last Composer run.
      */
     public function lastOutput()
@@ -752,14 +919,16 @@ class eZUpdateManager
     /**
      * The Composer arguments of an update, a dry run first when $dryRun is set.
      */
-    public function updateArguments( $dryRun = false, $method = null )
+    public function updateArguments( $dryRun = false, $method = null, array $packages = array() )
     {
         $arguments = array( 'update' );
         if ( $dryRun )
         {
             $arguments[] = '--dry-run';
         }
-        return array_merge( $arguments, $this->methodArguments( $method ), $this->configuredArguments( 'UpdateArguments' ) );
+        // only the named packages (valid package names only) when given
+        $names = array_values( array_unique( array_filter( $packages, array( __CLASS__, 'isPackageName' ) ) ) );
+        return array_merge( $arguments, $this->methodArguments( $method ), $this->configuredArguments( 'UpdateArguments' ), $names );
     }
 
     /**

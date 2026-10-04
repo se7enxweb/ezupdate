@@ -4,6 +4,29 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.13 (2026-10-03)
+-------------------
+
+**Install updates from the Overview.**
+
+Added
+- *Install updates*: after *Check for updates* each package that can be installed has a tick box
+  (all ticked) and the button runs `composer update` for the ticked ones. It is always shown;
+  disabled with an explanation while `[UpdateSettings] AllowUpdate` is `disabled`.
+- *Switch on updates* / *Switch off* for users with `update/manage`: writes `AllowUpdate` to
+  `settings/override/ezupdate.ini.append.php` through the kernel INI editor, asks for the
+  password again when `ReauthForManage` is on, records an audit event, clears the INI cache.
+- English and German strings; tests of the labelling with fixtures.
+
+Updated
+- *Kind* is decided by Composer: one `composer update --dry-run` over the outdated packages,
+  parsed per package. *Can be installed*, or *Blocked by composer.json (constraint)*.
+  Before, "semver-safe-update" was shown as "Within the constraint", which composer.json
+  could contradict (phpunit 13.0.0 pinned, 13.4.0 out).
+- *Update, dry run* is now *Preview (dry run)*; *Run again* keeps the package list.
+- Packages whose composer.json version is newer than composer.lock are added to the run
+  (Composer refuses a partial update otherwise).
+
 1.1.12 (2026-10-03)
 -------------------
 

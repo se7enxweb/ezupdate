@@ -66,7 +66,7 @@ class Dashboard extends \Exponential\Runnable\ModuleView
         }
         else if ( $module->isCurrentAction( 'CheckForUpdates' ) )
         {
-            $outdated = $manager->outdatedPackages( true );
+            $outdated = $manager->outdatedWithInstallability( true );
             if ( $outdated === false )
             {
                 $error = \ezpI18n::tr( 'extension/ezupdate', 'Composer could not check for updates.' ) . "\n" . $manager->lastOutput();
@@ -76,10 +76,46 @@ class Dashboard extends \Exponential\Runnable\ModuleView
                 $notice = \ezpI18n::tr( 'extension/ezupdate', 'The installation is up to date! Update again soon to remain secure.' );
             }
         }
-        else if ( $module->isCurrentAction( 'DryRunUpdate' ) || $module->isCurrentAction( 'Update' ) )
+        else if ( $module->isCurrentAction( 'SwitchUpdatesOn' ) || $module->isCurrentAction( 'SwitchUpdatesOff' ) )
+        {
+            $on = $module->isCurrentAction( 'SwitchUpdatesOn' );
+            if ( !$canManage )
+            {
+                $error = \ezpI18n::tr( 'extension/ezupdate', 'You do not have permission to change this setting.' );
+            }
+            else
+            {
+                // password again when [AuditConsoleSettings] ReauthForManage is on
+                $gate = class_exists( 'expAuditReauth' )
+                    ? \expAuditReauth::gate( $module, $on ? 'SwitchUpdatesOnButton' : 'SwitchUpdatesOffButton', 'update/dashboard', $on ? 'Switch on updates' : 'Switch off updates' )
+                    : null;
+                if ( $gate !== null )
+                {
+                    return $this->viewResult( isset( $Result ) ? $Result : null, $gate );
+                }
+                $written = $manager->setUpdateAllowed( $on );
+                if ( $written === true )
+                {
+                    \eZAudit::writeAudit( 'ezupdate-switch-updates', array( 'Setting' => '[UpdateSettings] AllowUpdate', 'Value' => $on ? 'enabled' : 'disabled', 'File' => 'settings/override/ezupdate.ini.append.php' ) );
+                    \eZCache::clearByTag( 'ini' );
+                    return $this->viewResult( isset( $Result ) ? $Result : null, $module->redirectTo( 'update/dashboard' ) );
+                }
+                $error = $written;
+            }
+        }
+        else if ( $module->isCurrentAction( 'DryRunUpdate' ) || $module->isCurrentAction( 'Update' ) || $module->isCurrentAction( 'InstallUpdates' ) )
         {
             $dryRun = $module->isCurrentAction( 'DryRunUpdate' );
-            if ( !$dryRun && ( !$canManage || !$manager->isUpdateAllowed() ) )
+            $packages = array();
+            if ( $module->hasActionParameter( 'Packages' ) )
+            {
+                $packages = array_values( array_filter( (array)$module->actionParameter( 'Packages' ), 'is_string' ) );
+            }
+            if ( $module->isCurrentAction( 'InstallUpdates' ) && !$packages )
+            {
+                $error = \ezpI18n::tr( 'extension/ezupdate', 'Tick at least one package to install.' );
+            }
+            else if ( !$dryRun && ( !$canManage || !$manager->isUpdateAllowed() ) )
             {
                 $error = \ezpI18n::tr( 'extension/ezupdate', 'Updating is switched off ([UpdateSettings] AllowUpdate in ezupdate.ini).' );
             }
@@ -91,8 +127,8 @@ class Dashboard extends \Exponential\Runnable\ModuleView
             {
                 $job = \eZUpdateJob::start(
                     $dryRun ? 'update-dry-run' : 'update',
-                    $manager->updateArguments( $dryRun, $method ),
-                    ( $dryRun ? \ezpI18n::tr( 'extension/ezupdate', 'Update, dry run' ) : \ezpI18n::tr( 'extension/ezupdate', 'Update' ) ) . ' (' . $method . ')'
+                    $manager->updateArguments( $dryRun, $method, $packages ),
+                    ( $dryRun ? \ezpI18n::tr( 'extension/ezupdate', 'Update, dry run' ) : \ezpI18n::tr( 'extension/ezupdate', 'Update' ) ) . ' (' . $method . ')' . ( $packages ? ', ' . count( $packages ) . ' ' . \ezpI18n::tr( 'extension/ezupdate', 'packages' ) : '' )
                 );
                 if ( $job instanceof \eZUpdateJob )
                 {
@@ -125,6 +161,7 @@ class Dashboard extends \Exponential\Runnable\ModuleView
         $tpl->setVariable( 'composer_server_count', count( $composerServers->servers() ) );
         $tpl->setVariable( 'packagist_enabled', $composerServers->packagistEnabled() );
         $tpl->setVariable( 'outdated', $outdated );
+        $tpl->setVariable( 'lock_mismatch', $manager->lockMismatch() );
         $tpl->setVariable( 'install_method', $method );
         $tpl->setVariable( 'install_methods', \eZUpdateManager::$installMethods );
         $jobs = \eZUpdateJob::fetchList( 10 );

@@ -20,11 +20,15 @@ $ViewList = array(
             'CheckForUpdatesButton' => 'CheckForUpdates',
             'DryRunUpdateButton'    => 'DryRunUpdate',
             'UpdateButton'          => 'Update',
+            'InstallUpdatesButton'  => 'InstallUpdates',
+            'SwitchUpdatesOnButton'  => 'SwitchUpdatesOn',
+            'SwitchUpdatesOffButton' => 'SwitchUpdatesOff',
             'GetComposerButton'     => 'GetComposer',
         ),
         'post_action_parameters'  => array(
-            'DryRunUpdate' => array( 'InstallMethod' => 'InstallMethod' ),
-            'Update'       => array( 'ConfirmBackup' => 'ConfirmBackup', 'InstallMethod' => 'InstallMethod' ),
+            'DryRunUpdate'   => array( 'InstallMethod' => 'InstallMethod', 'Packages' => 'Packages' ),
+            'Update'         => array( 'ConfirmBackup' => 'ConfirmBackup', 'InstallMethod' => 'InstallMethod' ),
+            'InstallUpdates' => array( 'ConfirmBackup' => 'ConfirmBackup', 'InstallMethod' => 'InstallMethod', 'Packages' => 'Packages' ),
         ),
     ),
     // composer.json, composer.lock, installed.json and the extension directories, matched up (read only)

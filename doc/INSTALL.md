@@ -101,7 +101,9 @@ Out of the box eZ Update only looks: you can check for updates and run dry runs,
 but not update or install. That is on purpose: Composer rewrites `vendor/` and
 every package it manages.
 
-When you want the admin to be able to change packages, in
+The Overview shows an **Install updates** button that is disabled until then, with the
+reason under it. With the `update/manage` policy, **Switch on updates** there writes the line
+below for you. To do it by hand, in
 `settings/override/ezupdate.ini.append.php`:
 
 ```ini

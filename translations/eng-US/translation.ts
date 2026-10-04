@@ -1203,6 +1203,94 @@
         <source>Finished. Changed: %summary.</source>
         <translation>Finished. Changed: %summary.</translation>
     </message>
+    <message>
+        <source>Install updates</source>
+        <translation>Install updates</translation>
+    </message>
+    <message>
+        <source>Preview (dry run)</source>
+        <translation>Preview (dry run)</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>Select</translation>
+    </message>
+    <message>
+        <source>Install this update</source>
+        <translation>Install this update</translation>
+    </message>
+    <message>
+        <source>Can be installed</source>
+        <translation>Can be installed</translation>
+    </message>
+    <message>
+        <source>Would install %version</source>
+        <translation>Would install %version</translation>
+    </message>
+    <message>
+        <source>Could not be checked</source>
+        <translation>Could not be checked</translation>
+    </message>
+    <message>
+        <source>Blocked by composer.json (%constraint)</source>
+        <translation>Blocked by composer.json (%constraint)</translation>
+    </message>
+    <message>
+        <source>Blocked by composer.json or another package</source>
+        <translation>Blocked by composer.json or another package</translation>
+    </message>
+    <message>
+        <source>Installing updates is switched off.</source>
+        <translation>Installing updates is switched off.</translation>
+    </message>
+    <message>
+        <source>Composer rewrites vendor/ and the files of every package it updates, so this stays off until you choose otherwise. Make a backup of the files and the database first.</source>
+        <translation>Composer rewrites vendor/ and the files of every package it updates, so this stays off until you choose otherwise. Make a backup of the files and the database first.</translation>
+    </message>
+    <message>
+        <source>To switch it on, set AllowUpdate=enabled under [UpdateSettings] in settings/override/ezupdate.ini.append.php</source>
+        <translation>To switch it on, set AllowUpdate=enabled under [UpdateSettings] in settings/override/ezupdate.ini.append.php</translation>
+    </message>
+    <message>
+        <source>, or use the button below.</source>
+        <translation>, or use the button below.</translation>
+    </message>
+    <message>
+        <source>.</source>
+        <translation>.</translation>
+    </message>
+    <message>
+        <source>Switch on updates</source>
+        <translation>Switch on updates</translation>
+    </message>
+    <message>
+        <source>Installing updates is switched on.</source>
+        <translation>Installing updates is switched on.</translation>
+    </message>
+    <message>
+        <source>No package on this list can be installed by an update: composer.json blocks them. Raise their constraints in composer.json first.</source>
+        <translation>No package on this list can be installed by an update: composer.json blocks them. Raise their constraints in composer.json first.</translation>
+    </message>
+    <message>
+        <source>You do not have permission to change this setting.</source>
+        <translation>You do not have permission to change this setting.</translation>
+    </message>
+    <message>
+        <source>Tick at least one package to install.</source>
+        <translation>Tick at least one package to install.</translation>
+    </message>
+    <message>
+        <source>packages</source>
+        <translation>packages</translation>
+    </message>
+    <message>
+        <source>Check for updates first: then the packages that can be installed are listed and ticked here.</source>
+        <translation>Check for updates first: then the packages that can be installed are listed and ticked here.</translation>
+    </message>
+    <message>
+        <source>composer.json asks for newer versions than composer.lock holds of: %packages. Composer needs them in the same run, so they are always included.</source>
+        <translation>composer.json asks for newer versions than composer.lock holds of: %packages. Composer needs them in the same run, so they are always included.</translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>

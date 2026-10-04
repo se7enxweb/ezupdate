@@ -388,9 +388,11 @@ class eZUpdateJob
 
         if ( strpos( $kind, 'update' ) === 0 )
         {
+            // the package names of a partial update stay (arguments after "update" that are package names)
+            $packages = array_values( array_filter( array_slice( $arguments, 1 ), array( 'eZUpdateManager', 'isPackageName' ) ) );
             return array(
                 'kind'      => $dryRun ? 'update-dry-run' : 'update',
-                'arguments' => $manager->updateArguments( $dryRun, $method ),
+                'arguments' => $manager->updateArguments( $dryRun, $method, $packages ),
                 'label'     => ( $dryRun ? ezpI18n::tr( 'extension/ezupdate', 'Update, dry run' ) : ezpI18n::tr( 'extension/ezupdate', 'Update' ) ) . ' (' . $method . ')',
                 'changes'   => !$dryRun,
             );
