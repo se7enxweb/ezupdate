@@ -2,6 +2,11 @@
 {def $ended = or( eq( $progress.status, 'finished' ), eq( $progress.status, 'failed' ), eq( $progress.status, 'stopped' ) )}
 <div class="ezx-page">
 
+    {* The result of the run: filled in by ezupdate.js when the run ends while this page is open. *}
+    <div id="ezupdate-job-result" class="ezx-alert ezx-alert-{if $progress.message_state|eq( '' )}ok{else}{$progress.message_state}{/if}" role="status" aria-live="polite"{if $progress.message|eq( '' )} hidden="hidden"{/if}>
+        <div><h2>{$progress.message|wash}</h2></div>
+    </div>
+
     <div class="ezx-head">
         <div>
             <h1>{$job.label|wash}</h1>

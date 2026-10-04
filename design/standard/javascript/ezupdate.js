@@ -107,6 +107,12 @@
                 if (data.status === 'queued' || data.status === 'running') {
                     window.setTimeout(poll, 1000);
                 } else {
+                    var result = document.getElementById('ezupdate-job-result');
+                    if (result && data.message) {
+                        result.className = 'ezx-alert ezx-alert-' + (data.message_state || 'ok');
+                        result.firstElementChild.firstElementChild.textContent = data.message;
+                        result.hidden = false;
+                    }
                     if (elapsed && data.finished) { elapsed.setAttribute('data-finished', data.finished); }
                     // The run has ended: its "run again" buttons may be used now.
                     var waiting = document.querySelectorAll('[data-ezupdate-when-done]');

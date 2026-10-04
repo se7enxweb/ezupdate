@@ -1171,6 +1171,38 @@
         <source>Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>
@@ -1178,11 +1210,75 @@
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/setup/menu</name>
     <message>
         <source>Updates and packages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

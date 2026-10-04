@@ -275,6 +275,9 @@ class eZUpdateJob
 
         $job->data['status'] = $exit === 0 ? 'finished' : 'failed';
         $job->data['exit'] = $exit;
+        $outcome = self::outcomeOf( (string)@file_get_contents( self::logFile( $id ) ), $exit );
+        $job->data['outcome'] = $outcome['state'];
+        $job->data['counts'] = $outcome['counts'];
         $job->data['finished'] = time();
         $job->store();
 
@@ -422,6 +425,82 @@ class eZUpdateJob
     }
 
     /**
+     * What a finished run came to, read from Composer's output: 'failed' (exit code
+     * other than 0), 'uptodate' (nothing to install, update or remove) or 'changed'
+     * (with the counts of installs, updates and removals when Composer printed them).
+     *
+     * @param string $log  the run's output, with or without colour codes
+     * @param int    $exit the exit code
+     * @return array hash state, counts (hash installs, updates, removals)
+     */
+    public static function outcomeOf( $log, $exit )
+    {
+        $counts = array( 'installs' => 0, 'updates' => 0, 'removals' => 0 );
+        if ( (int)$exit !== 0 )
+        {
+            return array( 'state' => 'failed', 'counts' => $counts );
+        }
+        $text = preg_replace( '/\x1b\[[0-9;]*m/', '', (string)$log );
+        // "Package operations: ..." is the real run, "Lock file operations: ..." the lock only; the last one wins.
+        if ( preg_match_all( '/^(?:Package|Lock file) operations: (\d+) installs?, (\d+) updates?, (\d+) removals?/m', $text, $all, PREG_SET_ORDER ) )
+        {
+            $last = end( $all );
+            $counts = array( 'installs' => (int)$last[1], 'updates' => (int)$last[2], 'removals' => (int)$last[3] );
+            $state = array_sum( $counts ) > 0 ? 'changed' : 'uptodate';
+        }
+        else if ( preg_match( '/^Nothing to (?:install, update or remove|modify in lock file)/m', $text ) )
+        {
+            $state = 'uptodate';
+        }
+        else
+        {
+            $state = 'changed';
+        }
+        return array( 'state' => $state, 'counts' => $counts );
+    }
+
+    /**
+     * The sentence the user is shown when the run has ended.
+     *
+     * @return array hash state (ok|bad|info), text
+     */
+    public function resultMessage( $status, $exit, $log )
+    {
+        if ( $status === 'failed' )
+        {
+            return array( 'state' => 'bad', 'text' => ezpI18n::tr( 'extension/ezupdate', 'Failed with exit code %code.', null, array( '%code' => $exit ) ) );
+        }
+        if ( $status === 'stopped' )
+        {
+            return array( 'state' => 'bad', 'text' => ezpI18n::tr( 'extension/ezupdate', 'The run stopped before it finished.' ) );
+        }
+        if ( $status !== 'finished' )
+        {
+            return array( 'state' => '', 'text' => '' );
+        }
+        $outcome = self::outcomeOf( $log, 0 );
+        if ( $outcome['state'] === 'uptodate' )
+        {
+            return array( 'state' => 'ok', 'text' => ezpI18n::tr( 'extension/ezupdate', 'The installation is up to date! Update again soon to remain secure.' ) );
+        }
+        $parts = array();
+        $c = $outcome['counts'];
+        if ( $c['installs'] ) $parts[] = ezpI18n::tr( 'extension/ezupdate', '%count installed', null, array( '%count' => $c['installs'] ) );
+        if ( $c['updates'] )  $parts[] = ezpI18n::tr( 'extension/ezupdate', '%count updated', null, array( '%count' => $c['updates'] ) );
+        if ( $c['removals'] ) $parts[] = ezpI18n::tr( 'extension/ezupdate', '%count removed', null, array( '%count' => $c['removals'] ) );
+        $summary = implode( ', ', $parts );
+        if ( substr( (string)$this->data['kind'], -8 ) === '-dry-run' )
+        {
+            return array( 'state' => 'info', 'text' => $summary !== ''
+                ? ezpI18n::tr( 'extension/ezupdate', 'Dry run finished. It would change: %summary. Nothing was changed.', null, array( '%summary' => $summary ) )
+                : ezpI18n::tr( 'extension/ezupdate', 'Dry run finished. Nothing was changed.' ) );
+        }
+        return array( 'state' => 'ok', 'text' => $summary !== ''
+            ? ezpI18n::tr( 'extension/ezupdate', 'Finished. Changed: %summary.', null, array( '%summary' => $summary ) )
+            : ezpI18n::tr( 'extension/ezupdate', 'Finished.' ) );
+    }
+
+    /**
      * The status and the whole output as HTML, for the progress page.
      */
     public function progress()
@@ -441,7 +520,10 @@ class eZUpdateJob
                 $this->data = $fresh->data;
             }
         }
+        $message = $this->resultMessage( $this->data['status'], $this->data['exit'], $log );
         return array(
+            'message'  => $message['text'],
+            'message_state' => $message['state'],
             'id'       => $this->data['id'],
             'status'   => $this->data['status'],
             'exit'     => $this->data['exit'],

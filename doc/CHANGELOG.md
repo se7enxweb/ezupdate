@@ -4,6 +4,18 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.12 (2026-10-03)
+-------------------
+
+**Every finished run says how it ended.**
+
+Added
+- A notice box at the top of the run's page (and on the Overview after *Check for
+  updates*): *The installation is up to date! Update again soon to remain secure.* when
+  Composer had nothing to install, update or remove; what changed (installed, updated,
+  removed) after a run that did something; the exit code after a failure. It appears
+  when the run ends while the page is open, too. German translation included.
+
 1.1.11 (2026-10-03)
 -------------------
 

@@ -71,6 +71,10 @@ class Dashboard extends \Exponential\Runnable\ModuleView
             {
                 $error = \ezpI18n::tr( 'extension/ezupdate', 'Composer could not check for updates.' ) . "\n" . $manager->lastOutput();
             }
+            else if ( !$outdated )
+            {
+                $notice = \ezpI18n::tr( 'extension/ezupdate', 'The installation is up to date! Update again soon to remain secure.' );
+            }
         }
         else if ( $module->isCurrentAction( 'DryRunUpdate' ) || $module->isCurrentAction( 'Update' ) )
         {

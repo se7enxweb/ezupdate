@@ -424,3 +424,4 @@ a.ezx-stat:hover, a.ezx-stat:focus-visible { border-color: #b9c3cf; box-shadow: 
 @keyframes ezx-spin { to { transform: rotate(360deg); } }
 .ezx-alert.is-leaving { opacity: 0; transform: translateY(-4px); transition: opacity .35s, transform .35s; }
 .ezx-kbd { display: inline-block; min-width: 1.4em; padding: 0 0.35em; font: 600 0.75em/1.5 var(--x-mono); text-align: center; color: var(--x-muted); background: #fff; border: 1px solid #cfd6df; border-bottom-width: 2px; border-radius: 4px; }
+.ezx-alert[hidden] { display: none; }

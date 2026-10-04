@@ -1171,6 +1171,38 @@
         <source>Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.</source>
         <translation>Taken from ezupdate.ini; open_basedir keeps PHP from checking the file.</translation>
     </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation>The installation is up to date! Update again soon to remain secure.</translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation>The run stopped before it finished.</translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation>%count installed</translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation>%count updated</translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation>%count removed</translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation>Dry run finished. It would change: %summary. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation>Dry run finished. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
+        <translation>Finished. Changed: %summary.</translation>
+    </message>
 </context>
 <context>
     <name>kernel/navigationpart</name>
@@ -1178,12 +1210,76 @@
         <source>Update</source>
         <translation>Update</translation>
     </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation>The installation is up to date! Update again soon to remain secure.</translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation>The run stopped before it finished.</translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation>%count installed</translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation>%count updated</translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation>%count removed</translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation>Dry run finished. It would change: %summary. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation>Dry run finished. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
+        <translation>Finished. Changed: %summary.</translation>
+    </message>
 </context>
 <context>
     <name>design/admin/parts/setup/menu</name>
     <message>
         <source>Updates and packages</source>
         <translation>Updates and packages</translation>
+    </message>
+    <message>
+        <source>The installation is up to date! Update again soon to remain secure.</source>
+        <translation>The installation is up to date! Update again soon to remain secure.</translation>
+    </message>
+    <message>
+        <source>The run stopped before it finished.</source>
+        <translation>The run stopped before it finished.</translation>
+    </message>
+    <message>
+        <source>%count installed</source>
+        <translation>%count installed</translation>
+    </message>
+    <message>
+        <source>%count updated</source>
+        <translation>%count updated</translation>
+    </message>
+    <message>
+        <source>%count removed</source>
+        <translation>%count removed</translation>
+    </message>
+    <message>
+        <source>Dry run finished. It would change: %summary. Nothing was changed.</source>
+        <translation>Dry run finished. It would change: %summary. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Dry run finished. Nothing was changed.</source>
+        <translation>Dry run finished. Nothing was changed.</translation>
+    </message>
+    <message>
+        <source>Finished. Changed: %summary.</source>
+        <translation>Finished. Changed: %summary.</translation>
     </message>
 </context>
 </TS>
