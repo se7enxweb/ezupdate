@@ -188,11 +188,51 @@ class eZUpdateJob
     }
 
     /**
+     * Where setsid is. The kernel helper when this kernel has one; otherwise
+     * the usual places, tested as is_executable() says, and, when open_basedir
+     * hides them (it hides the file from PHP although proc_open may run it),
+     * by running "setsid --version".
+     *
+     * @return string|false
+     */
+    private static function findSetsid()
+    {
+        if ( class_exists( 'expProcessTools' ) )
+        {
+            return expProcessTools::setsid();
+        }
+        foreach ( array( '/usr/bin/setsid', '/bin/setsid' ) as $file )
+        {
+            if ( is_executable( $file ) )
+            {
+                return $file;
+            }
+        }
+        foreach ( array( '/usr/bin/setsid', '/bin/setsid' ) as $file )
+        {
+            $spawned = eZUpdateManager::spawn( array( $file, '--version' ) );
+            if ( !$spawned )
+            {
+                continue;
+            }
+            list( $process, $pipe ) = $spawned;
+            stream_set_timeout( $pipe, 5 );
+            stream_get_contents( $pipe );
+            fclose( $pipe );
+            if ( proc_close( $process ) === 0 )
+            {
+                return $file;
+            }
+        }
+        return false;
+    }
+
+    /**
      * Starts the worker detached (setsid -f), so it outlives the web request.
      */
     private function launch()
     {
-        $setsid = is_executable( '/usr/bin/setsid' ) ? '/usr/bin/setsid' : ( is_executable( '/bin/setsid' ) ? '/bin/setsid' : false );
+        $setsid = self::findSetsid();
         $php = eZUpdateManager::getInstance()->phpBinary();
         if ( !$setsid || !$php || !function_exists( 'proc_open' ) )
         {

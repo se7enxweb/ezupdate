@@ -4,6 +4,14 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.15 (2026-10-04)
+-------------------
+
+**Install updates works under open_basedir.** On a host that confines PHP to its site directory,
+`is_executable('/usr/bin/setsid')` answers no although the program exists and `proc_open` may run it, so
+Install updates said it could not start. setsid is now found by the kernel helper `expProcessTools` when the
+kernel has one, and otherwise by running `setsid --version`.
+
 1.1.14 (2026-10-04)
 -------------------
 
