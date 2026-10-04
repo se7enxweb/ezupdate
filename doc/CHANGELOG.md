@@ -4,6 +4,12 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.14 (2026-10-04)
+-------------------
+
+**Clearer wording.** The Overview's status line for adding packages reads "Installing new packages"
+(German: "Neue Pakete installieren") instead of "Installing", so it is not mistaken for updates.
+
 1.1.13 (2026-10-03)
 -------------------
 

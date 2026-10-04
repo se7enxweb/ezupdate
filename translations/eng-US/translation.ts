@@ -236,8 +236,8 @@
         <translation>Switched off</translation>
     </message>
     <message>
-        <source>Installing</source>
-        <translation>Installing</translation>
+        <source>Installing new packages</source>
+        <translation>Installing new packages</translation>
     </message>
     <message>
         <source>Updates</source>

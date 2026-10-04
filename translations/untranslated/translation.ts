@@ -236,7 +236,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Installing</source>
+        <source>Installing new packages</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

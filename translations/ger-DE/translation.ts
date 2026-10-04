@@ -236,8 +236,8 @@
         <translation>Ausgeschaltet</translation>
     </message>
     <message>
-        <source>Installing</source>
-        <translation>Installieren</translation>
+        <source>Installing new packages</source>
+        <translation>Neue Pakete installieren</translation>
     </message>
     <message>
         <source>Updates</source>

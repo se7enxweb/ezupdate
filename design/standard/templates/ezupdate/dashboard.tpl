@@ -51,7 +51,7 @@
                 <dt>{'Updating'|i18n( 'extension/ezupdate' )}</dt>
                 <dd>{if $update_allowed}<span class="ezupdate-badge ezupdate-warn">{'Allowed'|i18n( 'extension/ezupdate' )}</span>
                     {else}<span class="ezupdate-badge">{'Switched off'|i18n( 'extension/ezupdate' )}</span> <span class="ezupdate-muted">[UpdateSettings] AllowUpdate</span>{/if}</dd>
-                <dt>{'Installing'|i18n( 'extension/ezupdate' )}</dt>
+                <dt>{'Installing new packages'|i18n( 'extension/ezupdate' )}</dt>
                 <dd>{if $install_allowed}<span class="ezupdate-badge ezupdate-warn">{'Allowed'|i18n( 'extension/ezupdate' )}</span>
                     {else}<span class="ezupdate-badge">{'Switched off'|i18n( 'extension/ezupdate' )}</span> <span class="ezupdate-muted">[UpdateSettings] AllowInstall</span>{/if}</dd>
             </dl>
