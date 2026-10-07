@@ -421,7 +421,7 @@ class eZUpdateManager
             ) );
             $body = curl_exec( $curl );
             $code = (int)curl_getinfo( $curl, CURLINFO_RESPONSE_CODE );
-            curl_close( $curl );
+            if ( PHP_VERSION_ID < 80000 ) curl_close( $curl ); // no effect since PHP 8.0, deprecated in 8.5
             return $body !== false && $code === 200 ? $body : false;
         }
         $context = stream_context_create( array( 'http' => array( 'timeout' => 120, 'follow_location' => 1 ) ) );

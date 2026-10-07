@@ -303,10 +303,10 @@ class eZUpdatePackageServers
         {
             $error = ezpI18n::tr( 'extension/ezupdate', 'Could not fetch %url: %reason', null,
                                    array( '%url' => $url, '%reason' => curl_error( $curl ) ) );
-            curl_close( $curl );
+            if ( PHP_VERSION_ID < 80000 ) curl_close( $curl ); // no effect since PHP 8.0, deprecated in 8.5
             return false;
         }
-        curl_close( $curl );
+        if ( PHP_VERSION_ID < 80000 ) curl_close( $curl ); // no effect since PHP 8.0, deprecated in 8.5
         return $body;
     }
 }
