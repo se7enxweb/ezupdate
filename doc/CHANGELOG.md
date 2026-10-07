@@ -4,6 +4,12 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.16 (2026-10-07)
+-------------------
+
+**No deprecation entries on PHP 8.5.** The package server and the update checks call `curl_close()` only on PHP
+versions before 8.0, where it still had an effect; PHP 8.5 deprecates it.
+
 1.1.15 (2026-10-04)
 -------------------
 
