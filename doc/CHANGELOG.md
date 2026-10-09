@@ -4,6 +4,13 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.17 (2026-10-08)
+-------------------
+
+**composer.phar keeps to the mode limits of Exponential.** The downloaded `composer.phar` is made executable
+through `eZFile::executableMode()`, so `EZP_DIR_MODE_MAX` in `config.php` narrows its 0755 (0750 under 0750 or 0770).
+Without the limit, or on a kernel without the helper, it is 0755 as before.
+
 1.1.16 (2026-10-07)
 -------------------
 
