@@ -391,7 +391,7 @@ class eZUpdateManager
         {
             return ezpI18n::tr( 'extension/ezupdate', 'The directory %dir is not writable.', null, array( '%dir' => $dir ) );
         }
-        @chmod( $temporary, 0755 );
+        @chmod( $temporary, self::executableMode( 0755 ) );
         if ( !rename( $temporary, $target ) )
         {
             @unlink( $temporary );
@@ -1259,5 +1259,17 @@ class eZUpdateManager
         // Drop any other escape sequence (cursor movement, erase line).
         $html = preg_replace( '/\x1b\[[0-9;?]*[A-Za-z]/', '', $html );
         return $open ? $html . '</span>' : $html;
+    }
+
+    /**
+     * The mode $mode of a file that has to stay executable, within the limit EZP_DIR_MODE_MAX of the kernel
+     * (eZFile::executableMode()); on a kernel without that helper $mode as it is.
+     *
+     * @param int $mode
+     * @return int
+     */
+    private static function executableMode( $mode )
+    {
+        return method_exists( 'eZFile', 'executableMode' ) ? eZFile::executableMode( $mode ) : (int)$mode;
     }
 }
