@@ -10,7 +10,7 @@
 
     <div class="ezx-stats">
         <a class="ezx-stat" href={'update/installed'|ezurl}><strong>{$installed_count}</strong><span>{'Installed by Composer'|i18n( 'extension/ezupdate' )}</span></a>
-        <a class="ezx-stat" href={'update/installed#extension'|ezurl}><strong>{$inventory.extension}</strong><span>{'Extensions, %active active'|i18n( 'extension/ezupdate',, hash( '%active', $inventory.active ) )}</span></a>
+        <a class="ezx-stat" href={'update/installed#extension'|ezurl}><strong>{$inventory.extension}</strong><span>{'Extensions on disk, %active active in any siteaccess'|i18n( 'extension/ezupdate',, hash( '%active', $inventory.active ) )}</span></a>
         <a class="ezx-stat{if $inventory.issues} is-warn{else} is-ok{/if}" href={'update/installed#issues'|ezurl}><strong>{$inventory.issues}</strong><span>{'Need attention'|i18n( 'extension/ezupdate' )}</span></a>
         <div class="ezx-stat{if $outdated|is_array}{if $outdated|count} is-warn{else} is-ok{/if}{/if}">
             <strong>{if $outdated|is_array}{$outdated|count}{else}&ndash;{/if}</strong>

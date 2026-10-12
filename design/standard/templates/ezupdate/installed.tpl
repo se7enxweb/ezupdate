@@ -37,7 +37,7 @@
     <div class="ezupdate-inv-cards">
         <button type="button" class="ezupdate-inv-card" data-filter="composer"><strong>{$summary.composer}</strong><span>{'Installed by Composer'|i18n( 'extension/ezupdate' )}</span></button>
         <button type="button" class="ezupdate-inv-card" data-filter="required"><strong>{$summary.required}</strong><span>{'Required in composer.json'|i18n( 'extension/ezupdate' )}</span></button>
-        <button type="button" class="ezupdate-inv-card" data-filter="extension"><strong>{$summary.extension}</strong><span>{'Extensions, %active active'|i18n( 'extension/ezupdate',, hash( '%active', $summary.active ) )}</span></button>
+        <button type="button" class="ezupdate-inv-card" data-filter="extension"><strong>{$summary.extension}</strong><span>{'Extensions on disk, %active active in any siteaccess'|i18n( 'extension/ezupdate',, hash( '%active', $summary.active ) )}</span></button>
         <button type="button" class="ezupdate-inv-card" data-filter="local"><strong>{$summary.local}</strong><span>{'Extensions not from Composer'|i18n( 'extension/ezupdate' )}</span></button>
         <button type="button" class="ezupdate-inv-card{if $summary.issues} is-warn{/if}" data-filter="issues"><strong>{$summary.issues}</strong><span>{'Need attention'|i18n( 'extension/ezupdate' )}</span></button>
     </div>

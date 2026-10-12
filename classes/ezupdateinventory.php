@@ -64,6 +64,15 @@ class eZUpdateInventory
         $active = $this->activeExtensions();
         $extensionDir = eZExtension::baseDirectory();
         $extensionPath = realpath( $root . '/' . $extensionDir );
+        // every extension root, as the kernel reads them (a later root wins for a name)
+        $extensionRoots = array();
+        $rootDirs = method_exists( 'eZExtension', 'extensionRootDirectories' ) ? eZExtension::extensionRootDirectories() : array( $extensionDir );
+        foreach ( $rootDirs as $rootDir )
+        {
+            $rootPath = realpath( ( $rootDir !== '' && $rootDir[0] === '/' ) ? $rootDir : $root . '/' . $rootDir );
+            if ( $rootPath )
+                $extensionRoots[$rootPath] = rtrim( $rootDir, '/' );
+        }
 
         $rows = array();
         $extensionsByComposer = array();
@@ -76,7 +85,7 @@ class eZUpdateInventory
             $key = strtolower( $name );
             $path = isset( $package['install-path'] ) ? realpath( dirname( $installedFile ) . '/' . $package['install-path'] ) : false;
             $extension = false;
-            if ( $path && $extensionPath && dirname( $path ) === $extensionPath )
+            if ( $path && isset( $extensionRoots[dirname( $path )] ) )
             {
                 $extension = basename( $path );
                 $extensionsByComposer[$extension] = true;
@@ -119,15 +128,17 @@ class eZUpdateInventory
             $rows[$key]['locked_ref'] = isset( $locked[$key] ) ? $locked[$key]['reference'] : '';
         }
 
-        // Extension directories Composer did not install
-        if ( $extensionPath )
+        // Extension directories Composer did not install, in every extension root
+        $seen = array();
+        foreach ( array_reverse( $extensionRoots, true ) as $rootPath => $rootDir )
         {
-            foreach ( scandir( $extensionPath ) as $dir )
+            foreach ( scandir( $rootPath ) as $dir )
             {
-                if ( $dir[0] === '.' || isset( $extensionsByComposer[$dir] ) || !is_dir( $extensionPath . '/' . $dir ) )
+                if ( $dir[0] === '.' || isset( $extensionsByComposer[$dir] ) || isset( $seen[strtolower( $dir )] ) || !is_dir( $rootPath . '/' . $dir ) )
                     continue;
-                $path = $extensionPath . '/' . $dir;
-                $row = self::emptyRow( $extensionDir . '/' . $dir );
+                $seen[strtolower( $dir )] = true;
+                $path = $rootPath . '/' . $dir;
+                $row = self::emptyRow( $rootDir . '/' . $dir );
                 $row['kind'] = 'extension';
                 $row['composer'] = false;
                 $row['installed'] = '';
@@ -142,10 +153,10 @@ class eZUpdateInventory
             }
         }
 
-        // Active in the settings, but no such directory
+        // Active in the settings, but no such directory in any extension root
         foreach ( $active['all'] as $extension => $where )
         {
-            if ( $extensionPath && !is_dir( $extensionPath . '/' . $extension ) )
+            if ( $extensionRoots && !isset( $seen[strtolower( $extension )] ) && !isset( $extensionsByComposer[$extension] ) )
             {
                 $row = self::emptyRow( $extensionDir . '/' . $extension );
                 $row['kind'] = 'extension';
@@ -170,6 +181,21 @@ class eZUpdateInventory
                 if ( isset( $summary[$filter] ) )
                     $summary[$filter]++;
             }
+        }
+        // The headline figures are the kernel's, the ones the admin dashboard and Info > About use too:
+        // extensions on disk and extensions active in any siteaccess (found on disk)
+        if ( method_exists( 'eZExtension', 'extensionCounts' ) )
+        {
+            $accessLists = array();
+            foreach ( $active['access'] as $extension => $siteaccesses )
+            {
+                foreach ( $siteaccesses as $siteaccess )
+                    $accessLists[$siteaccess][] = $extension;
+            }
+            $counts = eZExtension::extensionCounts( null, $accessLists );
+            $summary['extension'] = $counts['on_disk'];
+            $summary['active'] = $counts['anywhere'];
+            $summary['inactive'] = $counts['inactive'];
         }
         uasort( $rows, function ( $a, $b ) {
             return strcasecmp( $a['name'], $b['name'] );
@@ -287,8 +313,12 @@ class eZUpdateInventory
         $f = array();
         if ( $row['required'] !== '' ) $f[] = 'required';
         if ( $row['composer'] && $row['installed'] !== '' ) $f[] = 'composer';
-        $f[] = $row['kind'] === 'extension' ? 'extension' : 'library';
-        if ( $row['extension'] )
+        // an extension that is not on disk is no extension of the installation: it is listed under issues
+        if ( $row['kind'] !== 'extension' )
+            $f[] = 'library';
+        elseif ( $row['path_exists'] )
+            $f[] = 'extension';
+        if ( $row['extension'] && $row['path_exists'] )
             $f[] = $row['active'] ? 'active' : 'inactive';
         if ( !$row['composer'] ) $f[] = 'local';
         if ( $row['issues'] ) $f[] = 'issues';

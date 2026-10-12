@@ -784,8 +784,8 @@
         <translation>Installed by Composer</translation>
     </message>
     <message>
-        <source>Extensions, %active active</source>
-        <translation>Extensions, %active active</translation>
+        <source>Extensions on disk, %active active in any siteaccess</source>
+        <translation>Extensions on disk, %active active in any siteaccess</translation>
     </message>
     <message>
         <source>Need attention</source>

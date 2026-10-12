@@ -784,7 +784,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Extensions, %active active</source>
+        <source>Extensions on disk, %active active in any siteaccess</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
