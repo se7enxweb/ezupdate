@@ -280,6 +280,14 @@
         <translation>Letzte Läufe</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>Zusammenfassung</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>Pakete mit einer neueren Version</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>Lauf</translation>
     </message>

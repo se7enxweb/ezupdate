@@ -1,0 +1,86 @@
+/*
+ * ezupdate (Setup > Updates and packages): what the administration's shared components (components.css: .a4-pagehead,
+ * .a4-tabs, .a4-figures, .a4-card, .a4-facts, .a4-table, .a4-badge, .a4-btn, .a4-notice, .a4-empty) cannot do on
+ * its own. Loaded by design.ini [StylesheetSettings] BackendCSSFileList, so the ezjscore packer bundles it.
+ *
+ * Rules (doc/bc/6.0/admin4-styling.md): .a4-update-* class names only, colours, radius, spacing and fonts only from
+ * the --a4-* tokens (each has its dark value in components.css), no new tokens. The older views' rules (.ezx-*,
+ * .ezupdate-*) are in ../ezupdate.css.
+ */
+
+/* The page header: the pagehead, then the app's tabs, then the messages of the request */
+.a4-update-head { margin: 0 0 var(--a4-space-4); }
+.a4-update-head .a4-pagehead { margin-bottom: var(--a4-space-3); }
+.a4-update-head .a4-notice { margin: var(--a4-space-3) 0 0; }
+.a4-update-tabs { margin: 0; }
+
+/* A message that closes: the close button at the end of the notice, and a short fade when it goes */
+.a4-update-dismissable { display: flex; align-items: flex-start; gap: var(--a4-space-2); }
+.a4-update-dismissable > .a4-notice-title { flex: 1 1 auto; margin: 0; }
+.a4-update-dismiss { flex: none; color: inherit; font-size: var(--a4-text-l); line-height: 1; }
+.a4-update-dismissable.is-leaving { opacity: 0; transition: opacity .35s; }
+.a4-update-dismissable[hidden] { display: none; }
+.a4-update-message { margin: var(--a4-space-2) 0 0; }
+
+/* The sections of a view, one under the other */
+.a4-update-section { margin: 0 0 var(--a4-space-4); }
+.a4-update-section > .a4-figures { margin: 0; }
+
+/* A figure that links to the view it counts: the whole figure is the link */
+.a4-update-figures .a4-figure > a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 100%;
+  margin: calc(-1 * var(--a4-space-3));
+  padding: var(--a4-space-3);
+  border-radius: var(--a4-radius-s);
+}
+.a4-update-figures .a4-figure:has(> a:hover) { border-color: var(--a4-accent); }
+.a4-update-figures .a4-figure strong .a4-badge { vertical-align: middle; }
+
+/* The Composer facts: a value with its notes and badges on one wrapping line */
+.a4-update-facts dd { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-1) var(--a4-space-2); }
+.a4-update-facts dd > .a4-pre,
+.a4-update-facts dd > form { flex: 1 1 100%; }
+.a4-update-desc { display: block; margin-top: 2px; }
+
+/* A row of controls: an action under a notice, the "switched on" line */
+.a4-update-row { margin: var(--a4-space-3) 0 0; }
+.a4-update-note { margin: var(--a4-space-3) 0 0; }
+.a4-update-note > p { max-width: 78ch; }
+
+/* The form under the updates: the buttons, the fetch method and the backup box in one wrapping bar */
+.a4-update-foot { align-items: flex-end; }
+.a4-update-method { flex: 0 1 220px; }
+.a4-update-method select { min-height: var(--a4-control-h); }
+.a4-update-confirm { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-2) var(--a4-space-3); }
+.a4-update-confirm .a4-check { align-items: center; color: var(--a4-warn); font-weight: 600; }
+
+/* The actions cell of a table: its form in the flow of the cell */
+.a4-update-actions { text-align: end; white-space: nowrap; }
+.a4-update-actions form { display: inline; margin: 0; }
+
+/* A run's status: a pulsing dot while it runs (still for people who ask for less motion) */
+.a4-update-status.is-running::before {
+  content: "";
+  width: var(--a4-space-2);
+  height: var(--a4-space-2);
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: a4-update-pulse 1.2s ease-in-out infinite;
+}
+@keyframes a4-update-pulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .a4-update-status.is-running::before { animation: none; }
+  .a4-update-dismissable.is-leaving { transition: none; }
+}
+
+/* The copy button after a path (ezupdate.js adds it) */
+.a4-update-copy.is-done { border-color: var(--a4-ok); color: var(--a4-ok); }
+
+/* Phone width: the form's controls take the whole row */
+@media (max-width: 600px) {
+  .a4-update-method { flex: 1 1 100%; }
+  .a4-update-confirm { width: 100%; }
+}

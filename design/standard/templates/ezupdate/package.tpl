@@ -87,7 +87,7 @@
             </dl>
             {/if}
             {if $details}
-            <div class="ezx-term" style="margin-top: 1em">
+            <div class="ezx-term ezx-term-spaced">
                 <div class="ezx-term-bar"><span class="ezx-dots" aria-hidden="true"><i></i><i></i><i></i></span><span class="ezx-term-title">composer show {$name|wash}</span></div>
                 {* HTML from eZUpdateManager::ansiToHtml(), which escapes first. *}
                 <pre class="ezupdate-terminal">{$details}</pre>

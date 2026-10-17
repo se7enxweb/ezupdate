@@ -3,4 +3,10 @@
 [ExtensionSettings]
 DesignExtensions[]=ezupdate
 
+[StylesheetSettings]
+# The module's own rules for the administration's shared components (.a4-update-*, tokens only), bundled by the
+# ezjscore packer with the rest of the admin's stylesheets. The older views' rules (ezupdate.css) are still
+# loaded by their templates.
+BackendCSSFileList[]=modules/update.css
+
 */ ?>

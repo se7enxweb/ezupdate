@@ -63,7 +63,8 @@
             say(kind, httpStatus);
             window.setTimeout(poll, Math.min(3000 * failures, 15000));
         }
-        var classes = { running: 'ezupdate-warn ezupdate-running', finished: 'ezupdate-good', failed: 'ezupdate-bad', stopped: 'ezupdate-bad' };
+        // the classes of parts/status.tpl (the shared .a4-badge), so a badge the script swaps looks like the one the page drew
+        var classes = { running: 'is-warn is-running', finished: 'is-ok', failed: 'is-bad', stopped: 'is-bad' };
         var follow = document.querySelector('[data-ezx-follow]');
         var elapsed = document.querySelector('[data-ezx-elapsed]');
 
@@ -100,7 +101,7 @@
                     var label = pre.getAttribute('data-status-' + data.status) || data.status;
                     status.innerHTML = '';
                     var badge = document.createElement('span');
-                    badge.className = 'ezupdate-badge ' + classes[data.status];
+                    badge.className = 'a4-badge a4-update-status ' + classes[data.status];
                     badge.textContent = label;
                     status.appendChild(badge);
                 }
@@ -243,7 +244,7 @@
             var b = alert.querySelector('.ezx-dismiss');
             if (b) { b.addEventListener('click', function () { close(alert); }); }
             // a success message goes by itself; an error stays
-            if (alert.classList.contains('ezx-alert-ok')) { window.setTimeout(function () { close(alert); }, 6000); }
+            if (alert.classList.contains('ezx-alert-ok') || alert.hasAttribute('data-ezx-autoclose')) { window.setTimeout(function () { close(alert); }, 6000); }
         });
     }
 
@@ -286,10 +287,17 @@
     }
 
     // Copy buttons: after code marked data-ezx-copy, and buttons naming an element to copy (the terminal).
+    // The labels are translated: the page's root carries them (data-ezupdate-copy, data-ezupdate-copied, see
+    // parts/header.tpl); on the shared admin pages (.a4-page) the button is a small shared .a4-btn.
     function copyButtons() {
         each('[data-ezx-copy]', function (code) {
+            var root = code.closest('[data-ezupdate-copy]');
+            var label = root ? root.getAttribute('data-ezupdate-copy') : 'Copy';
             var b = document.createElement('button');
-            b.type = 'button'; b.className = 'ezx-copy'; b.textContent = 'Copy'; b.setAttribute('aria-label', 'Copy ' + code.textContent);
+            b.type = 'button';
+            b.className = code.closest('.a4-page') ? 'a4-btn a4-btn-small a4-update-copy' : 'ezx-copy';
+            b.textContent = label; b.setAttribute('aria-label', label + ': ' + code.textContent);
+            if (root && root.getAttribute('data-ezupdate-copied')) { b.setAttribute('data-done', root.getAttribute('data-ezupdate-copied')); }
             b.addEventListener('click', function () { copyText(code.textContent, b); });
             code.insertAdjacentElement('afterend', b);
         });

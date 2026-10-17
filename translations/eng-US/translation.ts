@@ -280,6 +280,14 @@
         <translation>Recent runs</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>Summary</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>Packages with a newer release</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>Run</translation>
     </message>

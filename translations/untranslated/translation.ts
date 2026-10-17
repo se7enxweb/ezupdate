@@ -280,6 +280,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
