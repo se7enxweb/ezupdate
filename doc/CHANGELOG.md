@@ -4,6 +4,18 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.20 (2026-10-17)
+-------------------
+
+**The Overview follows the administration's look, light and dark.** The Overview (update/dashboard) and the page
+header, tabs, status badges and fetch method every view shares are built from the administration's shared
+components (cards, figures, facts, tables, badges, buttons, notices), so the page has admin4's dark mode, reads in
+the classic admin, and passes the contrast checks. The module's own rules are `.a4-update-*` in
+`design/standard/stylesheets/modules/update.css`, loaded through `design.ini` `[StylesheetSettings]
+BackendCSSFileList` (the packer bundles it). The older views keep `ezupdate.css`, whose colors now follow the
+administration's tokens. No template carries a style attribute any more. The job page's live status uses the same
+badge. Every form and button name is unchanged.
+
 1.1.17 (2026-10-08)
 -------------------
 

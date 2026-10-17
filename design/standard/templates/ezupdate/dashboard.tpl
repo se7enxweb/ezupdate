@@ -45,7 +45,8 @@
             <dt>{'PHP for Composer'|i18n( 'extension/ezupdate' )}</dt>
             <dd>{if $php_binary}<code>{$php_binary|wash}</code>{else}<span class="a4-badge is-bad">{'Not found'|i18n( 'extension/ezupdate' )}</span>{/if}</dd>
             <dt>{'Installation'|i18n( 'extension/ezupdate' )}</dt>
-            <dd><code data-ezx-copy="1">{$project_path|wash}</code>
+            <dd><code id="ezupdate-project-path">{$project_path|wash}</code>
+                <button type="button" class="a4-btn a4-btn-small a4-update-copy" data-ezx-copy-target="ezupdate-project-path" data-done="{'Copied'|i18n( 'extension/ezupdate' )|wash}" aria-label="{'Copy'|i18n( 'extension/ezupdate' )|wash}: {$project_path|wash}">{'Copy'|i18n( 'extension/ezupdate' )}</button>
                 {if $has_composer_json}<span class="a4-meta">{'composer.json, %count packages installed'|i18n( 'extension/ezupdate',, hash( '%count', $installed_count ) )}</span>
                     {if $composer_json_writable|not}<span class="a4-badge is-warn">{'composer.json is read-only for the web server'|i18n( 'extension/ezupdate' )}</span>{/if}
                 {else}<span class="a4-badge is-bad">{'No composer.json'|i18n( 'extension/ezupdate' )}</span>{/if}</dd>
