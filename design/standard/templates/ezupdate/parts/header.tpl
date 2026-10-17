@@ -27,11 +27,9 @@
     <div class="a4-pagehead">
         <div class="a4-pagehead-main">
             {if $ezx_title}
-            <p class="a4-pagehead-pre">{'Updates and packages'|i18n( 'extension/ezupdate' )}</p>
             <h1 class="a4-pagehead-title">{$ezx_title|wash}</h1>
             {if $ezx_intro}<p class="a4-pagehead-sub">{$ezx_intro|wash}</p>{/if}
             {else}
-            <p class="a4-pagehead-pre">{'Updates and packages'|i18n( 'extension/ezupdate' )}</p>
             <p class="a4-pagehead-sub">{'Composer, extensions and package servers'|i18n( 'extension/ezupdate' )}</p>
             {/if}
         </div>
