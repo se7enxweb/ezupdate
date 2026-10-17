@@ -4,6 +4,14 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.22 (2026-10-17)
+-------------------
+
+**The Overview's new labels in Spanish, Hebrew, Latin and Klingon.** Spain's and Mexico's Spanish, Hebrew, Latin
+and Klingon translate Summary and the caption of the table of packages with a newer release, so the five
+catalogues are complete again. The master catalogue (`translations/untranslated`) validates against the Qt
+translation schema again: 22 of its messages had no `<translation>` element.
+
 1.1.21 (2026-10-17)
 -------------------
 
