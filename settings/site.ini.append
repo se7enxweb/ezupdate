@@ -1,2 +1,12 @@
 [RegionalSettings]
 TranslationExtensions[]=ezupdate
+
+# The Composer version and the packagist.org answers, in <cache dir>/ezupdate.
+# Cleared by "Clear all" and by bin/php/ezcache.php --clear-id=ezupdate.
+[Cache]
+CacheItems[]=ezupdate
+
+[Cache_ezupdate]
+name=Update extension cache
+id=ezupdate
+path=ezupdate

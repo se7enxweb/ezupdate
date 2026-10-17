@@ -526,22 +526,112 @@ class eZUpdateManager
         return preg_match( '/^\d+\.\d+$/', $output ) ? $output : false;
     }
 
-    public function composerVersion()
+    /**
+     * The first line of `composer --version`, or false when Composer did not start.
+     *
+     * Asking Composer starts a PHP process that reads its whole phar, so the answer
+     * is kept in the cache directory (ezupdate/composer-version.json) for
+     * [ComposerSettings] VersionCacheTime seconds. It is keyed on the command and on
+     * the size and time of the binary: another binary, or a new composer.phar, is
+     * asked again at once. "Clear cache" (cache id ezupdate) or --clear-all removes it.
+     * A failure is never cached, so lastOutput() always says why it failed.
+     *
+     * @param bool $fresh true asks Composer even when a cached answer is there
+     * @return string|false
+     */
+    public function composerVersion( $fresh = false )
     {
+        $command = $this->composerCommand();
+        // a settings cache from before this setting existed has no value: one day
+        $cacheTime = $this->ini->hasVariable( 'ComposerSettings', 'VersionCacheTime' )
+            ? (int)$this->ini->variable( 'ComposerSettings', 'VersionCacheTime' ) : 86400;
+        $cacheFile = self::versionCacheFile();
+        $key = $command ? self::versionCacheKey( $command ) : false;
+        if ( !$fresh && $key !== false && $cacheTime > 0 )
+        {
+            $cached = self::readVersionCache( $cacheFile, $key, $cacheTime, time() );
+            if ( $cached !== false )
+            {
+                return $cached;
+            }
+        }
+
         $result = $this->run( array( '--version', '--no-ansi' ), 60 );
         if ( $result['exit'] !== 0 )
         {
             return false;
         }
-        // Warnings (running as root, a missing extension) may come first.
-        foreach ( explode( "\n", $result['output'] ) as $line )
+        $version = self::parseComposerVersion( $result['output'] );
+        if ( $key !== false && $cacheTime > 0 && $version !== '' )
         {
-            if ( stripos( $line, 'Composer version' ) === 0 )
+            self::writeVersionCache( $cacheFile, $key, $version, time() );
+        }
+        return $version;
+    }
+
+    /**
+     * Pure: the "Composer version ..." line of `composer --version`. Warnings
+     * (running as root, a missing extension) may come first.
+     */
+    public static function parseComposerVersion( $output )
+    {
+        foreach ( explode( "\n", (string)$output ) as $line )
+        {
+            if ( stripos( trim( $line ), 'Composer version' ) === 0 )
             {
                 return trim( $line );
             }
         }
-        return trim( strtok( $result['output'], "\n" ) );
+        return trim( (string)strtok( (string)$output, "\n" ) );
+    }
+
+    /**
+     * Where composerVersion() keeps its answer.
+     */
+    public static function versionCacheFile()
+    {
+        return eZSys::cacheDirectory() . '/ezupdate/composer-version.json';
+    }
+
+    /**
+     * Pure apart from stat(): what identifies the Composer that was asked.
+     */
+    public static function versionCacheKey( array $command )
+    {
+        $parts = array();
+        foreach ( $command as $file )
+        {
+            $parts[] = $file . ':' . (int)@filesize( $file ) . ':' . (int)@filemtime( $file );
+        }
+        return md5( implode( '|', $parts ) );
+    }
+
+    /**
+     * The cached version for $key when it is younger than $cacheTime seconds, else false.
+     */
+    public static function readVersionCache( $file, $key, $cacheTime, $now )
+    {
+        if ( $cacheTime <= 0 || !is_file( $file ) )
+        {
+            return false;
+        }
+        $data = json_decode( (string)@file_get_contents( $file ), true );
+        if ( !is_array( $data ) || !isset( $data['key'], $data['version'], $data['time'] )
+             || $data['key'] !== $key || !is_string( $data['version'] ) || $data['version'] === ''
+             || (int)$data['time'] > $now || (int)$data['time'] <= $now - $cacheTime )
+        {
+            return false;
+        }
+        return $data['version'];
+    }
+
+    /**
+     * Stores a version for readVersionCache(); a cache that cannot be written is skipped.
+     */
+    public static function writeVersionCache( $file, $key, $version, $now )
+    {
+        $body = json_encode( array( 'key' => $key, 'version' => (string)$version, 'time' => (int)$now ) );
+        return (bool)@eZFile::create( basename( $file ), dirname( $file ), $body, true );
     }
 
     /**
@@ -1089,7 +1179,15 @@ class eZUpdateManager
             }
             $exit = -1;
         }
-        eZDebug::writeNotice( 'composer ' . implode( ' ', $arguments ) . ' exit ' . $exit, __METHOD__ );
+        // A run that worked is debug information; one that failed is worth a notice.
+        if ( (int)$exit === 0 )
+        {
+            eZDebug::writeDebug( 'composer ' . implode( ' ', $arguments ) . ' exit ' . $exit, __METHOD__ );
+        }
+        else
+        {
+            eZDebug::writeNotice( 'composer ' . implode( ' ', $arguments ) . ' exit ' . $exit, __METHOD__ );
+        }
 
         return $this->lastResult = array(
             'output'    => rtrim( $output ),

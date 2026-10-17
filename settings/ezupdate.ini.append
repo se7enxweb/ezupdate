@@ -34,6 +34,9 @@ PHPSearchPath[]=/opt/cpanel/ea-php%nodot%/root/usr/bin/php
 DownloadURL=https://getcomposer.org/download/latest-stable/composer.phar
 # Empty: DownloadURL followed by .sha256sum
 ChecksumURL=
+# Seconds the answer of `composer --version` is reused (Overview, ezupdate status).
+# Another binary or a new composer.phar is asked again at once. 0: ask every time.
+VersionCacheTime=86400
 # Seconds a Composer run may take before it is stopped.
 Timeout=900
 # COMPOSER_HOME when the web server passes none, relative to the installation root;

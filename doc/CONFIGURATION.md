@@ -30,6 +30,7 @@ After changing a setting, clear the INI cache:
 | `PHPSearchPath[]` | `/opt/plesk/php/%version%/bin/php`, `/usr/local/bin/php`, ... | PHP binaries tried after the one next to the running PHP; one with the running major.minor is preferred. |
 | `BinaryNames[]` | `composer`, `composer.phar` | Names to look for. |
 | `PHPBinary` | *(empty)* | The PHP command line binary that runs a `composer.phar` and the background runs. Empty: the `php` next to the running PHP (`PHP_BINDIR`), then `/usr/local/bin/php`, `/usr/bin/php`. Set it when the web server's PHP is not a command line PHP (PHP-FPM). |
+| `VersionCacheTime` | `86400` | Seconds the answer of `composer --version` is reused by the Overview and `ezupdate status`, kept in `<cache dir>/ezupdate/composer-version.json`. Another binary or a new `composer.phar` is asked again at once; a failure is never kept. `0` asks every time. Cleared by "Clear all" and `bin/php/ezcache.php --clear-id=ezupdate`. |
 | `Timeout` | `900` | Seconds a Composer run may take before it is stopped. |
 | `ComposerHome` | `var/ezupdate/composer` | `COMPOSER_HOME` when the web server passes none, relative to the installation root. Each system account gets its own directory below it (`…/composer/<user>`), so the web server and root never lock each other out of Composer's cache. |
 

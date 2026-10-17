@@ -4,6 +4,17 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.21 (2026-10-17)
+-------------------
+
+**The Overview no longer starts Composer on every visit.** `composer --version` was run each time the Overview
+(update/dashboard) was opened, and every run wrote a notice to `var/log/notice.log`. The answer is now kept in the
+cache directory for `[ComposerSettings] VersionCacheTime` seconds (default one day), keyed on the binary's path,
+size and time, so a new `composer.phar` is asked again at once. A failure is never kept, so the Overview still says
+why Composer did not start. The cache is a cache item of its own (`ezupdate`, "Update extension cache"), cleared by
+"Clear all" and `bin/php/ezcache.php --clear-id=ezupdate`; it also holds the packagist.org answers. A Composer run
+that succeeds is now logged at debug level; one that fails still writes a notice.
+
 1.1.20 (2026-10-17)
 -------------------
 
