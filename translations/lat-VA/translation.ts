@@ -283,6 +283,14 @@
         <translation>Cursus recentes</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>Summarium</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>Fasciculi cum editione recentiore</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>Exsequi</translation>
     </message>

@@ -1213,69 +1213,91 @@
     </message>
     <message>
         <source>Install updates</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Preview (dry run)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Install this update</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Can be installed</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Would install %version</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Could not be checked</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Blocked by composer.json (%constraint)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Blocked by composer.json or another package</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Installing updates is switched off.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Composer rewrites vendor/ and the files of every package it updates, so this stays off until you choose otherwise. Make a backup of the files and the database first.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>To switch it on, set AllowUpdate=enabled under [UpdateSettings] in settings/override/ezupdate.ini.append.php</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>, or use the button below.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Switch on updates</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Installing updates is switched on.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No package on this list can be installed by an update: composer.json blocks them. Raise their constraints in composer.json first.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>You do not have permission to change this setting.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tick at least one package to install.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>packages</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Check for updates first: then the packages that can be installed are listed and ticked here.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>composer.json asks for newer versions than composer.lock holds of: %packages. Composer needs them in the same run, so they are always included.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -280,6 +280,14 @@
         <translation>Ejecuciones recientes</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>Resumen</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>Paquetes con una versión más reciente</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>Arrancar</translation>
     </message>

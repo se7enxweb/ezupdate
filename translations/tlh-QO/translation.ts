@@ -283,6 +283,14 @@
         <translation>QapmoHghachmey chu&apos;</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>QIn ngaj</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>chovnatlh chu&apos; ghajbogh ngaSwI&apos;mey</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>yIQapmoH</translation>
     </message>

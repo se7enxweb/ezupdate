@@ -282,6 +282,14 @@
         <translation>הרצות אחרונות</translation>
     </message>
     <message>
+        <source>Summary</source>
+        <translation>תקציר</translation>
+    </message>
+    <message>
+        <source>Packages with a newer release</source>
+        <translation>חבילות עם גרסה חדשה יותר</translation>
+    </message>
+    <message>
         <source>Run</source>
         <translation>הרצה</translation>
     </message>
