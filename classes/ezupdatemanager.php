@@ -1293,61 +1293,59 @@ class eZUpdateManager
         $name = preg_replace( '/[^A-Za-z0-9_.-]/', '_', $name );
         return $name !== '' ? $name : 'default';
     }
-
     /**
      * Turns Composer output with ANSI colour codes into HTML. The text is escaped
      * first, so nothing in the output (package descriptions included) becomes markup.
+     *
+     * The colours are classes, not style attributes (a Content-Security-Policy of style-src 'self' drops those):
+     * .a4-update-ansi-<name> and .a4-update-ansi-bold, drawn by stylesheets/modules/update.css in the
+     * administration's state colours, so the output reads in the light and the dark look alike.
      */
     public static function ansiToHtml( $text )
     {
         $colours = array(
-            '30' => '#000', '31' => '#c00', '32' => '#0a0', '33' => '#a50',
-            '34' => '#00a', '35' => '#a0a', '36' => '#0aa', '37' => '#aaa',
-            '90' => '#555', '91' => '#f55', '92' => '#5f5', '93' => '#ff5',
-            '94' => '#55f', '95' => '#f5f', '96' => '#5ff', '97' => '#fff',
+            '30' => 'muted', '31' => 'bad', '32' => 'ok', '33' => 'warn',
+            '34' => 'info', '35' => 'accent', '36' => 'info', '37' => 'ink',
+            '90' => 'muted', '91' => 'bad', '92' => 'ok', '93' => 'warn',
+            '94' => 'info', '95' => 'accent', '96' => 'info', '97' => 'ink',
         );
 
         $text = htmlspecialchars( (string)$text, ENT_QUOTES, 'UTF-8' );
         $open = false;
-        $styles = array();
+        $classes = array();
 
         $html = preg_replace_callback(
             '/\x1b\[([0-9;]*)m/',
-            function ( $m ) use ( $colours, &$open, &$styles )
+            function ( $m ) use ( $colours, &$open, &$classes )
             {
                 foreach ( explode( ';', $m[1] ) as $code )
                 {
                     if ( $code === '' || $code === '0' )
                     {
-                        $styles = array();
+                        $classes = array();
                     }
                     else if ( $code === '39' )
                     {
-                        unset( $styles['color'] );
+                        unset( $classes['colour'] );
                     }
                     else if ( $code === '22' )
                     {
-                        unset( $styles['font-weight'] );
+                        unset( $classes['weight'] );
                     }
                     else if ( $code === '1' )
                     {
-                        $styles['font-weight'] = 'bold';
+                        $classes['weight'] = 'a4-update-ansi-bold';
                     }
                     else if ( isset( $colours[$code] ) )
                     {
-                        $styles['color'] = $colours[$code];
+                        $classes['colour'] = 'a4-update-ansi-' . $colours[$code];
                     }
                 }
                 $html = $open ? '</span>' : '';
                 $open = false;
-                if ( $styles )
+                if ( $classes )
                 {
-                    $css = array();
-                    foreach ( $styles as $property => $value )
-                    {
-                        $css[] = $property . ':' . $value;
-                    }
-                    $html .= '<span style="' . implode( ';', $css ) . '">';
+                    $html .= '<span class="' . implode( ' ', $classes ) . '">';
                     $open = true;
                 }
                 return $html;

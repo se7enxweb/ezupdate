@@ -328,6 +328,10 @@
         <translation>enlaces de financiación</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>Enlaces de financiación</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>Todos los paquetes instalados</translation>
     </message>
@@ -458,6 +462,10 @@
     <message>
         <source>Source</source>
         <translation>Origen</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Fuentes</translation>
     </message>
     <message>
         <source>Website</source>

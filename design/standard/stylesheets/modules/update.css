@@ -1,11 +1,11 @@
 /*
  * ezupdate (Setup > Updates and packages): what the administration's shared components (components.css: .a4-pagehead,
- * .a4-tabs, .a4-figures, .a4-card, .a4-facts, .a4-table, .a4-badge, .a4-btn, .a4-notice, .a4-empty) cannot do on
- * its own. Loaded by design.ini [StylesheetSettings] BackendCSSFileList, so the ezjscore packer bundles it.
+ * .a4-tabs, .a4-figures, .a4-card, .a4-facts, .a4-table, .a4-badge, .a4-tag, .a4-btn, .a4-notice, .a4-empty,
+ * .a4-toolbar, .a4-filterbar, .a4-chips, .a4-fold, .a4-pre) cannot do on its own, for every view of the module.
+ * Loaded by design.ini [StylesheetSettings] BackendCSSFileList, so the ezjscore packer bundles it.
  *
  * Rules (doc/bc/6.0/admin4-styling.md): .a4-update-* class names only, colours, radius, spacing and fonts only from
- * the --a4-* tokens (each has its dark value in components.css), no new tokens. The older views' rules (.ezx-*,
- * .ezupdate-*) are in ../ezupdate.css.
+ * the --a4-* tokens (each has its dark value in components.css), no new tokens.
  */
 
 /* The page header: the pagehead, then the app's tabs, then the messages of the request */
@@ -76,11 +76,125 @@
   .a4-update-dismissable.is-leaving { transition: none; }
 }
 
-/* The copy button after a path (ezupdate.js adds it) */
+/* A copy button after a value (drawn by the views; ezupdate.js copies and says "Copied") */
 .a4-update-copy.is-done { border-color: var(--a4-ok); color: var(--a4-ok); }
+
+/* A busy button (ezupdate.js, after a slow submit) */
+.a4-update-busy { opacity: .7; }
+
+/* A section that follows a list in the same card */
+.a4-update-section-top { margin-top: var(--a4-space-4); }
+.a4-update-note-top { margin: 0 0 var(--a4-space-3); }
+
+/* A row of controls above a list (the funding scope and filter, the install form): fields and buttons on one
+   wrapping line, aligned at their bottom edge */
+.a4-update-bar { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--a4-space-3) var(--a4-space-4); margin: 0 0 var(--a4-space-4); }
+.a4-update-installform { flex: 1 1 100%; justify-content: flex-start; margin: 0; }
+.a4-update-scope { margin: 0; }
+.a4-update-filter { flex: 0 1 280px; }
+.a4-update-grow { flex: 1 1 260px; }
+
+/* An add form in the foot of a card: name, type, address and the button on one wrapping line */
+.a4-update-form { align-items: flex-end; gap: var(--a4-space-3); }
+.a4-update-form .a4-field { flex: 0 1 180px; }
+.a4-update-form .a4-field.a4-update-grow { flex: 1 1 260px; }
+
+/* The search of Find packages: the query takes the room the other fields leave */
+.a4-update-search .a4-actions { align-self: end; }
+
+/* A value with its copy button */
+.a4-update-copyable { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-1) var(--a4-space-2); overflow-wrap: anywhere; }
+
+/* Funding: the vendors as a grid of cards, their links with the kind of link as a badge */
+.a4-update-vendors { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
+.a4-update-links { margin: 0; padding: 0; list-style: none; }
+.a4-update-links > li { margin: 0 0 var(--a4-space-2); }
+.a4-update-links > li:last-child { margin-bottom: 0; }
+.a4-update-fund-link { display: inline-flex; align-items: center; gap: var(--a4-space-2); max-width: 100%; text-decoration: none; }
+.a4-update-fund-link .a4-badge { flex: none; }
+.a4-update-url { min-width: 0; overflow-wrap: anywhere; }
+.a4-update-fund-link:hover .a4-update-url { text-decoration: underline; }
+.a4-update-supports { margin: var(--a4-space-1) 0 0; font-size: var(--a4-text-s); }
+.a4-update-supports > summary { cursor: pointer; color: var(--a4-muted); }
+.a4-update-supports > summary:hover { color: var(--a4-accent-text); }
+.a4-update-supports > p { margin: var(--a4-space-1) 0 0; }
+
+/* Installed packages: the figures are toggle buttons that filter the list, the filter chips carry their count */
+.a4-update-figures .a4-figure > button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: calc(100% + 2 * var(--a4-space-3));
+  min-height: 100%;
+  margin: calc(-1 * var(--a4-space-3));
+  padding: var(--a4-space-3);
+  border: 0;
+  border-radius: var(--a4-radius-s);
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.a4-update-figures .a4-figure:has(> button:hover) { border-color: var(--a4-accent); }
+.a4-update-figures .a4-figure > button[aria-pressed="true"] span { color: var(--a4-ink); }
+.a4-update-invbar { align-items: flex-end; }
+.a4-update-invbar .a4-field { flex: 0 1 220px; }
+.a4-update-invbar .a4-field.a4-update-grow { flex: 1 1 260px; }
+.a4-update-invbar .a4-field.a4-field-wide { flex: 1 1 100%; }
+.a4-update-show > legend { font-weight: 600; }
+.a4-update-count { color: var(--a4-muted); font-weight: 400; }
+.a4-update-shown { margin: 0; }
+
+/* Installed packages: one package per tbody (its row and its details), sorted and filtered in the page */
+.a4-update-inv th .a4-link-button { font-weight: inherit; }
+.a4-update-inv th[aria-sort="ascending"] .a4-link-button::after { content: " \2191"; }
+.a4-update-inv th[aria-sort="descending"] .a4-link-button::after { content: " \2193"; }
+.a4-update-invrow[hidden] { display: none; }
+.a4-update-vendor { color: var(--a4-muted); }
+.a4-update-name .a4-tag { margin-inline-start: var(--a4-space-1); }
+.a4-update-versions { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px var(--a4-space-2); margin: 0; align-items: baseline; }
+.a4-update-versions dt { color: var(--a4-muted); font-size: var(--a4-text-xs); text-transform: uppercase; letter-spacing: .05em; cursor: help; }
+.a4-update-versions dd { margin: 0; }
+.a4-update-more .a4-icon { transition: transform .15s; }
+.a4-update-more[aria-expanded="true"] .a4-icon { transform: rotate(180deg); }
+.a4-update-detail > td { background-color: var(--a4-soft); }
+.a4-update-detail code { overflow-wrap: anywhere; }
+
+/* A run: its status and times on one wrapping line */
+.a4-update-run { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-2) var(--a4-space-4); }
+.a4-update-run strong { color: var(--a4-ink); font-weight: 600; }
+
+/* The output of Composer: the shared code block, drawn on the page's soft surface so the state colours of the
+   output (.a4-update-ansi-*, eZUpdateManager::ansiToHtml()) read in the light and the dark look alike */
+.a4-update-terminal { border: 1px solid var(--a4-line); background-color: var(--a4-soft); color: var(--a4-ink); }
+.a4-update-term.is-nowrap .a4-update-terminal { white-space: pre; overflow-wrap: normal; }
+.a4-update-term-title { min-width: 0; font-family: var(--a4-mono); font-size: var(--a4-text-m); overflow-wrap: anywhere; }
+.a4-update-term .a4-card-actions { gap: var(--a4-space-2) var(--a4-space-4); }
+.a4-update-show-title { margin: var(--a4-space-4) 0 var(--a4-space-2); }
+.a4-update-ansi-bold { font-weight: 700; }
+.a4-update-ansi-muted { color: var(--a4-muted); }
+.a4-update-ansi-ink { color: var(--a4-ink); }
+.a4-update-ansi-ok { color: var(--a4-ok); }
+.a4-update-ansi-warn { color: var(--a4-warn); }
+.a4-update-ansi-bad { color: var(--a4-bad); }
+.a4-update-ansi-info { color: var(--a4-info); }
+.a4-update-ansi-accent { color: var(--a4-accent-text); }
+
+/* Forced colours (Windows high contrast): a pressed figure keeps an edge */
+@media (forced-colors: active) {
+  .a4-update-figures .a4-figure > button[aria-pressed="true"] { outline: 2px solid Highlight; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .a4-update-more .a4-icon { transition: none; }
+}
 
 /* Phone width: the form's controls take the whole row */
 @media (max-width: 600px) {
   .a4-update-method { flex: 1 1 100%; }
   .a4-update-confirm { width: 100%; }
+  .a4-update-filter,
+  .a4-update-form .a4-field,
+  .a4-update-invbar .a4-field { flex: 1 1 100%; }
 }

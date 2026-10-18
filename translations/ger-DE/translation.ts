@@ -328,6 +328,10 @@
         <translation>Förder-Links</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>Förder-Links</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>Alle installierten Pakete</translation>
     </message>
@@ -458,6 +462,10 @@
     <message>
         <source>Source</source>
         <translation>Quelle</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Quellen</translation>
     </message>
     <message>
         <source>Website</source>

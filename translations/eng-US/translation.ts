@@ -328,6 +328,10 @@
         <translation>funding links</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>Funding links</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>All installed packages</translation>
     </message>
@@ -458,6 +462,10 @@
     <message>
         <source>Source</source>
         <translation>Source</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Sources</translation>
     </message>
     <message>
         <source>Website</source>

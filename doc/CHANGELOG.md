@@ -4,6 +4,29 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.23 (2026-10-17)
+-------------------
+
+**Every view follows the administration's look, light and dark.** Installed packages, Find packages, a package's
+page, Package servers, a server's packages, Funding and a run's page are built from the administration's shared
+components (page header, cards, figures, facts, tables, badges, tags, filter bar, toolbar, chips, notices, buttons),
+like the Overview since 1.1.20. They have admin4's dark mode, read in the classic admin, and pass the contrast
+checks. Each page draws its title, intro and actions (downloads, the way back, packagist.org) in the shared page
+header.
+
+- The older design system `design/standard/stylesheets/ezupdate.css` is gone; what the components cannot do is
+  `.a4-update-*` in `modules/update.css` (tokens only), loaded through `design.ini` and bundled by the packer. A site
+  that overrode an ezupdate template with the old `.ezx-*` or `.ezupdate-*` classes loses their look.
+- Composer's coloured output (a run's page, `composer show` on a package's page) uses classes instead of
+  `style=""` attributes (`eZUpdateManager::ansiToHtml()`), drawn in the administration's state colours on the
+  page's soft surface, so it reads in both modes and under a Content-Security-Policy of `style-src 'self'`.
+  `ezupdate.js` no longer sets inline styles either.
+- The copy buttons are part of the page, so nothing shifts when the script starts; the installed packages'
+  filters are radio chips and toggle figures (`aria-pressed`), the output of a run is a focusable, named region,
+  and every field has a label.
+- Every form field and button name is unchanged. New strings ("Funding links", "Sources") in English, German,
+  Spain's and Mexico's Spanish, Hebrew, Latin and Klingon.
+
 1.1.22 (2026-10-17)
 -------------------
 

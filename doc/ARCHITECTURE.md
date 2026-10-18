@@ -22,7 +22,7 @@ extension/ezupdate/
 │   └── dashboard.php installed.php browse.php package.php servers.php packages.php job.php fund.php
 ├── design/standard/
 │   ├── templates/ezupdate/       one template per view, parts/ (header, footer, status, method, install form)
-│   ├── stylesheets/ezupdate.css  the design system (all under .ezx)
+│   ├── stylesheets/modules/update.css  what the shared .a4-* components cannot do (.a4-update-*)
 │   └── javascript/ezupdate.js    plain JavaScript, no library
 ├── settings/                     ezupdate.ini, menu (Setup), module, design, site
 └── translations/                 eng-US, ger-DE, untranslated
@@ -87,28 +87,32 @@ one PHP process (persistent-worker servers).
 The front end
 -------------
 
-Every page starts with `parts/header.tpl` (title, tabs, messages; it opens the
-page root `<div class="ezx">`) and ends with `parts/footer.tpl`. The stylesheet
-is a small design system, every rule under `.ezx`, so the rest of the admin is
-untouched:
+Every page starts with `parts/header.tpl` (the page header with its title,
+intro and actions, the tabs, the messages; it opens the page root
+`<div class="a4-page ezx a4-update">`) and ends with `parts/footer.tpl`. Every
+view is built from the administration's shared components
+(`design:stylesheets/components.css`, doc/bc/6.0/admin4-styling.md of the
+kernel), so the pages follow admin4's light and dark look and read in the
+classic admin:
 
 | Component | Classes |
 |---|---|
-| tokens | CSS custom properties on `.ezx` (`--x-ink`, `--x-accent`, `--x-line`, …) |
-| page | `.ezx-page`, `.ezx-head`, `.ezx-head-actions` |
-| panel | `.ezx-panel` with `header`, `.ezx-panel-body` (`.ezx-panel-flush`), `footer` |
-| cards | `.ezx-stats`, `.ezx-stat` (`is-ok`, `is-warn`, `is-bad`) |
-| facts | `.ezx-facts` (a `dl`) |
-| table | `.ezx-table`, `.ezx-title-cell`, `.ezx-num`, `.ezx-actions`; cells with `data-label` |
-| forms | `.ezx-form`, `.ezx-field`, `.ezx-field-grow`, `.ezupdate-bar`, `.ezupdate-confirm` |
-| badges | `.ezupdate-badge` (`ezupdate-good`, `-warn`, `-bad`, `-running`) |
-| alerts | `.ezx-alert` (`-ok`, `-warn`, `-bad`, `-info`), `data-ezx-dismiss` |
-| terminal | `.ezx-term`, `.ezx-term-bar`, `.ezupdate-terminal` |
+| page | `.a4-page`, `.a4-pagehead` (`.a4-pagehead-actions`), `.a4-tabs` |
+| cards | `.a4-card` with `.a4-card-head`, `.a4-card-body`, `.a4-card-foot`; `.a4-cards` |
+| figures, facts | `.a4-figures` > `.a4-figure`; `dl.a4-facts.is-rows` |
+| table | `.a4-table-wrap` > `table.a4-table` |
+| forms | `.a4-field`, `.a4-filterbar`, `.a4-toolbar`, `.a4-chips`, `.a4-check`, `.a4-btn` |
+| badges | `.a4-badge`, `.a4-tag` (`is-ok`, `is-warn`, `is-bad`, `is-info`) |
+| notices | `.a4-notice` (`is-ok`, `is-warn`, `is-bad`, `is-info`), `.a4-empty`, `data-ezx-dismiss` |
+| output | `.a4-pre` with `.a4-update-terminal`; the colours of Composer's output are `.a4-update-ansi-*` classes |
 
-The layout follows the width of the page's own box, not the window
-(`container: ezx / inline-size` and `@container` rules), because the admin's
-side panels leave a narrow column even on wide screens: below 720px tables
-become cards.
+What the components cannot do is `.a4-update-*` in
+`design/standard/stylesheets/modules/update.css` (tokens only, no colour of its
+own), loaded through `design.ini` `[StylesheetSettings] BackendCSSFileList`, so
+the ezjscore packer bundles it. No template has a `<style>` block, a `style=""`
+attribute or an inline script, and `ansiToHtml()` writes classes, not style
+attributes, so the pages work under a Content-Security-Policy of
+`style-src 'self'` and `script-src 'self'`.
 
 `ezupdate.js` is plain JavaScript; each feature does nothing on a page without
 its markup:

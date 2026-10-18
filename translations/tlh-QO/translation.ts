@@ -331,6 +331,10 @@
         <translation>Huch nobghach rarwI&apos;mey</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>Huch nobghach rarwI&apos;mey</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>Hoch jomlu&apos;ta&apos;bogh &apos;aplomey</translation>
     </message>
@@ -461,6 +465,10 @@
     <message>
         <source>Source</source>
         <translation>Hal</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Halmey</translation>
     </message>
     <message>
         <source>Website</source>

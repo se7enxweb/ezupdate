@@ -331,6 +331,10 @@
         <translation>nexus subsidiorum</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>Nexus subsidiorum</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>Omnes sarcinae institutae</translation>
     </message>
@@ -461,6 +465,10 @@
     <message>
         <source>Source</source>
         <translation>Origo</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>Fontes</translation>
     </message>
     <message>
         <source>Website</source>

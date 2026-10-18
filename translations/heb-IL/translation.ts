@@ -330,6 +330,10 @@
         <translation>קישורי מימון</translation>
     </message>
     <message>
+        <source>Funding links</source>
+        <translation>קישורי מימון</translation>
+    </message>
+    <message>
         <source>All installed packages</source>
         <translation>כל החבילות המותקנות</translation>
     </message>
@@ -460,6 +464,10 @@
     <message>
         <source>Source</source>
         <translation>מקור</translation>
+    </message>
+    <message>
+        <source>Sources</source>
+        <translation>מקורות</translation>
     </message>
     <message>
         <source>Website</source>

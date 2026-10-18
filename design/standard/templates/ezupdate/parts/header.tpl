@@ -1,15 +1,14 @@
 {* The top of every ezupdate page: the page header, the app's tabs and the messages of the request. Opens the page's
-   root, <div class="context-block a4-page ezx">, which parts/footer.tpl closes (.a4-page, the shared reset, only
-   for a view that passes its title: the older views keep their own spacing).
+   root, <div class="context-block a4-page ezx a4-update">, which parts/footer.tpl closes.
 
    Built from the administration's shared components (design:stylesheets/components.css: .a4-pagehead, .a4-tabs,
    .a4-notice, .a4-btn), so it follows the light and the dark look of admin4 and reads in the classic admin too.
-   The module's own rules are .a4-update-* in stylesheets/modules/update.css (design.ini BackendCSSFileList). The
-   other views' bodies still use the older .ezx-* rules of ezupdate.css, loaded here for them.
+   The module's own rules are .a4-update-* in stylesheets/modules/update.css (design.ini BackendCSSFileList); every
+   view is built from the same components, no view loads a stylesheet of its own.
 
-   Parameters: current (dashboard|installed|browse|servers|fund), error, message; optional title and intro: with a
-   title the header draws the page's h1 (the view then has none of its own). *}
-{ezcss_require( 'ezupdate.css' )}
+   Parameters: current (dashboard|installed|browse|servers|fund), title, error, message; optional intro and actions:
+   a list of hash( 'url', <module path or address>, 'text', <label>, 'external', bool, 'download', bool ) (every key given), drawn as
+   small buttons at the end of the page header (an external address opens in a new window). *}
 {ezscript_require( 'ezupdate.js' )}
 {* the views pass error and message even when they have none (an empty value): first_set, not a def behind is_set(),
    which warned "already defined" for a passed empty value *}
@@ -17,12 +16,13 @@
      $ezx_message = first_set( $message, false() )
      $ezx_title = first_set( $title, false() )
      $ezx_intro = first_set( $intro, false() )
+     $ezx_actions = first_set( $actions, array() )
      $ezx_tabs = array( hash( 'id', 'dashboard', 'url', 'update/dashboard', 'text', 'Overview'|i18n( 'extension/ezupdate' ) ),
                         hash( 'id', 'installed', 'url', 'update/installed', 'text', 'Installed packages'|i18n( 'extension/ezupdate' ) ),
                         hash( 'id', 'browse', 'url', 'update/browse', 'text', 'Find packages'|i18n( 'extension/ezupdate' ) ),
                         hash( 'id', 'servers', 'url', 'update/servers', 'text', 'Package servers'|i18n( 'extension/ezupdate' ) ),
                         hash( 'id', 'fund', 'url', 'update/fund', 'text', 'Funding'|i18n( 'extension/ezupdate' ) ) )}
-<div class="context-block{if $ezx_title} a4-page{/if} ezx a4-update" data-ezupdate-copy="{'Copy'|i18n( 'extension/ezupdate' )|wash}" data-ezupdate-copied="{'Copied'|i18n( 'extension/ezupdate' )|wash}">
+<div class="context-block a4-page ezx a4-update" data-ezupdate-copy="{'Copy'|i18n( 'extension/ezupdate' )|wash}" data-ezupdate-copied="{'Copied'|i18n( 'extension/ezupdate' )|wash}">
 <div class="a4-update-head">
     <div class="a4-pagehead">
         <div class="a4-pagehead-main">
@@ -33,6 +33,17 @@
             <p class="a4-pagehead-sub">{'Composer, extensions and package servers'|i18n( 'extension/ezupdate' )}</p>
             {/if}
         </div>
+        {if $ezx_actions|count}
+        <div class="a4-pagehead-actions">
+            {foreach $ezx_actions as $ezx_action}
+            {if $ezx_action.external}
+            <a class="a4-btn a4-btn-small" href="{$ezx_action.url|wash}" target="_blank" rel="noopener noreferrer">{$ezx_action.text|wash}</a>
+            {else}
+            <a class="a4-btn a4-btn-small" href={$ezx_action.url|ezurl}{if $ezx_action.download} download="download"{/if}>{$ezx_action.text|wash}</a>
+            {/if}
+            {/foreach}
+        </div>
+        {/if}
     </div>
     <nav aria-label="{'Updates and packages'|i18n( 'extension/ezupdate' )}">
     <ul class="a4-tabs a4-update-tabs">
@@ -56,4 +67,4 @@
     </div>
     {/if}
 </div>
-{undef $ezx_error $ezx_message $ezx_title $ezx_intro $ezx_tabs}
+{undef $ezx_error $ezx_message $ezx_title $ezx_intro $ezx_actions $ezx_tabs}

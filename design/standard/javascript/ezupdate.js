@@ -50,7 +50,8 @@
             if (!kind) { notice.hidden = true; notice.textContent = ''; return; }
             var text = pre.getAttribute('data-notice-' + kind) || kind;
             notice.textContent = text.replace('%status', httpStatus).replace('%count', maxFailures);
-            notice.className = 'ezupdate-notice ' + (kind === 'server' || kind === 'noanswer' ? 'ezupdate-warn' : 'ezupdate-bad');
+            // the shared notice (.a4-notice), as job.tpl draws it
+            notice.className = 'a4-notice a4-update-note ' + (kind === 'server' || kind === 'noanswer' ? 'is-warn' : 'is-bad');
             notice.hidden = false;
         }
 
@@ -110,8 +111,8 @@
                 } else {
                     var result = document.getElementById('ezupdate-job-result');
                     if (result && data.message) {
-                        result.className = 'ezx-alert ezx-alert-' + (data.message_state || 'ok');
-                        result.firstElementChild.firstElementChild.textContent = data.message;
+                        result.className = 'a4-notice a4-update-section is-' + (data.message_state || 'ok');
+                        result.firstElementChild.textContent = data.message;
                         result.hidden = false;
                     }
                     if (elapsed && data.finished) { elapsed.setAttribute('data-finished', data.finished); }
@@ -128,14 +129,15 @@
         poll();
     }
 
-    // Installed packages (update/installed): the filter chips and cards, the search, the sortable columns and the
-    // details of a row, all in the page.
+    // Installed packages (update/installed): the filter chips (radio buttons) and figures (toggle buttons), the
+    // search, the sortable columns and the details of a row, all in the page. The parts are found by their data-*
+    // attributes (installed.tpl), not by their look.
     function installedPackages() {
         var root = document.querySelector('[data-ezupdate-installed]');
         if (!root) { return; }
-        var rows = Array.prototype.slice.call(root.querySelectorAll('tbody.ezupdate-inv-row'));
-        var table = root.querySelector('.ezupdate-inv-table');
-        var empty = root.querySelector('.ezupdate-inv-empty');
+        var rows = Array.prototype.slice.call(root.querySelectorAll('tbody[data-ezupdate-row]'));
+        var table = root.querySelector('[data-ezupdate-table]');
+        var empty = root.querySelector('[data-ezupdate-empty]');
         var count = root.querySelector('[data-count]');
         var search = root.querySelector('[data-search]');
         var filter = 'all', text = '', sortKey = 'name', sortDir = 1;
@@ -154,8 +156,10 @@
             if (empty) { empty.hidden = shown !== 0; }
             Array.prototype.forEach.call(root.querySelectorAll('[data-filter]'), function (b) {
                 var is = b.getAttribute('data-filter') === filter;
-                b.classList.toggle('is-on', is);
-                if (b.classList.contains('ezupdate-inv-chip')) { b.setAttribute('aria-pressed', is ? 'true' : 'false'); }
+                if (b.type === 'radio') { b.checked = is; return; }
+                b.setAttribute('aria-pressed', is ? 'true' : 'false');
+                var figure = b.closest('.a4-figure');
+                if (figure) { figure.classList.toggle('is-current', is); }
             });
         };
         var sort = function () {
@@ -211,7 +215,7 @@
                 save();
                 return;
             }
-            var more = e.target.closest('.ezupdate-inv-more button');
+            var more = e.target.closest('button[aria-controls^="ezupdate-inv-detail-"]');
             if (more) {
                 var detail = document.getElementById(more.getAttribute('aria-controls'));
                 var open = more.getAttribute('aria-expanded') !== 'true';
@@ -280,7 +284,7 @@
             return;
         }
         var area = document.createElement('textarea');
-        area.value = text; area.setAttribute('readonly', ''); area.style.position = 'fixed'; area.style.opacity = '0';
+        area.value = text; area.setAttribute('readonly', ''); area.className = 'a4-sr-only';
         document.body.appendChild(area); area.select();
         try { document.execCommand('copy'); done(); } catch (e) {}
         document.body.removeChild(area);
@@ -288,14 +292,15 @@
 
     // Copy buttons: after code marked data-ezx-copy, and buttons naming an element to copy (the terminal).
     // The labels are translated: the page's root carries them (data-ezupdate-copy, data-ezupdate-copied, see
-    // parts/header.tpl); on the shared admin pages (.a4-page) the button is a small shared .a4-btn.
+    // parts/header.tpl); the button is a small shared .a4-btn. The views draw their copy buttons themselves
+    // (data-ezx-copy-target), so nothing shifts when this script starts.
     function copyButtons() {
         each('[data-ezx-copy]', function (code) {
             var root = code.closest('[data-ezupdate-copy]');
             var label = root ? root.getAttribute('data-ezupdate-copy') : 'Copy';
             var b = document.createElement('button');
             b.type = 'button';
-            b.className = code.closest('.a4-page') ? 'a4-btn a4-btn-small a4-update-copy' : 'ezx-copy';
+            b.className = 'a4-btn a4-btn-small a4-update-copy';
             b.textContent = label; b.setAttribute('aria-label', label + ': ' + code.textContent);
             if (root && root.getAttribute('data-ezupdate-copied')) { b.setAttribute('data-done', root.getAttribute('data-ezupdate-copied')); }
             b.addEventListener('click', function () { copyText(code.textContent, b); });
@@ -377,7 +382,7 @@
             if (!button.form) { return; }
             button.form.addEventListener('submit', function (e) {
                 if (e.submitter && e.submitter !== button) { return; }
-                window.setTimeout(function () { button.value = button.getAttribute('data-ezx-busy'); button.setAttribute('aria-busy', 'true'); button.style.opacity = '.7'; }, 0);
+                window.setTimeout(function () { button.value = button.getAttribute('data-ezx-busy'); button.setAttribute('aria-busy', 'true'); button.classList.add('a4-update-busy'); }, 0);
             });
         });
     }
