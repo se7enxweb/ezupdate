@@ -156,7 +156,11 @@
 .a4-update-name .a4-tag { margin-inline-start: var(--a4-space-1); }
 .a4-update-versions { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px var(--a4-space-2); margin: 0; align-items: baseline; }
 .a4-update-versions dt { color: var(--a4-muted); font-size: var(--a4-text-xs); text-transform: uppercase; letter-spacing: .05em; cursor: help; }
-.a4-update-versions dd { margin: 0; }
+.a4-update-versions dd { margin: 0; white-space: nowrap; }
+.a4-update-inv > tbody > tr > .a4-update-actions,
+.a4-update-inv > thead > tr > th:last-child { width: 1%; }
+.a4-update-ext { align-items: center; }
+.a4-update-ext > code { overflow-wrap: normal; }
 .a4-update-more .a4-icon { transition: transform .15s; }
 .a4-update-more[aria-expanded="true"] .a4-icon { transform: rotate(180deg); }
 .a4-update-detail > td { background-color: var(--a4-soft); }

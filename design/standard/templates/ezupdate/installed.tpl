@@ -66,7 +66,7 @@
         <p class="a4-meta a4-update-shown" aria-live="polite"><span data-count="1">{$rows|count}</span> / {$rows|count}</p>
     </div>
 
-    <div class="a4-table-wrap">
+    <div class="a4-table-wrap" role="region" aria-label="{'Installed packages'|i18n( 'extension/ezupdate' )|wash}" tabindex="0">
     <table class="a4-table a4-update-inv" data-ezupdate-table="1">
         <caption class="a4-sr-only">{'Installed packages'|i18n( 'extension/ezupdate' )}</caption>
         <thead>
@@ -110,11 +110,11 @@
                             {if $row.git}<span class="a4-meta a4-update-desc" title="{'Git working copy'|i18n( 'extension/ezupdate' )}">{if $row.git.branch}{$row.git.branch|wash}{else}HEAD{/if}@{$row.git.commit|wash}</span>{/if}</dd>
                     </dl>
                 </td>
-                <td>{if $row.extension}
+                <td>{if $row.extension}<span class="a4-badges a4-update-ext">
                         <code>{$row.extension|wash}</code>
                         {if $row.active|count|eq( 0 )}<span class="a4-badge">{'off'|i18n( 'extension/ezupdate' )}</span>
                         {elseif eq( $row.active[0], 'everywhere' )}<span class="a4-badge is-ok">{'active'|i18n( 'extension/ezupdate' )}</span>
-                        {else}<span class="a4-badge is-info" title="{$row.active|implode( ', ' )|wash}">{'%count siteaccesses'|i18n( 'extension/ezupdate',, hash( '%count', $row.active|count ) )}</span>{/if}
+                        {else}<span class="a4-badge is-info" title="{$row.active|implode( ', ' )|wash}">{'%count siteaccesses'|i18n( 'extension/ezupdate',, hash( '%count', $row.active|count ) )}</span>{/if}</span>
                     {else}<span class="a4-muted">&mdash;</span>{/if}</td>
                 <td><span class="a4-badges">{if $row.issues|count}
                         {foreach $row.issues as $issue}<span class="a4-badge is-{$issue[0]|wash}">{$issue[1]|wash}</span>{/foreach}

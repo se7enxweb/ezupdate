@@ -19,7 +19,7 @@
         {if $composer_json_writable|not}
         <div class="a4-notice is-warn a4-update-note-top"><p>{'composer.json cannot be written by the web server, so this list can only be read here.'|i18n( 'extension/ezupdate' )}</p></div>
         {/if}
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-composer-servers" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'Composer servers'|i18n( 'extension/ezupdate' )}</caption>
             <thead><tr>
@@ -94,7 +94,7 @@
     </div>
     <div class="a4-card-body">
         {if $package_servers|count}
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-package-servers" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'Exponential package servers'|i18n( 'extension/ezupdate' )}</caption>
             <thead><tr>

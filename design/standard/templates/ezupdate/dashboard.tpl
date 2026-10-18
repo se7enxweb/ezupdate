@@ -101,7 +101,7 @@
     <div class="a4-card-body">
     {if $outdated|is_array}
         {if $outdated|count}
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-updates-title" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'Packages with a newer release'|i18n( 'extension/ezupdate' )}</caption>
             <thead><tr>
@@ -159,7 +159,7 @@
 <section class="a4-card a4-update-section" id="ezx-runs" aria-labelledby="ezupdate-runs-title">
     <div class="a4-card-head"><h2 id="ezupdate-runs-title">{'Recent runs'|i18n( 'extension/ezupdate' )}</h2></div>
     <div class="a4-card-body">
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-runs-title" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'Recent runs'|i18n( 'extension/ezupdate' )}</caption>
             <thead><tr>

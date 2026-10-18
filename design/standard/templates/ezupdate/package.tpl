@@ -113,7 +113,7 @@
         <div class="a4-card-actions"><label class="a4-check"><input type="checkbox" data-ezx-stable-only="1" /> <span>{'Releases only'|i18n( 'extension/ezupdate' )}</span></label></div>
     </div>
     <div class="a4-card-body">
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-package-versions" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'Versions'|i18n( 'extension/ezupdate' )}</caption>
             <thead><tr>

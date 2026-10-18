@@ -26,7 +26,7 @@
     </div>
     <div class="a4-card-body">
     {if $packages|count}
-        <div class="a4-table-wrap">
+        <div class="a4-table-wrap" role="region" aria-labelledby="ezupdate-packages-title" tabindex="0">
         <table class="a4-table">
             <caption class="a4-sr-only">{'%count packages'|i18n( 'extension/ezupdate',, hash( '%count', $packages|count ) )}</caption>
             <thead><tr>
