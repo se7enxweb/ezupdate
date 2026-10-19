@@ -74,10 +74,34 @@ class eZUpdatePackageServers
             $sdk = class_exists( 'ExponentialSDK' ) ? 'ExponentialSDK' : 'eZPublishSDK';
             if ( $base !== '' && class_exists( $sdk ) )
             {
-                $url = rtrim( $base, '/' ) . '/' . $sdk::version( false, false, false ) . '/' . $sdk::version();
+                $url = rtrim( $base, '/' ) . '/' . self::releasePath( $sdk );
             }
         }
         return rtrim( $url, '/' );
+    }
+
+    /**
+     * The release's folder on a package server, x.y/x.y.z (6.0/6.0.15), the
+     * state appended only for a release that is not stable (6.0/6.0.16alpha1).
+     * ExponentialSDK::packageServerPath() from Exponential 6.0.15 on; the same
+     * rule for an older kernel. Before ezupdate 1.1.24 the state was always
+     * appended (6.0/6.0.15stable), a folder the package server does not have.
+     *
+     * @param string $sdk ExponentialSDK or eZPublishSDK
+     */
+    public static function releasePath( $sdk )
+    {
+        if ( method_exists( $sdk, 'packageServerPath' ) )
+        {
+            return $sdk::packageServerPath();
+        }
+        $path = $sdk::version( false, false, false ) . '/' . $sdk::version( true, false, false );
+        $state = method_exists( $sdk, 'state' ) ? (string)$sdk::state() : '';
+        if ( $state !== '' && strtolower( $state ) !== 'stable' )
+        {
+            $path .= $state;
+        }
+        return $path;
     }
 
     public static function validate( $name, $url )

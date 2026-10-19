@@ -140,7 +140,10 @@ buttons are off.
 Servers of `.ezpkg` packages (site designs, content classes, demo content) in
 the `index.xml` format the setup wizard reads. The wizard's own server
 (`package.ini [RepositorySettings]`) is always listed; added ones are kept in
-`settings/override/ezupdate.ini.append.php`.
+`settings/override/ezupdate.ini.append.php`. From Exponential 6.0.15 on the
+setup wizard, the kickstarter and `exp:install` read the added servers too,
+after their own (`package.ini [RepositorySettings] RemotePackagesIndexSources[]`);
+older releases read only `package.ini`.
 
 **Packages** opens a server's list: each package with its type and, when you
 have it, the version in the local package repository. **Fetch** downloads a

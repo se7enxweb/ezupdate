@@ -4,6 +4,20 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.24 (2026-10-19)
+-------------------
+
+**The built-in package server's address is right when package.ini gives only the base.** With
+`package.ini [RepositorySettings] RemotePackagesIndexURL` empty, the Package servers page built
+`RemotePackagesIndexURLBase` plus `6.0/6.0.15stable`, a folder the package server does not have (its index answered
+404). It now builds `6.0/6.0.15`, with the release state appended only for a release that is not stable
+(`6.0/6.0.16alpha1`): `ExponentialSDK::packageServerPath()` from Exponential 6.0.15 on, the same rule on an older
+kernel (`eZUpdatePackageServers::releasePath()`).
+
+- From Exponential 6.0.15 on, the setup wizard, the kickstarter and `exp:install` also read the servers added on the
+  Package servers page, after the server of `package.ini` (`package.ini [RepositorySettings]
+  RemotePackagesIndexSources[]`). The user guide says so.
+
 1.1.23 (2026-10-17)
 -------------------
 
