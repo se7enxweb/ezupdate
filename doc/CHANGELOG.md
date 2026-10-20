@@ -4,6 +4,11 @@ Changelog
 All notable changes. Versions follow the tags of
 [github.com/se7enxweb/ezupdate](https://github.com/se7enxweb/ezupdate/releases).
 
+1.1.25 (2026-10-19)
+-------------------
+
+- Added: Translations in Croatian, Czech, Danish, Dutch, Italian, Norwegian, Polish, Brazilian Portuguese, Swedish and Turkish.
+
 1.1.24 (2026-10-19)
 -------------------
 
