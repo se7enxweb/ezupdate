@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Update</source>
-        <translation>Zaktualizuj</translation>
+        <translation>Zaktualizować</translation>
     </message>
     <message>
         <source>Install %package, dry run</source>
@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>Install %package</source>
-        <translation>Zainstaluj %package</translation>
+        <translation>Zainstalować %package</translation>
     </message>
     <message>
         <source>Composer was not found. Set [ComposerSettings] Path, Binary or PHPBinary in ezupdate.ini.</source>
@@ -117,7 +117,7 @@
     </message>
     <message>
         <source>Find packages</source>
-        <translation>Znajdź pakiety</translation>
+        <translation>Znaleźć pakiety</translation>
     </message>
     <message>
         <source>Name, keyword or vendor</source>
@@ -129,7 +129,7 @@
     </message>
     <message>
         <source>Search</source>
-        <translation>Wyszukaj</translation>
+        <translation>Wyszukać</translation>
     </message>
     <message>
         <source>packagist.org is asked through its public API; the type applies there only. The servers in composer.json are searched by Composer itself.</source>
@@ -221,7 +221,7 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation>Edytuj</translation>
+        <translation>Edytować</translation>
     </message>
     <message>
         <source>Updating</source>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>Check for updates</source>
-        <translation>Sprawdź aktualizacje</translation>
+        <translation>Sprawdzić aktualizacje</translation>
     </message>
     <message>
         <source>A backup of files and database exists</source>
@@ -289,7 +289,7 @@
     </message>
     <message>
         <source>Run</source>
-        <translation>Uruchom</translation>
+        <translation>Uruchomić</translation>
     </message>
     <message>
         <source>By</source>
@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>Run again</source>
-        <translation>Uruchom ponownie</translation>
+        <translation>Uruchomić ponownie</translation>
     </message>
     <message>
         <source>Funding</source>
@@ -341,7 +341,7 @@
     </message>
     <message>
         <source>Download</source>
-        <translation>Pobierz</translation>
+        <translation>Pobrać</translation>
     </message>
     <message>
         <source>Text</source>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <source>Run it for real</source>
-        <translation>Uruchom naprawdę</translation>
+        <translation>Uruchomić naprawdę</translation>
     </message>
     <message>
         <source>Running this again is switched off (AllowUpdate / AllowInstall in ezupdate.ini).</source>
@@ -501,15 +501,15 @@
     </message>
     <message>
         <source>Install, dry run</source>
-        <translation>Zainstaluj, przebieg próbny</translation>
+        <translation>Zainstalować, przebieg próbny</translation>
     </message>
     <message>
         <source>Change version</source>
-        <translation>Zmień wersję</translation>
+        <translation>Zmienić wersję</translation>
     </message>
     <message>
         <source>Install</source>
-        <translation>Zainstaluj</translation>
+        <translation>Zainstalować</translation>
     </message>
     <message>
         <source>Installing is switched off ([UpdateSettings] AllowInstall in ezupdate.ini).</source>
@@ -597,15 +597,15 @@
     </message>
     <message>
         <source>Fetch again</source>
-        <translation>Pobierz ponownie</translation>
+        <translation>Pobrać ponownie</translation>
     </message>
     <message>
         <source>Fetch</source>
-        <translation>Pobierz</translation>
+        <translation>Pobrać</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Otwórz</translation>
+        <translation>Otworzyć</translation>
     </message>
     <message>
         <source>Composer servers</source>
@@ -633,7 +633,7 @@
     </message>
     <message>
         <source>Switch off</source>
-        <translation>Wyłącz</translation>
+        <translation>Wyłączyć</translation>
     </message>
     <message>
         <source>Off</source>
@@ -641,7 +641,7 @@
     </message>
     <message>
         <source>Switch on</source>
-        <translation>Włącz</translation>
+        <translation>Włączyć</translation>
     </message>
     <message>
         <source>Remove this server from composer.json?</source>
@@ -649,7 +649,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation>Usuń</translation>
+        <translation>Usunąć</translation>
     </message>
     <message>
         <source>unnamed, edit composer.json</source>
@@ -657,7 +657,7 @@
     </message>
     <message>
         <source>Add Composer server</source>
-        <translation>Dodaj serwer Composer</translation>
+        <translation>Dodać serwer Composer</translation>
     </message>
     <message>
         <source>Exponential package servers</source>
@@ -677,7 +677,7 @@
     </message>
     <message>
         <source>Add package server</source>
-        <translation>Dodaj serwer pakietów</translation>
+        <translation>Dodać serwer pakietów</translation>
     </message>
     <message>
         <source>Installed packages</source>
@@ -693,7 +693,7 @@
     </message>
     <message>
         <source>Fetch from</source>
-        <translation>Pobieraj z</translation>
+        <translation>Pobierać z</translation>
     </message>
     <message>
         <source>auto</source>
@@ -781,7 +781,7 @@
     </message>
     <message>
         <source>Search packagist.org or your own servers</source>
-        <translation>Wyszukaj w packagist.org lub na własnych serwerach</translation>
+        <translation>Wyszukać w packagist.org lub na własnych serwerach</translation>
     </message>
     <message>
         <source>Exponential extensions are of the type ezpublish-legacy-extension.</source>
@@ -857,15 +857,15 @@
     </message>
     <message>
         <source>Keep the newest output in view</source>
-        <translation>Pokazuj zawsze najnowsze wyjście</translation>
+        <translation>Pokazywać zawsze najnowsze wyjście</translation>
     </message>
     <message>
         <source>Follow</source>
-        <translation>Śledź</translation>
+        <translation>Śledzić</translation>
     </message>
     <message>
         <source>Wrap lines</source>
-        <translation>Zawijaj wiersze</translation>
+        <translation>Zawijać wiersze</translation>
     </message>
     <message>
         <source>Copied</source>
@@ -873,7 +873,7 @@
     </message>
     <message>
         <source>Copy</source>
-        <translation>Kopiuj</translation>
+        <translation>Kopiować</translation>
     </message>
     <message>
         <source>Not on packagist.org</source>
@@ -981,11 +981,11 @@
     </message>
     <message>
         <source>Filter by name, description, extension or path</source>
-        <translation>Filtruj według nazwy, opisu, rozszerzenia lub ścieżki</translation>
+        <translation>Filtrować według nazwy, opisu, rozszerzenia lub ścieżki</translation>
     </message>
     <message>
         <source>Show</source>
-        <translation>Pokaż</translation>
+        <translation>Pokazać</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -1097,7 +1097,7 @@
     </message>
     <message>
         <source>Close</source>
-        <translation>Zamknij</translation>
+        <translation>Zamknąć</translation>
     </message>
     <message>
         <source>Required, not installed</source>
@@ -1177,7 +1177,7 @@
     </message>
     <message>
         <source>Get Composer</source>
-        <translation>Pobierz Composer</translation>
+        <translation>Pobrać Composer</translation>
     </message>
     <message>
         <source>Downloading...</source>
@@ -1221,7 +1221,7 @@
     </message>
     <message>
         <source>Install updates</source>
-        <translation>Zainstaluj aktualizacje</translation>
+        <translation>Zainstalować aktualizacje</translation>
     </message>
     <message>
         <source>Preview (dry run)</source>
@@ -1229,11 +1229,11 @@
     </message>
     <message>
         <source>Select</source>
-        <translation>Wybierz</translation>
+        <translation>Wybrać</translation>
     </message>
     <message>
         <source>Install this update</source>
-        <translation>Zainstaluj tę aktualizację</translation>
+        <translation>Zainstalować tę aktualizację</translation>
     </message>
     <message>
         <source>Can be installed</source>
@@ -1277,7 +1277,7 @@
     </message>
     <message>
         <source>Switch on updates</source>
-        <translation>Włącz aktualizacje</translation>
+        <translation>Włączyć aktualizacje</translation>
     </message>
     <message>
         <source>Installing updates is switched on.</source>
@@ -1312,7 +1312,7 @@
     <name>kernel/navigationpart</name>
     <message>
         <source>Update</source>
-        <translation>Zaktualizuj</translation>
+        <translation>Zaktualizować</translation>
     </message>
     <message>
         <source>The installation is up to date! Update again soon to remain secure.</source>
