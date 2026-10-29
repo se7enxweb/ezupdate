@@ -18,7 +18,7 @@
 .a4-update-dismissable { display: flex; align-items: flex-start; gap: var(--a4-space-2); }
 .a4-update-dismissable > .a4-notice-title { flex: 1 1 auto; margin: 0; }
 .a4-update-dismiss { flex: none; color: inherit; font-size: var(--a4-text-l); line-height: 1; }
-.a4-update-dismissable.is-leaving { opacity: 0; transition: opacity .35s; }
+.a4-update-dismissable.is-leaving { opacity: 0; transition: opacity var(--a4-duration-slow); }
 .a4-update-dismissable[hidden] { display: none; }
 .a4-update-message { margin: var(--a4-space-2) 0 0; }
 
@@ -55,7 +55,7 @@
 .a4-update-method { flex: 0 1 220px; }
 .a4-update-method select { min-height: var(--a4-control-h); }
 .a4-update-confirm { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-2) var(--a4-space-3); }
-.a4-update-confirm .a4-check { align-items: center; color: var(--a4-warn); font-weight: 600; }
+.a4-update-confirm .a4-check { align-items: center; color: var(--a4-warn); font-weight: var(--a4-weight-strong); }
 
 /* The actions cell of a table: its form in the flow of the cell */
 .a4-update-actions { text-align: end; white-space: nowrap; }
@@ -143,8 +143,8 @@
 .a4-update-invbar .a4-field { flex: 0 1 220px; }
 .a4-update-invbar .a4-field.a4-update-grow { flex: 1 1 260px; }
 .a4-update-invbar .a4-field.a4-field-wide { flex: 1 1 100%; }
-.a4-update-show > legend { font-weight: 600; }
-.a4-update-count { color: var(--a4-muted); font-weight: 400; }
+.a4-update-show > legend { font-weight: var(--a4-weight-strong); }
+.a4-update-count { color: var(--a4-muted); font-weight: normal; }
 .a4-update-shown { margin: 0; }
 
 /* Installed packages: one package per tbody (its row and its details), sorted and filtered in the page */
@@ -155,20 +155,20 @@
 .a4-update-vendor { color: var(--a4-muted); }
 .a4-update-name .a4-tag { margin-inline-start: var(--a4-space-1); }
 .a4-update-versions { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 2px var(--a4-space-2); margin: 0; align-items: baseline; }
-.a4-update-versions dt { color: var(--a4-muted); font-size: var(--a4-text-xs); text-transform: uppercase; letter-spacing: .05em; cursor: help; }
+.a4-update-versions dt { color: var(--a4-muted); font-size: var(--a4-text-xs); text-transform: uppercase; letter-spacing: var(--a4-tracking); cursor: help; }
 .a4-update-versions dd { margin: 0; white-space: nowrap; }
 .a4-update-inv > tbody > tr > .a4-update-actions,
 .a4-update-inv > thead > tr > th:last-child { width: 1%; }
 .a4-update-ext { align-items: center; }
 .a4-update-ext > code { overflow-wrap: normal; }
-.a4-update-more .a4-icon { transition: transform .15s; }
+.a4-update-more .a4-icon { transition: transform var(--a4-duration); }
 .a4-update-more[aria-expanded="true"] .a4-icon { transform: rotate(180deg); }
 .a4-update-detail > td { background-color: var(--a4-soft); }
 .a4-update-detail code { overflow-wrap: anywhere; }
 
 /* A run: its status and times on one wrapping line */
 .a4-update-run { display: flex; flex-wrap: wrap; align-items: center; gap: var(--a4-space-2) var(--a4-space-4); }
-.a4-update-run strong { color: var(--a4-ink); font-weight: 600; }
+.a4-update-run strong { color: var(--a4-ink); font-weight: var(--a4-weight-strong); }
 
 /* The output of Composer: the shared code block, drawn on the page's soft surface so the state colours of the
    output (.a4-update-ansi-*, eZUpdateManager::ansiToHtml()) read in the light and the dark look alike */
@@ -177,7 +177,7 @@
 .a4-update-term-title { min-width: 0; font-family: var(--a4-mono); font-size: var(--a4-text-m); overflow-wrap: anywhere; }
 .a4-update-term .a4-card-actions { gap: var(--a4-space-2) var(--a4-space-4); }
 .a4-update-show-title { margin: var(--a4-space-4) 0 var(--a4-space-2); }
-.a4-update-ansi-bold { font-weight: 700; }
+.a4-update-ansi-bold { font-weight: var(--a4-weight-bold); }
 .a4-update-ansi-muted { color: var(--a4-muted); }
 .a4-update-ansi-ink { color: var(--a4-ink); }
 .a4-update-ansi-ok { color: var(--a4-ok); }
