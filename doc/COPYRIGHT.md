@@ -1,4 +1,4 @@
-﻿Copyright © 1999 - 2024 7x. All rights reserved.
+﻿Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.
 
     This file is part of eZ Update.
 

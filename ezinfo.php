@@ -12,7 +12,7 @@ class ezupdateInfo
             'Name'      => '<a href="https://github.com/se7enxweb/ezupdate">eZ Update : Composer and package servers</a>',
             'Version'   => '1.1.27',
             'Author'    => '7x',
-            'Copyright' => 'Copyright &copy; 1998 - ' . date( 'Y' ) . ' <a href="https://se7enx.com" target="blank">7x</a>',
+            'Copyright' => 'Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.',
             'License'   => "GNU General Public License v2.0 (or any later version)",
             'Info_url'  => 'https://github.com/se7enxweb/ezupdate'
         );
