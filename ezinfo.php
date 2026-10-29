@@ -10,7 +10,7 @@ class ezupdateInfo
     {
         return array(
             'Name'      => '<a href="https://github.com/se7enxweb/ezupdate">eZ Update : Composer and package servers</a>',
-            'Version'   => '1.1.28',
+            'Version'   => '1.1.29',
             'Author'    => '7x',
             'Copyright' => 'Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved.',
             'License'   => "GNU General Public License v2.0 (or any later version)",
