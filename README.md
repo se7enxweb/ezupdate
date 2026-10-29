@@ -144,7 +144,7 @@ License
 -------
 
 eZ Update is free software: GNU General Public License v2.0 (or any later
-version). See [LICENSE.md](LICENSE.md). Copyright (C) 1998 - 2026 Exponential Foundation and 7x. All rights reserved. ;
+version). See [LICENSE.md](LICENSE.md). Copyright (C) 1998 - 2026 Exponential Foundation and 7x;
 the extension skeleton is by Serhey Dolgushev (see [doc/CREDITS.md](doc/CREDITS.md)).
 
 Issues: https://github.com/se7enxweb/ezupdate/issues
